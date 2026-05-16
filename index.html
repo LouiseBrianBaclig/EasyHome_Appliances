@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyHome Appliances – Affordable Access to Essential Home Appliances</title>
+  <meta name="description"
+    content="EasyHome Appliances – Get essential home appliances through affordable installment and rental plans. Zero large upfront payment. Free delivery and installation.">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* PAGE-SPECIFIC */
+    .hero-section {
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      background: linear-gradient(145deg, #edf6e0 0%, #e2f0d4 60%, #cce5b0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      padding: 80px 0 80px 5vw;
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 109, 17, .12);
+      border: 1px solid rgba(59, 109, 17, .2);
+      color: var(--g600);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--g400);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .4;
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 5.5vw, 68px);
+      letter-spacing: -0.028em;
+      color: var(--g900);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--g400);
+    }
+
+    .hero .lead {
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      padding-right: 5vw;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 24px 64px rgba(59, 109, 17, .12);
+      width: 330px;
+      position: relative;
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .hero-card-appliances {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hca-item {
+      background: var(--gray1);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all var(--transition);
+    }
+
+    .hca-item:hover,
+    .hca-item.active {
+      background: var(--g50);
+      border-color: var(--g200);
+    }
+
+    .hca-icon {
+      font-size: 26px;
+    }
+
+    .hca-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hero-plan-strip {
+      background: var(--g50);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hero-plan-label {
+      font-size: 12px;
+      color: var(--g600);
+      font-weight: 500;
+    }
+
+    .hero-plan-price {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      color: var(--g800);
+    }
+
+    .hero-plan-price small {
+      font-family: 'DM Sans';
+      font-size: 12px;
+      color: var(--g600);
+    }
+
+    .hero-pill {
+      position: absolute;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+      box-shadow: var(--shadow-md);
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+
+    .hero-pill-1 {
+      top: -20px;
+      right: -24px;
+      background: var(--a50);
+      color: var(--a600);
+      border: 1px solid var(--a100);
+      animation-delay: -2s;
+    }
+
+    .hero-pill-2 {
+      bottom: -20px;
+      left: -24px;
+      background: var(--t50);
+      color: var(--t600);
+      border: 1px solid var(--t100);
+      animation-delay: -4s;
+    }
+
+    .hero-circles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hc {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(59, 109, 17, .05);
+    }
+
+    /* PROBLEMS SECTION */
+    .problems-section {
+      background: var(--gray1);
+      padding: 80px 0;
+    }
+
+    /* SOLUTION SECTION */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .solution-features {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .calc-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .months-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .month-btn {
+      padding: 10px 6px;
+      border: 1.5px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      background: white;
+      font-size: 13px;
+      color: var(--muted);
+      font-family: 'DM Sans';
+      transition: all var(--transition);
+      font-weight: 500;
+    }
+
+    .month-btn:hover {
+      border-color: var(--g200);
+      color: var(--g600);
+    }
+
+    .month-btn.active {
+      background: var(--g600);
+      color: white;
+      border-color: var(--g600);
+    }
+
+    .calc-result-box {
+      background: var(--g50);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .calc-monthly-amt {
+      font-family: 'Fraunces', serif;
+      font-size: 34px;
+      color: var(--g800);
+    }
+
+    /* HOW IT WORKS */
+    .how-section {
+      background: var(--g900);
+      padding: 80px 0;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: rgba(255, 255, 255, .06);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    /* CATALOG PREVIEW */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    /* WHO WE SERVE */
+    .users-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .user-card {
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border: 1px solid transparent;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .user-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .uc-green {
+      background: var(--g50);
+      border-color: var(--g100);
+    }
+
+    .uc-teal {
+      background: var(--t50);
+      border-color: var(--t100);
+    }
+
+    .uc-amber {
+      background: var(--a50);
+      border-color: var(--a100);
+    }
+
+    .user-emoji {
+      font-size: 38px;
+      margin-bottom: 14px;
+    }
+
+    .user-type {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--g900);
+      margin-bottom: 8px;
+    }
+
+    .user-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width:900px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .hero-content {
+        padding: 80px 5vw 60px;
+      }
+
+      .solution-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .how-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .users-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width:768px) {
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════ NAV ════════════ -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <div class="nav-logo-mark">🏠</div>
+        EasyHome
+      </a>
+      <div class="nav-links">
+        <a class="nav-link active" href="index.html">Home</a>
+        <a class="nav-link" href="catalog.html">Catalog</a>
+        <a class="nav-link" href="apply.html">Apply</a>
+        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link" href="about.html">About</a>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-cart-btn" href="dashboard.html#cart">
+          🛒
+          <span id="cart-badge"></span>
+        </a>
+        <a class="btn-nav-primary" href="apply.html">Apply Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="catalog.html">Catalog</a>
+    <a class="nav-link" href="apply.html">Apply</a>
+    <a class="nav-link" href="dashboard.html">Dashboard</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="btn btn-primary btn-sm" href="apply.html" style="margin-top:8px;width:fit-content;">Apply Now</a>
+  </div>
+
+  <!-- ════════════ HERO ════════════ -->
+  <section class="hero-section">
+    <div class="hero-circles">
+      <div class="hc"
+        style="width:400px;height:400px;top:-100px;right:8%;animation:floatCircle 14s ease-in-out infinite;"></div>
+      <div class="hc"
+        style="width:200px;height:200px;bottom:10%;left:5%;animation:floatCircle 10s ease-in-out infinite reverse;">
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge" data-reveal><span class="dot"></span> Now serving families across the Philippines</div>
+      <h1 data-reveal data-reveal-delay="1">Essential appliances, <em>accessible</em> for everyone.</h1>
+      <p class="lead" data-reveal data-reveal-delay="2">EasyHome lets you bring home the appliances you need today —
+        through affordable installment or rental plans, with zero large upfront payment required.</p>
+      <div class="hero-btns" data-reveal data-reveal-delay="3">
+        <a class="btn btn-primary" href="catalog.html">Browse Appliances →</a>
+        <a class="btn btn-secondary" href="apply.html">Apply in Minutes</a>
+      </div>
+    </div>
+    <div class="hero-visual" data-reveal data-reveal-delay="2">
+      <div class="hero-card">
+        <p style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:12px;">Quick Calculator</p>
+        <div class="hero-card-appliances">
+          <div class="hca-item active" onclick="heroSetAppliance(this,3500)">
+            <div class="hca-icon">🌀</div>
+            <div class="hca-name">Washer</div>
+          </div>
+          <div class="hca-item" onclick="heroSetAppliance(this,4200)">
+            <div class="hca-icon">❄️</div>
+            <div class="hca-name">Refrigerator</div>
+          </div>
+          <div class="hca-item" onclick="heroSetAppliance(this,2200)">
+            <div class="hca-icon">🌬️</div>
+            <div class="hca-name">Aircon</div>
+          </div>
+          <div class="hca-item" onclick="heroSetAppliance(this,1800)">
+            <div class="hca-icon">📺</div>
+            <div class="hca-name">Smart TV</div>
+          </div>
+        </div>
+        <div class="hero-plan-strip">
+          <div>
+            <div class="hero-plan-label">Monthly installment</div>
+            <div class="hero-plan-price" id="hero-price">₱309 <small>/ 12 mos</small></div>
+          </div>
+          <a href="apply.html" class="btn btn-primary btn-sm">Apply</a>
+        </div>
+        <div class="hero-pill hero-pill-1">✔ Free Delivery<br>✔ Free Installation</div>
+        <div class="hero-pill hero-pill-2">🔧 Maintenance Included<br>on All Plans</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ STATS ════════════ -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div data-reveal>
+          <div class="stat-num">₱0</div>
+          <div class="stat-label">Down Payment Required</div>
+        </div>
+        <div data-reveal data-reveal-delay="1">
+          <div class="stat-num">3 hrs</div>
+          <div class="stat-label">Average Delivery Time</div>
+        </div>
+        <div data-reveal data-reveal-delay="2">
+          <div class="stat-num">200+</div>
+          <div class="stat-label">Appliance Models</div>
+        </div>
+        <div data-reveal data-reveal-delay="3">
+          <div class="stat-num">GCash</div>
+          <div class="stat-label">Easy Payment Methods</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ PROBLEMS ════════════ -->
+  <section class="problems-section" id="problems">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="label">The Problem</span>
+        <h2 class="display-2">Why appliances are out of reach for most</h2>
+        <p class="lead">Millions of Filipinos need essential appliances but face one common barrier — the high upfront
+          cost.</p>
+      </div>
+      <div class="grid-3">
+        <div class="problem-card" data-reveal>
+          <div class="problem-num">01</div>
+          <h3 class="problem-title">High Upfront Costs</h3>
+          <p class="problem-desc">Low-income families cannot afford appliances due to large one-time payments — limiting
+            access to essentials for daily living like food storage, cooking, and comfort.</p>
+          <div class="problem-who">👥 Low-income households, students, renters</div>
+        </div>
+        <div class="problem-card" data-reveal data-reveal-delay="1">
+          <div class="problem-num">02</div>
+          <h3 class="problem-title">Newly Moved Households</h3>
+          <p class="problem-desc">Young professionals and newlyweds need appliances immediately after moving but lack
+            sufficient budget for a full purchase at once.</p>
+          <div class="problem-who">👥 Young professionals, newly married couples</div>
+        </div>
+        <div class="problem-card" data-reveal data-reveal-delay="2">
+          <div class="problem-num">03</div>
+          <h3 class="problem-title">Small Businesses Left Out</h3>
+          <p class="problem-desc">Laundry shops, food stalls, and small entrepreneurs need appliances to earn income but
+            cannot afford them upfront to start operating.</p>
+          <div class="problem-who">👥 Laundry shops, food stalls, entrepreneurs</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ SOLUTION ════════════ -->
+  <section class="section" id="solution">
+    <div class="container">
+      <div class="solution-grid">
+        <div>
+          <span class="label" data-reveal>Our Solution</span>
+          <h2 class="display-2" data-reveal data-reveal-delay="1">Pay weekly or monthly —<br>start living today.</h2>
+          <p class="lead" data-reveal data-reveal-delay="2" style="margin-bottom:28px;">Affordable installment and
+            rental plans so everyone can access essential appliances — no large upfront payment needed.</p>
+          <div class="solution-features">
+            <div class="feature-row" data-reveal>
+              <div class="feature-icon">📦</div>
+              <div>
+                <div class="feature-title">Flexible Installment Plans</div>
+                <div class="feature-desc">Weekly or monthly payments. Terms from 3 to 36 months. Zero or low down
+                  payment.</div>
+              </div>
+            </div>
+            <div class="feature-row" data-reveal data-reveal-delay="1">
+              <div class="feature-icon">🚚</div>
+              <div>
+                <div class="feature-title">Free Delivery & Installation</div>
+                <div class="feature-desc">We deliver and professionally install your appliance at no extra charge —
+                  within 3 hours of approval.</div>
+              </div>
+            </div>
+            <div class="feature-row" data-reveal data-reveal-delay="2">
+              <div class="feature-icon">🔧</div>
+              <div>
+                <div class="feature-title">Ongoing Maintenance Support</div>
+                <div class="feature-desc">All plans include access to our certified repair and maintenance team. We keep
+                  you covered.</div>
+              </div>
+            </div>
+            <div class="feature-row" data-reveal data-reveal-delay="3">
+              <div class="feature-icon">💳</div>
+              <div>
+                <div class="feature-title">Pay via GCash, Banks & More</div>
+                <div class="feature-desc">Multiple payment channels — GCash, major banks, or over-the-counter. No
+                  complex paperwork.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- CALCULATOR -->
+        <div class="calc-card" data-reveal data-reveal-delay="2">
+          <h3 style="font-size:20px;color:var(--g900);margin-bottom:22px;">Installment Calculator</h3>
+          <div class="form-group">
+            <label class="form-label">Choose an Appliance</label>
+            <select class="form-select" id="calc-select" onchange="calcUpdate()">
+              <option value="3500">Washing Machine — ₱3,500</option>
+              <option value="4200">Refrigerator — ₱4,200</option>
+              <option value="2200">Air Conditioner — ₱2,200</option>
+              <option value="1800">Smart TV — ₱1,800</option>
+              <option value="1200">Electric Fan — ₱1,200</option>
+              <option value="900">Rice Cooker — ₱900</option>
+              <option value="5500">Side-by-Side Ref — ₱5,500</option>
+              <option value="6800">Inverter Aircon — ₱6,800</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Term (Months)</label>
+            <div class="months-grid">
+              <button class="month-btn" onclick="setMonths(3,this)">3 mos</button>
+              <button class="month-btn active" onclick="setMonths(6,this)">6 mos</button>
+              <button class="month-btn" onclick="setMonths(12,this)">12 mos</button>
+              <button class="month-btn" onclick="setMonths(18,this)">18 mos</button>
+              <button class="month-btn" onclick="setMonths(24,this)">24 mos</button>
+              <button class="month-btn" onclick="setMonths(36,this)">36 mos</button>
+            </div>
+          </div>
+          <div class="calc-result-box">
+            <div>
+              <div style="font-size:12px;color:var(--g600);font-weight:500;margin-bottom:2px;">Monthly Payment</div>
+              <div class="calc-monthly-amt" id="calc-monthly">₱617</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:11px;color:var(--g600);margin-bottom:2px;">Total Amount</div>
+              <div style="font-size:17px;font-weight:500;color:var(--g800);" id="calc-total">₱3,700</div>
+            </div>
+          </div>
+          <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px;">Apply
+            for This Plan →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ HOW IT WORKS ════════════ -->
+  <section class="how-section" id="howitworks">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="label" style="color:var(--g100);">How It Works</span>
+        <h2 class="display-2" style="color:white;">Get your appliance in 4 simple steps</h2>
+        <p class="lead" style="color:var(--t100);opacity:.8;">From browsing to delivery — fast, easy, and stress-free.
+        </p>
+      </div>
+      <div class="how-grid">
+        <div class="step-card" data-reveal>
+          <div class="step-num">01</div>
+          <div class="step-icon">🛍️</div>
+          <div class="step-title">Browse & Choose</div>
+          <div class="step-desc">Explore 200+ appliance models. Filter by category, brand, or price range that fits your
+            needs.</div>
+        </div>
+        <div class="step-card" data-reveal data-reveal-delay="1">
+          <div class="step-num">02</div>
+          <div class="step-icon">📋</div>
+          <div class="step-title">Apply Online</div>
+          <div class="step-desc">Fill out a short application form. No complex documents — just basic personal
+            information required.</div>
+        </div>
+        <div class="step-card" data-reveal data-reveal-delay="2">
+          <div class="step-num">03</div>
+          <div class="step-icon">✅</div>
+          <div class="step-title">Get Approved</div>
+          <div class="step-desc">Receive approval within hours. Choose your preferred payment plan and delivery
+            schedule.</div>
+        </div>
+        <div class="step-card" data-reveal data-reveal-delay="3">
+          <div class="step-num">04</div>
+          <div class="step-icon">🏠</div>
+          <div class="step-title">Delivered & Installed</div>
+          <div class="step-desc">We deliver and professionally install your appliance same day at your door — at no
+            extra charge.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ FEATURED PRODUCTS ════════════ -->
+  <section class="section">
+    <div class="container">
+      <div
+        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
+        <div>
+          <span class="label">Popular Appliances</span>
+          <h2 class="display-3" style="color:var(--g900);">Top picks this month</h2>
+        </div>
+        <a class="btn btn-secondary" href="catalog.html">View Full Catalog →</a>
+      </div>
+      <div class="products-grid" id="featured-products"></div>
+    </div>
+  </section>
+
+  <!-- ════════════ WHO WE SERVE ════════════ -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="label">Who We Serve</span>
+        <h2 class="display-2">Built for the people who need it most</h2>
+        <p class="lead">EasyHome is designed for everyday Filipinos who deserve access to modern living essentials.</p>
+      </div>
+      <div class="users-grid">
+        <div class="user-card uc-green" data-reveal>
+          <div class="user-emoji">👨‍👩‍👧</div>
+          <div class="user-type">Families & Households</div>
+          <div class="user-desc">Low to middle-income families who need appliances for daily living — food storage,
+            laundry, and cooking — without draining savings.</div>
+        </div>
+        <div class="user-card uc-teal" data-reveal data-reveal-delay="1">
+          <div class="user-emoji">🎓</div>
+          <div class="user-type">Students & Young Renters</div>
+          <div class="user-desc">Students and young professionals setting up their first home need appliances fast, with
+            payments that fit an entry-level budget.</div>
+        </div>
+        <div class="user-card uc-amber" data-reveal data-reveal-delay="2">
+          <div class="user-emoji">🏪</div>
+          <div class="user-type">Small Business Owners</div>
+          <div class="user-desc">Laundry shops, food stalls, and small entrepreneurs who need appliances to generate
+            income but cannot afford large upfront costs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ TESTIMONIALS ════════════ -->
+  <section class="section" style="background:var(--gray1);padding:80px 0;">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="label">Customer Stories</span>
+        <h2 class="display-2">What our customers say</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testi-card" data-reveal>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"I never thought I could own a refrigerator this soon. EasyHome made it possible with
+            their monthly plan — the delivery was fast and the team was very professional."</p>
+          <div class="testi-author">
+            <div class="avatar" style="background:var(--g50);color:var(--g600);">MR</div>
+            <div>
+              <div style="font-size:14px;font-weight:500;color:var(--g900);">Maria Reyes</div>
+              <div style="font-size:12px;color:var(--muted);">Stay-at-home mom, Davao City</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card" data-reveal data-reveal-delay="1">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"As a student renting a small room, I couldn't imagine paying full price for a washing
+            machine. EasyHome's installment plan saved me so much time and money."</p>
+          <div class="testi-author">
+            <div class="avatar" style="background:var(--t50);color:var(--t600);">JM</div>
+            <div>
+              <div style="font-size:14px;font-weight:500;color:var(--g900);">Jake Morales</div>
+              <div style="font-size:12px;color:var(--muted);">College student, Cebu</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card" data-reveal data-reveal-delay="2">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"I started my laundry business with two washing machines from EasyHome. No big capital
+            needed — just a small weekly payment, and now I earn daily!"</p>
+          <div class="testi-author">
+            <div class="avatar" style="background:var(--a50);color:var(--a600);">LP</div>
+            <div>
+              <div style="font-size:14px;font-weight:500;color:var(--g900);">Liza Pascual</div>
+              <div style="font-size:12px;color:var(--muted);">Laundry shop owner, Manila</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ CTA BANNER ════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner" data-reveal>
+        <div>
+          <h2>Ready to bring home the appliances you need?</h2>
+          <p>Apply online in minutes. Get approved fast. Delivered today.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-white" href="apply.html">Apply Now</a>
+          <a class="btn btn-outline-white" href="catalog.html">Browse Catalog</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ FOOTER ════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">🏠 EasyHome Appliances</div>
+          <p class="footer-tagline">Making modern living accessible for every Filipino family, student, and small
+            business owner — one appliance at a time.</p>
+          <div class="footer-socials" style="margin-top:20px;">
+            <button class="footer-social-btn">f</button>
+            <button class="footer-social-btn">in</button>
+            <button class="footer-social-btn">t</button>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Products</h5>
+          <a href="catalog.html">Refrigerators</a>
+          <a href="catalog.html">Washing Machines</a>
+          <a href="catalog.html">Air Conditioners</a>
+          <a href="catalog.html">Smart TVs</a>
+          <a href="catalog.html">All Appliances</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="about.html">About Us</a>
+          <a href="index.html#howitworks">How It Works</a>
+          <a href="about.html#team">Our Team</a>
+          <a href="about.html#contact">Contact Us</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a href="apply.html">Apply for a Plan</a>
+          <a href="apply.html">Payment Options</a>
+          <a href="dashboard.html">My Dashboard</a>
+          <a href="about.html#faq">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 EasyHome Appliances. All rights reserved.</span>
+        <span>Aniñon · Baclig · Tagalog</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    const APPLIANCES = [
+      { id: 1, name: 'Double Door Refrigerator', price: 4200, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=500&q=80', category: 'refrigerators', badge: 'Popular' },
+      { id: 2, name: 'Front Load Washing Machine', price: 3500, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=500&q=80', category: 'washers', badge: 'Best Seller' },
+      { id: 3, name: 'Split-Type Air Conditioner', price: 2200, img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&q=80', category: 'aircon', badge: 'Available' },
+      { id: 4, name: '55" 4K Smart TV', price: 1800, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80', category: 'tvs', badge: 'Available' },
+    ];
+
+    function renderFeatured() {
+      const grid = document.getElementById('featured-products');
+      grid.innerHTML = APPLIANCES.map(a => `
+    <div class="product-card card-hover" data-reveal>
+      <img class="product-img" src="${a.img}" alt="${a.name}" loading="lazy" onerror="this.style.background='var(--gray1)'">
+      <div class="product-body">
+        <span class="badge badge-green" style="width:fit-content;">${a.badge}</span>
+        <div class="product-name">${a.name}</div>
+        <div class="product-price">₱${a.price.toLocaleString()}</div>
+        <div class="product-monthly">From ₱${Math.round(a.price * 1.06 / 12).toLocaleString()}/mo for 12 months</div>
+      </div>
+      <div class="product-actions">
+        <button class="btn btn-primary btn-sm" style="flex:1;" onclick='Cart.add(${JSON.stringify(a)})'>Add to Cart</button>
+        <a class="btn btn-secondary btn-sm" href="catalog.html">Details</a>
+      </div>
+    </div>
+  `).join('');
+      initScrollReveal();
+    }
+
+    // Calculator
+    let calcMonths = 6;
+    function setMonths(m, btn) {
+      calcMonths = m;
+      document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      calcUpdate();
+    }
+    function calcUpdate() {
+      const price = parseFloat(document.getElementById('calc-select').value);
+      const total = Math.round(price * 1.06);
+      const monthly = Math.round(total / calcMonths);
+      document.getElementById('calc-monthly').textContent = '₱' + monthly.toLocaleString();
+      document.getElementById('calc-total').textContent = '₱' + total.toLocaleString();
+    }
+
+    // Hero calculator
+    let heroPrice = 3500;
+    function heroSetAppliance(el, price) {
+      heroPrice = price;
+      document.querySelectorAll('.hca-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      const m = Math.round(price * 1.06 / 12);
+      document.getElementById('hero-price').innerHTML = `₱${m.toLocaleString()} <small>/ 12 mos</small>`;
+    }
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', function () {
+      this.classList.toggle('open');
+      const m = document.getElementById('mobile-menu');
+      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+      m.classList.toggle('open');
+    });
+
+    calcUpdate();
+    renderFeatured();
+  </script>
+</body>
+
+</html>
