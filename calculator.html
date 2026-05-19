@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Calculator – EasyHome</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .calc-page {
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+      background: var(--bg-page)
+    }
+
+    .calc-hero {
+      background: linear-gradient(145deg, #edf6e0 0%, #d4edc0 100%);
+      padding: 48px 0 32px
+    }
+
+    [data-theme="dark"] .calc-hero {
+      background: linear-gradient(145deg, #0d1f06 0%, #112808 100%)
+    }
+
+    .calc-main-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+      margin-top: 32px
+    }
+
+    .calc-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      padding: 28px;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .result-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: calc(var(--nav-h)+16px)
+    }
+
+    .big-monthly {
+      font-family: 'Fraunces', serif;
+      font-size: 52px;
+      color: var(--g800);
+      line-height: 1
+    }
+
+    .result-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 0
+    }
+
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none
+    }
+
+    .breakdown-label {
+      color: var(--muted)
+    }
+
+    .breakdown-val {
+      font-weight: 500;
+      color: var(--text)
+    }
+
+    .breakdown-val.total {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      color: var(--g800)
+    }
+
+    .term-selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px
+    }
+
+    .term-opt {
+      padding: 12px 6px;
+      border: 1.5px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: 'DM Sans';
+      text-align: center
+    }
+
+    .term-opt:hover {
+      border-color: var(--g200);
+      color: var(--g600)
+    }
+
+    .term-opt.active {
+      background: var(--g600);
+      color: white;
+      border-color: var(--g600)
+    }
+
+    .freq-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .freq-opt {
+      padding: 12px;
+      border: 1.5px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: 'DM Sans';
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .freq-opt:hover {
+      border-color: var(--g200);
+      color: var(--g600)
+    }
+
+    .freq-opt.active {
+      border-color: var(--g600);
+      background: var(--g50);
+      color: var(--g800)
+    }
+
+    .slider-wrap {
+      position: relative;
+      margin: 10px 0
+    }
+
+    .slider-input {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+      accent-color: var(--g600)
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .amortization-table {
+      margin-top: 20px
+    }
+
+    .amortization-table table {
+      font-size: 12px
+    }
+
+    .amortization-table th {
+      font-size: 11px;
+      padding: 8px 10px
+    }
+
+    .amortization-table td {
+      padding: 8px 10px
+    }
+
+    @media(max-width:900px) {
+      .calc-main-layout {
+        grid-template-columns: 1fr
+      }
+
+      .result-card {
+        position: static
+      }
+
+      .term-selector {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calc-page">
+    <!-- NAV -->
+    <nav id="main-nav">
+      <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+          <div class="nav-logo-mark">🏠</div><span>Easy<span style="color:var(--g400)">Home</span></span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="catalog.html">Products</a>
+          <a class="nav-link active" href="calculator.html">Calculator</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
+        </div>
+        <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
+          <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+            <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
+          </div>
+          <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+          <a class="btn btn-primary btn-sm" href="apply.html" style="margin-left:12px;">Apply Now</a>
+          <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </nav>
+    <div class="settings-panel" id="settings-panel">
+      <div class="settings-panel-title">⚙️ Settings</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">🌙 Dark Mode</div>
+        </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
+            onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+      </div>
+      <div class="settings-row" style="border:none;padding-bottom:0;"><a href="login.html"
+          style="font-size:13px;color:var(--g600);font-weight:500;">Login →</a></div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="catalog.html">Products</a>
+      <a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <div class="mobile-menu-divider"></div><a class="nav-link" href="login.html">Login</a>
+    </div>
+
+    <div class="calc-hero">
+      <div class="container">
+        <a href="index.html" class="back-link" style="margin-bottom:16px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 5l-7 7 7 7" />
+          </svg>
+          Back to Home
+        </a>
+        <span class="label">Payment Calculator</span>
+        <h1 class="display-3" style="color:var(--text);margin-bottom:8px;">Customize Your Payment Plan</h1>
+        <p style="font-size:16px;color:var(--muted);">Find out exactly how much you'll pay monthly — before you apply.
+        </p>
+      </div>
+    </div>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="calc-main-layout">
+          <!-- LEFT: Calculator inputs -->
+          <div>
+            <div class="calc-card">
+              <h3 style="font-size:17px;color:var(--text);margin-bottom:20px;">① Customize Your Plan</h3>
+              <div class="form-group">
+                <label class="form-label">Choose an Appliance</label>
+                <select class="form-select" id="calc-appliance" onchange="calcUpdate()">
+                  <option value="17990" data-name="Panasonic 2-Door Refrigerator">Panasonic 2-Door Refrigerator —
+                    ₱17,990</option>
+                  <option value="24500" data-name="LG Front Load Washing Machine">LG Front Load Washing Machine —
+                    ₱24,500</option>
+                  <option value="18000" data-name="Samsung 43&quot; Smart TV">Samsung 43" Smart TV — ₱18,000</option>
+                  <option value="22000" data-name="Carrier Inverter Aircon">Carrier Inverter Aircon — ₱22,000</option>
+                  <option value="3900" data-name="Sharp Microwave Oven">Sharp Microwave Oven — ₱3,900</option>
+                  <option value="1800" data-name="Panasonic Rice Cooker">Panasonic Rice Cooker — ₱1,800</option>
+                  <option value="45000" data-name="LG Side-by-Side Refrigerator">LG Side-by-Side Refrigerator — ₱45,000
+                  </option>
+                  <option value="0" data-name="Custom">Custom Amount</option>
+                </select>
+              </div>
+              <div class="form-group" id="custom-price-wrap" style="display:none;">
+                <label class="form-label">Enter Cash Price (₱)</label>
+                <input class="form-control" id="custom-price" type="number" placeholder="e.g. 15000"
+                  oninput="calcUpdate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Down Payment: <strong id="dp-label">₱0</strong></label>
+                <div class="slider-wrap">
+                  <input type="range" class="slider-input" id="dp-slider" min="0" max="8000" value="0" step="100"
+                    oninput="calcUpdate()">
+                  <div class="slider-labels"><span>₱0</span><span id="dp-max-label">₱8,995</span></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Payment Term</label>
+                <div class="term-selector">
+                  <button class="term-opt" onclick="setTerm(6,this)">6 mo</button>
+                  <button class="term-opt active" onclick="setTerm(12,this)">12 mo</button>
+                  <button class="term-opt" onclick="setTerm(18,this)">18 mo</button>
+                  <button class="term-opt" onclick="setTerm(24,this)">24 mo</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Payment Frequency</label>
+                <div class="freq-selector">
+                  <button class="freq-opt active" id="freq-monthly" onclick="setFreq('monthly')">📅 Monthly</button>
+                  <button class="freq-opt" id="freq-weekly" onclick="setFreq('weekly')">📆 Weekly</button>
+                </div>
+              </div>
+              <div class="alert alert-info" style="margin-top:4px;font-size:13px;">ℹ️ This is an estimate only. Final
+                approval is subject to verification and may vary.</div>
+            </div>
+
+            <!-- Amortization table -->
+            <div class="calc-card amortization-table" style="margin-top:20px;">
+              <h3 style="font-size:15px;color:var(--text);margin-bottom:16px;">Payment Schedule</h3>
+              <div class="table-wrap" style="border-radius:var(--radius-md);">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Payment</th>
+                      <th>Principal</th>
+                      <th>Interest</th>
+                      <th>Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="amort-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Result summary -->
+          <div class="result-card">
+            <h3 style="font-size:17px;color:var(--text);margin-bottom:16px;">② Your Payment Plan</h3>
+            <div style="background:var(--g50);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:20px;">
+              <div style="font-size:12px;color:var(--g600);font-weight:500;margin-bottom:4px;">Estimated Payment</div>
+              <div class="big-monthly" id="result-monthly">₱1,574</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px;" id="result-freq-label">per month · for 12
+                months</div>
+            </div>
+            <div class="result-breakdown">
+              <div class="breakdown-row">
+                <div class="breakdown-label">Cash Price</div>
+                <div class="breakdown-val" id="r-price">₱17,990</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Down Payment</div>
+                <div class="breakdown-val" id="r-dp">−₱0</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Amount Financed</div>
+                <div class="breakdown-val" id="r-financed">₱17,990</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Monthly Interest Rate</div>
+                <div class="breakdown-val" id="r-rate">2.5%</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Payment Term</div>
+                <div class="breakdown-val" id="r-term">12 months</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Total of Payments</div>
+                <div class="breakdown-val" id="r-total">₱18,890</div>
+              </div>
+              <div class="breakdown-row">
+                <div class="breakdown-label">Total Interest</div>
+                <div class="breakdown-val" id="r-interest">₱900</div>
+              </div>
+            </div>
+            <div
+              style="margin-top:20px;background:var(--g50);border-radius:var(--radius-md);padding:14px 16px;font-size:13px;color:var(--g700);margin-bottom:20px;">
+              <strong>Affordable. Flexible. Hassle-free.</strong><br>
+              Start enjoying your appliance today with EasyHome's installment plans!
+            </div>
+            <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center;"
+              id="result-apply-btn">
+              📋 Proceed to Application →
+            </a>
+            <a href="catalog.html" class="btn btn-secondary"
+              style="width:100%;justify-content:center;margin-top:10px;">← Back to Products</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">🏠 EasyHome</div>
+            <p class="footer-tagline">Affordable appliances for every Filipino home.</p>
+          </div>
+          <div class="footer-col">
+            <h5>Products</h5><a href="catalog.html">All Appliances</a>
+          </div>
+          <div class="footer-col">
+            <h5>Company</h5><a href="about.html">About Us</a><a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h5>Account</h5><a href="login.html">Login</a><a href="dashboard.html">Dashboard</a>
+          </div>
+        </div>
+        <div class="footer-bottom"><span>© 2025 EasyHome. All rights reserved.</span></div>
+      </div>
+    </footer>
+
+    <script src="shared.js"></script>
+    <script>
+      let calcMonths = 12;
+      let calcFreq = 'monthly';
+      const RATE = 0.025;
+
+      function setTerm(m, btn) {
+        calcMonths = m;
+        document.querySelectorAll('.term-opt').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        calcUpdate();
+      }
+
+      function setFreq(f) {
+        calcFreq = f;
+        document.getElementById('freq-monthly').classList.toggle('active', f === 'monthly');
+        document.getElementById('freq-weekly').classList.toggle('active', f === 'weekly');
+        calcUpdate();
+      }
+
+      function calcUpdate() {
+        const sel = document.getElementById('calc-appliance');
+        let price = parseFloat(sel.value);
+        const isCustom = price === 0;
+        document.getElementById('custom-price-wrap').style.display = isCustom ? 'block' : 'none';
+        if (isCustom) { price = parseFloat(document.getElementById('custom-price').value) || 0; }
+
+        const maxDP = Math.floor(price * 0.5);
+        document.getElementById('dp-slider').max = maxDP;
+        document.getElementById('dp-max-label').textContent = '₱' + maxDP.toLocaleString();
+
+        const dp = Math.min(parseFloat(document.getElementById('dp-slider').value) || 0, maxDP);
+        document.getElementById('dp-label').textContent = '₱' + dp.toLocaleString();
+
+        const financed = price - dp;
+        const totalFactor = Math.pow(1 + RATE, calcMonths / 12);
+        const totalPayable = Math.round(financed * totalFactor);
+        const monthly = Math.round(totalPayable / calcMonths);
+        const weekly = Math.round(monthly / 4.33);
+        const interest = totalPayable - financed;
+        const payment = calcFreq === 'monthly' ? monthly : weekly;
+        const freqLabel = calcFreq === 'monthly' ? `per month · for ${calcMonths} months` : `per week · for ${calcMonths * 4} weeks`;
+
+        document.getElementById('result-monthly').textContent = '₱' + payment.toLocaleString();
+        document.getElementById('result-freq-label').textContent = freqLabel;
+        document.getElementById('r-price').textContent = '₱' + price.toLocaleString();
+        document.getElementById('r-dp').textContent = '−₱' + dp.toLocaleString();
+        document.getElementById('r-financed').textContent = '₱' + financed.toLocaleString();
+        document.getElementById('r-rate').textContent = RATE * 100 + '%';
+        document.getElementById('r-term').textContent = calcMonths + ' months';
+        document.getElementById('r-total').textContent = '₱' + totalPayable.toLocaleString();
+        document.getElementById('r-interest').textContent = '₱' + interest.toLocaleString();
+
+        // Amortization
+        let balance = financed;
+        const rows = [];
+        for (let i = 1; i <= calcMonths; i++) {
+          const intPmt = Math.round(balance * RATE / 12 * 100) / 100;
+          const principal = monthly - intPmt;
+          balance = Math.max(0, balance - principal);
+          rows.push(`<tr><td>${i}</td><td>₱${monthly.toLocaleString()}</td><td>₱${Math.round(principal).toLocaleString()}</td><td>₱${Math.round(intPmt).toLocaleString()}</td><td>₱${Math.round(balance).toLocaleString()}</td></tr>`);
+        }
+        document.getElementById('amort-body').innerHTML = rows.join('');
+      }
+
+      // URL params
+      const params = new URLSearchParams(location.search);
+      const paramPrice = params.get('price');
+      if (paramPrice) {
+        const sel = document.getElementById('calc-appliance');
+        let found = false;
+        for (let opt of sel.options) { if (opt.value === paramPrice) { sel.value = paramPrice; found = true; break; } }
+        if (!found) { sel.value = '0'; document.getElementById('custom-price').value = paramPrice; }
+      }
+
+      calcUpdate();
+    </script>
+</body>
+
+</html>
