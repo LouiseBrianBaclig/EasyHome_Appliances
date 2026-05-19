@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – EasyHome</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif
+    }
+
+    .admin-layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    .admin-sidebar {
+      width: 240px;
+      background: var(--g900);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow-y: auto
+    }
+
+    [data-theme="dark"] .admin-sidebar {
+      background: #080e04
+    }
+
+    .admin-logo {
+      padding: 20px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .admin-logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--g400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0
+    }
+
+    .admin-nav {
+      padding: 12px 0;
+      flex: 1
+    }
+
+    .admin-nav-section {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .3);
+      padding: 12px 18px 4px
+    }
+
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, .55);
+      cursor: pointer;
+      transition: all var(--transition);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      border-left: 3px solid transparent
+    }
+
+    .admin-nav-item:hover {
+      background: rgba(255, 255, 255, .07);
+      color: rgba(255, 255, 255, .9)
+    }
+
+    .admin-nav-item.active {
+      background: rgba(255, 255, 255, .1);
+      color: white;
+      border-left: 3px solid var(--g400)
+    }
+
+    .admin-nav-item .nav-icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0
+    }
+
+    .admin-nav-item .nav-badge {
+      margin-left: auto;
+      background: var(--r400);
+      color: white;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px
+    }
+
+    .admin-sidebar-footer {
+      padding: 16px 18px;
+      border-top: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .admin-main {
+      margin-left: 240px;
+      min-height: 100vh;
+      background: var(--bg-page);
+      display: flex;
+      flex-direction: column
+    }
+
+    .admin-topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50
+    }
+
+    .admin-topbar-title {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text)
+    }
+
+    .admin-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .admin-menu-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 10px;
+      background: var(--g100);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-content {
+      padding: 28px;
+      flex: 1
+    }
+
+    .admin-panel {
+      display: none
+    }
+
+    .admin-panel.active {
+      display: block;
+      animation: fadeUp .3s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 20px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .kpi-icon {
+      font-size: 28px;
+      margin-bottom: 10px
+    }
+
+    .kpi-val {
+      font-family: 'Fraunces', serif;
+      font-size: 30px;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1
+    }
+
+    .kpi-lbl {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .kpi-trend {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px
+    }
+
+    .kpi-trend.up {
+      background: var(--g50);
+      color: var(--g600)
+    }
+
+    .kpi-trend.down {
+      background: var(--r50);
+      color: var(--r600)
+    }
+
+    .admin-table-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden
+    }
+
+    .admin-table-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .admin-table-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text)
+    }
+
+    .admin-search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray1);
+      border-radius: var(--radius-sm);
+      padding: 7px 12px;
+      min-width: 200px
+    }
+
+    .admin-search-box input {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      background: transparent;
+      font-family: 'DM Sans';
+      color: var(--text);
+      flex: 1
+    }
+
+    .action-btn {
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--border-md);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: all var(--transition)
+    }
+
+    .action-btn:hover {
+      background: var(--gray1)
+    }
+
+    .action-btn.danger {
+      color: var(--r600);
+      border-color: var(--r400)22
+    }
+
+    .action-btn.danger:hover {
+      background: var(--r50)
+    }
+
+    .action-btn.success {
+      color: var(--g600);
+      border-color: var(--g200)
+    }
+
+    .action-btn.success:hover {
+      background: var(--g50)
+    }
+
+    .action-btn.primary {
+      background: var(--g600);
+      color: white;
+      border-color: var(--g600)
+    }
+
+    .action-btn.primary:hover {
+      background: var(--g800)
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px
+    }
+
+    .dot-green {
+      background: var(--g400)
+    }
+
+    .dot-amber {
+      background: var(--a400)
+    }
+
+    .dot-red {
+      background: var(--r400)
+    }
+
+    .dot-blue {
+      background: var(--b400)
+    }
+
+    .chart-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px
+    }
+
+    .chart-bar-label {
+      font-size: 12px;
+      color: var(--muted);
+      width: 120px;
+      flex-shrink: 0;
+      text-align: right
+    }
+
+    .chart-bar-track {
+      flex: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--gray2);
+      overflow: hidden
+    }
+
+    .chart-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--g400);
+      transition: width 1s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .chart-bar-val {
+      font-size: 12px;
+      color: var(--muted);
+      width: 40px;
+      flex-shrink: 0
+    }
+
+    .product-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border)
+    }
+
+    .product-row:hover {
+      background: var(--gray0)
+    }
+
+    .prod-img-sm {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--gray2);
+      flex-shrink: 0
+    }
+
+    .modal-lg .modal-box {
+      max-width: 680px
+    }
+
+    .form-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    @media(max-width:900px) {
+      .admin-sidebar {
+        width: 200px
+      }
+
+      .admin-main {
+        margin-left: 200px
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:700px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+        transition: transform .3s;
+        width: 100%;
+      }
+
+      .admin-sidebar.open {
+        transform: translateX(0)
+      }
+
+      .admin-topbar-right .admin-menu-btn {
+        display: inline-flex;
+      }
+
+      .admin-main {
+        margin-left: 0
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-mark">🏠</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">EasyHome</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.4);font-family:'DM Sans';">Admin Panel</div>
+        </div>
+      </div>
+      <nav class="admin-nav">
+        <div class="admin-nav-section">Overview</div>
+        <button class="admin-nav-item active" onclick="showAdmin('overview')"><span class="nav-icon">📊</span>
+          Dashboard</button>
+        <div class="admin-nav-section">Manage</div>
+        <button class="admin-nav-item" onclick="showAdmin('applications')"><span class="nav-icon">📋</span> Applications
+          <span class="nav-badge" id="badge-apps">0</span></button>
+        <button class="admin-nav-item" onclick="showAdmin('products')"><span class="nav-icon">📦</span>
+          Products</button>
+        <button class="admin-nav-item" onclick="showAdmin('users')"><span class="nav-icon">👥</span> Customers</button>
+        <button class="admin-nav-item" onclick="showAdmin('transactions')"><span class="nav-icon">💳</span>
+          Transactions</button>
+        <div class="admin-nav-section">Reports</div>
+        <button class="admin-nav-item" onclick="showAdmin('analytics')"><span class="nav-icon">📈</span>
+          Analytics</button>
+        <div class="admin-nav-section">Settings</div>
+        <button class="admin-nav-item" onclick="showAdmin('settings')"><span class="nav-icon">⚙️</span>
+          Settings</button>
+      </nav>
+      <div class="admin-sidebar-footer">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div
+            style="width:34px;height:34px;border-radius:50%;background:var(--g600);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;">
+            AD</div>
+          <div>
+            <div style="font-size:13px;color:rgba(255,255,255,.8);font-weight:500;">Admin</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.4);">easyhome2026@gmail.com</div>
+          </div>
+        </div>
+        <button onclick="Auth.logout()"
+          style="width:100%;padding:8px;border-radius:8px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border:none;font-size:13px;cursor:pointer;transition:background var(--transition);"
+          onmouseover="this.style.background='rgba(255,255,255,.12)'"
+          onmouseout="this.style.background='rgba(255,255,255,.07)'">🚪 Logout</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div class="admin-topbar-title" id="admin-page-title">Dashboard Overview</div>
+        <div class="admin-topbar-right">
+          <button class="admin-menu-btn" id="admin-menu-btn" aria-label="Open menu">☰</button>
+          <a href="index.html" target="_blank" class="action-btn primary">🌐 View Site</a>
+        </div>
+      </div>
+      <div class="settings-panel" id="settings-panel" style="top:68px;">
+        <div class="settings-panel-title">⚙️ Admin Settings</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-label">🌙 Dark Mode</div>
+          </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
+              onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+        </div>
+        <div class="settings-row" style="border:none;padding-bottom:0;"><button onclick="Auth.logout()"
+            style="font-size:13px;color:var(--r600);background:none;border:none;cursor:pointer;font-weight:500;">🚪
+            Logout</button></div>
+      </div>
+
+      <div class="admin-content">
+
+        <!-- OVERVIEW -->
+        <div class="admin-panel active" id="panel-overview">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-icon">📋</div>
+              <div class="kpi-val" id="kpi-apps">0</div>
+              <div class="kpi-lbl">Total Applications</div>
+              <div class="kpi-trend up">+12%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">👥</div>
+              <div class="kpi-val" id="kpi-users">0</div>
+              <div class="kpi-lbl">Registered Users</div>
+              <div class="kpi-trend up">+8%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">✅</div>
+              <div class="kpi-val" id="kpi-approved">0</div>
+              <div class="kpi-lbl">Approved Applications</div>
+              <div class="kpi-trend up">+5%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">💰</div>
+              <div class="kpi-val" id="kpi-revenue">₱0</div>
+              <div class="kpi-lbl">Est. Monthly Revenue</div>
+              <div class="kpi-trend up">+18%</div>
+            </div>
+          </div>
+          <div class="grid-2" style="gap:20px;margin-bottom:20px;">
+            <div class="admin-table-card">
+              <div class="admin-table-header">
+                <div class="admin-table-title">Recent Applications</div><button class="action-btn"
+                  onclick="showAdmin('applications')">View All</button>
+              </div>
+              <div id="recent-apps-list"></div>
+            </div>
+            <div class="admin-table-card">
+              <div class="admin-table-header">
+                <div class="admin-table-title">Sales by Category</div>
+              </div>
+              <div style="padding:20px;" id="category-chart"></div>
+            </div>
+          </div>
+          <div class="admin-table-card">
+            <div class="admin-table-header">
+              <div class="admin-table-title">Top Customers</div><button class="action-btn"
+                onclick="showAdmin('users')">View All</button>
+            </div>
+            <div id="top-customers"></div>
+          </div>
+        </div>
+
+        <!-- APPLICATIONS -->
+        <div class="admin-panel" id="panel-applications">
+          <div class="admin-table-card">
+            <div class="admin-table-header">
+              <div class="admin-table-title">All Applications</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <div class="admin-search-box"><svg width="14" height="14" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24" style="color:var(--hint);flex-shrink:0;">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg><input placeholder="Search applications..." oninput="filterApps(this.value)" id="app-search">
+                </div>
+                <select class="action-btn" id="app-status-filter"
+                  onchange="filterApps(document.getElementById('app-search').value)" style="padding:7px 12px;">
+                  <option value="">All Status</option>
+                  <option>In Review</option>
+                  <option>Approved</option>
+                  <option>Rejected</option>
+                  <option>Draft</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap" style="border-radius:0;border:none;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Applicant</th>
+                    <th>Product</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="apps-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="admin-panel" id="panel-products">
+          <div class="admin-table-card">
+            <div class="admin-table-header">
+              <div class="admin-table-title">Product Catalog</div>
+              <button class="action-btn primary" onclick="openProductModal()">+ Add Product</button>
+            </div>
+            <div id="products-list"></div>
+          </div>
+        </div>
+
+        <!-- USERS -->
+        <div class="admin-panel" id="panel-users">
+          <div class="admin-table-card">
+            <div class="admin-table-header">
+              <div class="admin-table-title">Registered Customers</div>
+              <div class="admin-search-box"><svg width="14" height="14" fill="none" stroke="currentColor"
+                  stroke-width="2" viewBox="0 0 24 24" style="color:var(--hint);flex-shrink:0;">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg><input placeholder="Search customers..." oninput="filterUsers(this.value)"></div>
+            </div>
+            <div class="table-wrap" style="border-radius:0;border:none;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Joined</th>
+                    <th>Applications</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRANSACTIONS -->
+        <div class="admin-panel" id="panel-transactions">
+          <div class="admin-table-card">
+            <div class="admin-table-header">
+              <div class="admin-table-title">Transaction Records</div>
+              <button class="action-btn primary" onclick="exportTransactions()">⬇ Export CSV</button>
+            </div>
+            <div class="table-wrap" style="border-radius:0;border:none;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Transaction ID</th>
+                    <th>Applicant</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="transactions-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div class="admin-panel" id="panel-analytics">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-icon">📈</div>
+              <div class="kpi-val">87%</div>
+              <div class="kpi-lbl">Approval Rate</div>
+              <div class="kpi-trend up">+3%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">⏱️</div>
+              <div class="kpi-val">2.4h</div>
+              <div class="kpi-lbl">Avg. Review Time</div>
+              <div class="kpi-trend down">-12%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">🔁</div>
+              <div class="kpi-val">34%</div>
+              <div class="kpi-lbl">Repeat Customers</div>
+              <div class="kpi-trend up">+7%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">💸</div>
+              <div class="kpi-val">₱18.2K</div>
+              <div class="kpi-lbl">Avg. Order Value</div>
+              <div class="kpi-trend up">+2%</div>
+            </div>
+          </div>
+          <div class="grid-2" style="gap:20px;">
+            <div class="admin-table-card">
+              <div class="admin-table-header">
+                <div class="admin-table-title">Applications by Month</div>
+              </div>
+              <div style="padding:20px;" id="monthly-chart"></div>
+            </div>
+            <div class="admin-table-card">
+              <div class="admin-table-header">
+                <div class="admin-table-title">Top Products Applied</div>
+              </div>
+              <div style="padding:20px;" id="products-chart"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="admin-panel" id="panel-settings">
+          <div class="grid-2" style="gap:20px;">
+            <div class="section-card">
+              <div class="section-card-title">Store Information</div>
+              <div class="form-group"><label class="form-label">Store Name</label><input class="form-control"
+                  value="EasyHome"></div>
+              <div class="form-group"><label class="form-label">Support Email</label><input class="form-control"
+                  value="support@easyhome.ph"></div>
+              <div class="form-group"><label class="form-label">Phone</label><input class="form-control"
+                  value="+63 912 345 6789"></div>
+              <div class="form-group"><label class="form-label">Address</label><textarea class="form-control"
+                  rows="2">123 Appliance Blvd., Davao City, Philippines</textarea></div>
+              <button class="btn btn-primary btn-sm" onclick="Toast.success('Store settings saved!')">Save
+                Settings</button>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Interest Rate Settings</div>
+              <div class="form-group"><label class="form-label">Monthly Interest Rate (%)</label><input
+                  class="form-control" type="number" value="2.5" step="0.1"></div>
+              <div class="form-group"><label class="form-label">Default Payment Term (months)</label><select
+                  class="form-select">
+                  <option>6</option>
+                  <option selected>12</option>
+                  <option>18</option>
+                  <option>24</option>
+                </select></div>
+              <div class="form-group"><label class="form-label">Minimum Monthly Income (₱)</label><input
+                  class="form-control" type="number" value="8000"></div>
+              <button class="btn btn-primary btn-sm" onclick="Toast.success('Rate settings saved!')">Save Rates</button>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Appearance</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🌙 Dark Mode</div>
+                </div><label class="toggle-switch"><input type="checkbox" id="admin-dark"
+                    onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+              </div>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Data Management</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Clear All Test Data</div>
+                  <div class="settings-desc">Removes all demo applications</div>
+                </div><button class="btn btn-danger btn-sm" onclick="clearAllData()">Clear Data</button>
+              </div>
+              <div class="settings-row" style="border:none;">
+                <div>
+                  <div class="settings-label">Export All Data</div>
+                  <div class="settings-desc">Download a CSV of all records</div>
+                </div><button class="btn btn-secondary btn-sm" onclick="exportTransactions()">⬇ Export</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /admin-content -->
+    </main>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="product-modal-title">Add Product</h3><button class="modal-close"
+          onclick="Modal.close('product-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="pm-id">
+        <div class="form-2col">
+          <div class="form-group"><label class="form-label">Product Name *</label><input class="form-control"
+              id="pm-name" placeholder="e.g. Panasonic 2-Door Refrigerator"></div>
+          <div class="form-group"><label class="form-label">Model *</label><input class="form-control" id="pm-model"
+              placeholder="e.g. NR-BB221V"></div>
+          <div class="form-group"><label class="form-label">Brand *</label><input class="form-control" id="pm-brand"
+              placeholder="e.g. Panasonic"></div>
+          <div class="form-group"><label class="form-label">Category *</label><select class="form-select" id="pm-cat">
+              <option value="">Select category</option>
+              <option>Refrigerators</option>
+              <option>Washing Machines</option>
+              <option>Televisions</option>
+              <option>Air Conditioners</option>
+              <option>Microwaves</option>
+              <option>Small Appliances</option>
+            </select></div>
+          <div class="form-group"><label class="form-label">Cash Price (₱) *</label><input class="form-control"
+              id="pm-price" type="number" placeholder="17990"></div>
+          <div class="form-group"><label class="form-label">Monthly Rate (₱) *</label><input class="form-control"
+              id="pm-monthly" type="number" placeholder="1450"></div>
+          <div class="form-group"><label class="form-label">Payment Term (months)</label><select class="form-select"
+              id="pm-term">
+              <option value="6">6 months</option>
+              <option value="12" selected>12 months</option>
+              <option value="18">18 months</option>
+              <option value="24">24 months</option>
+            </select></div>
+          <div class="form-group"><label class="form-label">Badge Label</label><input class="form-control" id="pm-badge"
+              placeholder="e.g. Best Seller, New, Popular"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="pm-desc"
+            rows="3" placeholder="Product description..."></textarea></div>
+        <div class="form-group"><label class="form-label">Image URL</label><input class="form-control" id="pm-img"
+            placeholder="https://..."></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="Modal.close('product-modal')">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveProduct()">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION STATUS MODAL -->
+  <div class="modal-overlay" id="app-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Application Details</h3><button class="modal-close"
+          onclick="Modal.close('app-modal')">✕</button>
+      </div>
+      <div class="modal-body" id="app-modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-danger btn-sm" id="btn-reject" onclick="updateAppStatus('Rejected')">Reject</button>
+        <button class="btn btn-success btn-sm" id="btn-approve" onclick="updateAppStatus('Approved')">Approve</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared.js"></script>
+  <script>
+    // Admin auth guard
+    if (!Auth.isAdmin()) window.location.href = 'login.html';
+
+    const adminSidebar = document.querySelector('.admin-sidebar');
+    const adminMenuBtn = document.getElementById('admin-menu-btn');
+    if (adminMenuBtn && adminSidebar) {
+      adminMenuBtn.addEventListener('click', () => {
+        adminSidebar.classList.toggle('open');
+      });
+      document.querySelectorAll('.admin-nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 700) adminSidebar.classList.remove('open');
+        });
+      });
+    }
+
+    let ADMIN_PRODUCTS = Store.get('admin_products', [
+      { id: 1, name: 'Panasonic 2-Door Refrigerator', model: 'NR-BB221V', brand: 'Panasonic', category: 'Refrigerators', price: 17990, monthly: 1450, term: 12, badge: 'Best Seller', img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=300&q=80', desc: 'Energy-efficient 2-door top-freezer refrigerator.' },
+      { id: 2, name: 'LG Front Load Washing Machine', model: '8.5kg Inverter', brand: 'LG', category: 'Washing Machines', price: 24500, monthly: 1350, term: 12, badge: 'Popular', img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=300&q=80', desc: 'Inverter Direct Drive front load washer.' },
+      { id: 3, name: 'Samsung 43" Smart TV', model: 'Crystal UHD 4K', brand: 'Samsung', category: 'Televisions', price: 18000, monthly: 1200, term: 12, badge: 'New', img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300&q=80', desc: '4K Crystal UHD Smart TV with Tizen OS.' },
+      { id: 4, name: 'Sharp Microwave Oven', model: '20L Digital', brand: 'Sharp', category: 'Microwaves', price: 3900, monthly: 650, term: 6, badge: 'Available', img: 'https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=300&q=80', desc: '20L digital microwave with child lock.' },
+      { id: 5, name: 'Carrier Inverter Aircon', model: '1.0 HP Energy Saving', brand: 'Carrier', category: 'Air Conditioners', price: 22000, monthly: 1600, term: 12, badge: 'Popular', img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=80', desc: '1.0 HP inverter aircon with auto-restart.' },
+    ]);
+
+    let currentAppRef = null;
+
+    function showAdmin(id) {
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      const titles = { overview: 'Dashboard Overview', applications: 'Applications', products: 'Product Catalog', users: 'Customers', transactions: 'Transactions', analytics: 'Analytics', settings: 'Settings' };
+      document.getElementById('admin-page-title').textContent = titles[id] || id;
+      event && event.currentTarget && event.currentTarget.classList.add('active');
+      document.querySelectorAll('.admin-nav-item').forEach(b => { if (b.onclick && b.onclick.toString().includes(`'${id}'`)) b.classList.add('active'); });
+      if (id === 'applications') renderAppsTable();
+      if (id === 'products') renderProductsList();
+      if (id === 'users') renderUsersTable();
+      if (id === 'transactions') renderTransactions();
+      if (id === 'analytics') renderAnalytics();
+      if (id === 'overview') renderOverview();
+      if (id === 'settings') { const d = Store.get('theme') === 'dark'; document.getElementById('admin-dark').checked = d; }
+    }
+
+    function getApps() { return Store.get('applications', []); }
+    function getUsers() { return Store.get('users', []); }
+
+    function renderOverview() {
+      const apps = getApps();
+      const users = getUsers();
+      const approved = apps.filter(a => a.status === 'Approved').length;
+      document.getElementById('kpi-apps').textContent = apps.length;
+      document.getElementById('kpi-users').textContent = users.length;
+      document.getElementById('kpi-approved').textContent = approved;
+      document.getElementById('kpi-revenue').textContent = '₱' + ((approved * 1450) + Math.round(Math.random() * 5000)).toLocaleString();
+      document.getElementById('badge-apps').textContent = apps.filter(a => a.status === 'In Review').length;
+
+      const bc = { 'badge-blue': 'In Review', 'badge-green': 'Approved', 'badge-amber': 'Draft', 'badge-red': 'Rejected' };
+      const badgeClass = { 'In Review': 'badge-blue', 'Approved': 'badge-green', 'Draft': 'badge-amber', 'Rejected': 'badge-red' };
+      const imgs = { 1: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=60', 2: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=60', default: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=60' };
+
+      document.getElementById('recent-apps-list').innerHTML = apps.slice(-5).reverse().map(a => `
+    <div class="product-row">
+      <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:500;color:var(--text);">${a.applicant || 'Applicant'}</div><div style="font-size:11px;color:var(--muted);">${a.ref} · ${a.productName || '—'}</div></div>
+      <span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span>
+    </div>`).join('') || '<div style="padding:20px;text-align:center;color:var(--muted);font-size:14px;">No applications yet</div>';
+
+      const cats = ['Refrigerators', 'Washing Machines', 'TVs', 'Aircon', 'Microwaves'];
+      const vals = [42, 28, 18, 8, 4];
+      document.getElementById('category-chart').innerHTML = cats.map((c, i) => `
+    <div class="chart-bar-row"><div class="chart-bar-label">${c}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${vals[i]}%"></div></div><div class="chart-bar-val">${vals[i]}%</div></div>`).join('');
+
+      document.getElementById('top-customers').innerHTML = users.slice(0, 5).map((u, i) => `
+    <div class="product-row">
+      <div style="width:26px;height:26px;border-radius:50%;background:var(--g50);color:var(--g600);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;">${u.name.slice(0, 2).toUpperCase()}</div>
+      <div style="flex:1;min-width:0;margin-left:10px;"><div style="font-size:13px;font-weight:500;color:var(--text);">${u.name}</div><div style="font-size:11px;color:var(--muted);">${u.email}</div></div>
+      <div style="font-size:12px;color:var(--muted);">${new Date(u.joined).toLocaleDateString()}</div>
+    </div>`).join('') || '<div style="padding:20px;text-align:center;color:var(--muted);font-size:14px;">No registered users yet</div>';
+    }
+
+    function renderAppsTable(q = '', statusF = '') {
+      const apps = getApps().filter(a => {
+        const qs = (q || '').toLowerCase();
+        if (qs && !a.ref.toLowerCase().includes(qs) && !(a.applicant || '').toLowerCase().includes(qs) && !(a.productName || '').toLowerCase().includes(qs)) return false;
+        if (statusF && a.status !== statusF) return false;
+        return true;
+      });
+      const badgeClass = { 'In Review': 'badge-blue', 'Approved': 'badge-green', 'Draft': 'badge-amber', 'Rejected': 'badge-red' };
+      document.getElementById('apps-table-body').innerHTML = apps.length ? apps.map(a => `
+    <tr>
+      <td><code style="font-size:12px;background:var(--gray1);padding:2px 6px;border-radius:4px;">${a.ref}</code></td>
+      <td><div style="font-size:13px;font-weight:500;">${a.applicant || '—'}</div><div style="font-size:11px;color:var(--muted);">${a.phone || ''}</div></td>
+      <td style="font-size:13px;">${a.productName || 'General'}</td>
+      <td style="font-size:13px;text-transform:capitalize;">${a.payMethod || '—'}</td>
+      <td><span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span></td>
+      <td style="font-size:12px;color:var(--muted);">${new Date(a.submittedAt).toLocaleDateString()}</td>
+      <td><div style="display:flex;gap:6px;">
+        <button class="action-btn" onclick="viewApp('${a.ref}')">View</button>
+        <button class="action-btn success" onclick="quickStatus('${a.ref}','Approved')">✓</button>
+        <button class="action-btn danger" onclick="quickStatus('${a.ref}','Rejected')">✕</button>
+      </div></td>
+    </tr>`).join('') : `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted);">No applications found</td></tr>`;
+    }
+
+    function filterApps(q) {
+      const statusF = document.getElementById('app-status-filter').value;
+      renderAppsTable(q, statusF);
+    }
+
+    function viewApp(ref) {
+      currentAppRef = ref;
+      const a = getApps().find(x => x.ref === ref);
+      if (!a) return;
+      const badgeClass = { 'In Review': 'badge-blue', 'Approved': 'badge-green', 'Draft': 'badge-amber', 'Rejected': 'badge-red' };
+      document.getElementById('app-modal-body').innerHTML = `
+    <div style="display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+      <div style="flex:1;"><div style="font-size:12px;color:var(--muted);">Reference Number</div><div style="font-size:15px;font-weight:600;color:var(--g600);">${a.ref}</div></div>
+      <span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span>
+    </div>
+    <div class="grid-2" style="gap:12px;margin-bottom:12px;">
+      <div><div class="form-label">Applicant</div><div style="font-size:14px;font-weight:500;">${a.applicant || '—'}</div></div>
+      <div><div class="form-label">Phone</div><div style="font-size:14px;">${a.phone || '—'}</div></div>
+      <div><div class="form-label">Product</div><div style="font-size:14px;">${a.productName || 'General Application'}</div></div>
+      <div><div class="form-label">Payment Method</div><div style="font-size:14px;text-transform:capitalize;">${a.payMethod || '—'}</div></div>
+      <div><div class="form-label">Submitted</div><div style="font-size:14px;">${new Date(a.submittedAt).toLocaleString()}</div></div>
+    </div>`;
+      Modal.open('app-modal');
+    }
+
+    function quickStatus(ref, status) {
+      currentAppRef = ref;
+      updateAppStatus(status);
+    }
+
+    function updateAppStatus(status) {
+      const apps = getApps();
+      const idx = apps.findIndex(a => a.ref === currentAppRef);
+      if (idx < 0) return;
+      apps[idx].status = status;
+      Store.set('applications', apps);
+      Toast.success(`Application ${status.toLowerCase()} successfully!`);
+      Modal.close('app-modal');
+      renderAppsTable();
+      renderOverview();
+      document.getElementById('badge-apps').textContent = apps.filter(a => a.status === 'In Review').length;
+    }
+
+    function renderProductsList() {
+      document.getElementById('products-list').innerHTML = ADMIN_PRODUCTS.map(p => `
+    <div class="product-row">
+      <img class="prod-img-sm" src="${p.img}" alt="${p.name}" onerror="this.style.background='var(--gray2)'">
+      <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:500;color:var(--text);">${p.name}</div><div style="font-size:11px;color:var(--muted);">${p.brand} · ${p.model} · ${p.category}</div></div>
+      <div style="text-align:right;margin-right:16px;"><div style="font-size:14px;font-weight:500;color:var(--g600);">₱${p.monthly.toLocaleString()}/mo</div><div style="font-size:11px;color:var(--muted);">Cash ₱${p.price.toLocaleString()}</div></div>
+      <div style="display:flex;gap:6px;">
+        <button class="action-btn" onclick="editProduct(${p.id})">✏️ Edit</button>
+        <button class="action-btn danger" onclick="deleteProduct(${p.id})">🗑️</button>
+      </div>
+    </div>`).join('');
+    }
+
+    function openProductModal(id) {
+      document.getElementById('pm-id').value = '';
+      document.getElementById('pm-name').value = ''; document.getElementById('pm-model').value = ''; document.getElementById('pm-brand').value = '';
+      document.getElementById('pm-cat').value = ''; document.getElementById('pm-price').value = ''; document.getElementById('pm-monthly').value = '';
+      document.getElementById('pm-term').value = '12'; document.getElementById('pm-badge').value = ''; document.getElementById('pm-desc').value = ''; document.getElementById('pm-img').value = '';
+      document.getElementById('product-modal-title').textContent = 'Add Product';
+      Modal.open('product-modal');
+    }
+
+    function editProduct(id) {
+      const p = ADMIN_PRODUCTS.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('pm-id').value = id;
+      document.getElementById('pm-name').value = p.name;
+      document.getElementById('pm-model').value = p.model;
+      document.getElementById('pm-brand').value = p.brand;
+      document.getElementById('pm-cat').value = p.category;
+      document.getElementById('pm-price').value = p.price;
+      document.getElementById('pm-monthly').value = p.monthly;
+      document.getElementById('pm-term').value = p.term;
+      document.getElementById('pm-badge').value = p.badge;
+      document.getElementById('pm-desc').value = p.desc;
+      document.getElementById('pm-img').value = p.img;
+      document.getElementById('product-modal-title').textContent = 'Edit Product';
+      Modal.open('product-modal');
+    }
+
+    function saveProduct() {
+      const id = document.getElementById('pm-id').value;
+      const name = document.getElementById('pm-name').value.trim();
+      const price = parseFloat(document.getElementById('pm-price').value);
+      if (!name || !price) { Toast.error('Name and price are required.'); return; }
+      const prod = {
+        id: id ? parseInt(id) : Date.now(),
+        name, model: document.getElementById('pm-model').value,
+        brand: document.getElementById('pm-brand').value,
+        category: document.getElementById('pm-cat').value,
+        price, monthly: parseFloat(document.getElementById('pm-monthly').value) || Math.round(price / 12),
+        term: parseInt(document.getElementById('pm-term').value),
+        badge: document.getElementById('pm-badge').value || 'Available',
+        desc: document.getElementById('pm-desc').value,
+        img: document.getElementById('pm-img').value || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80'
+      };
+      if (id) { const idx = ADMIN_PRODUCTS.findIndex(p => p.id === parseInt(id)); if (idx >= 0) ADMIN_PRODUCTS[idx] = prod; }
+      else ADMIN_PRODUCTS.push(prod);
+      Store.set('admin_products', ADMIN_PRODUCTS);
+      Toast.success(id ? 'Product updated!' : 'Product added!');
+      Modal.close('product-modal');
+      renderProductsList();
+    }
+
+    function deleteProduct(id) {
+      if (!confirm('Delete this product?')) return;
+      ADMIN_PRODUCTS = ADMIN_PRODUCTS.filter(p => p.id !== id);
+      Store.set('admin_products', ADMIN_PRODUCTS);
+      Toast.success('Product deleted.'); renderProductsList();
+    }
+
+    function renderUsersTable(q = '') {
+      const users = getUsers().filter(u => !q || u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase()));
+      const apps = getApps();
+      document.getElementById('users-table-body').innerHTML = users.length ? users.map(u => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--g50);color:var(--g600);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;">${u.name.slice(0, 2).toUpperCase()}</div><span style="font-size:13px;font-weight:500;">${u.name}</span></div></td>
+      <td style="font-size:13px;">${u.email}</td>
+      <td style="font-size:13px;">${u.phone || '—'}</td>
+      <td style="font-size:12px;color:var(--muted);">${new Date(u.joined).toLocaleDateString()}</td>
+      <td><span class="badge badge-blue">${apps.filter(a => a.applicant === u.name).length}</span></td>
+      <td><button class="action-btn danger" onclick="deleteUser('${u.email}')">Remove</button></td>
+    </tr>`).join('') : `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted);">No registered customers yet</td></tr>`;
+    }
+
+    function filterUsers(q) { renderUsersTable(q); }
+
+    function deleteUser(email) {
+      if (!confirm('Remove this customer?')) return;
+      const users = Store.get('users', []).filter(u => u.email !== email);
+      Store.set('users', users);
+      Toast.success('Customer removed.'); renderUsersTable();
+    }
+
+    function renderTransactions() {
+      const apps = getApps();
+      document.getElementById('transactions-body').innerHTML = apps.length ? apps.map((a, i) => `
+    <tr>
+      <td><code style="font-size:12px;background:var(--gray1);padding:2px 6px;border-radius:4px;">TXN-${String(i + 1).padStart(5, '0')}</code></td>
+      <td style="font-size:13px;">${a.applicant || '—'}</td>
+      <td style="font-size:13px;">${a.productName || '—'}</td>
+      <td style="font-size:13px;font-weight:500;color:var(--g600);">₱1,450</td>
+      <td style="font-size:13px;text-transform:capitalize;">${a.payMethod || '—'}</td>
+      <td><span class="badge ${{ Approved: 'badge-green', 'In Review': 'badge-blue', Rejected: 'badge-red', Draft: 'badge-amber' }[a.status]}">${a.status}</span></td>
+      <td style="font-size:12px;color:var(--muted);">${new Date(a.submittedAt).toLocaleDateString()}</td>
+    </tr>`).join('') : `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted);">No transactions yet</td></tr>`;
+    }
+
+    function exportTransactions() {
+      const apps = getApps();
+      if (!apps.length) { Toast.warning('No data to export.'); return; }
+      const csv = ['Ref,Applicant,Phone,Product,Method,Status,Date', ...apps.map(a => `${a.ref},${a.applicant || ''},${a.phone || ''},${a.productName || ''},${a.payMethod || ''},${a.status},${new Date(a.submittedAt).toLocaleDateString()}`)].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'easyhome_transactions.csv'; a.click();
+      Toast.success('Export downloaded!');
+    }
+
+    function renderAnalytics() {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const vals = [4, 7, 11, 9, 14, 18, 12, 20, 16, 22, 19, 25];
+      document.getElementById('monthly-chart').innerHTML = months.map((m, i) => `
+    <div class="chart-bar-row"><div class="chart-bar-label">${m}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${vals[i] / 25 * 100}%"></div></div><div class="chart-bar-val">${vals[i]}</div></div>`).join('');
+      const prods = [['Refrigerators', 42], ['Washing Machines', 28], ['Smart TVs', 18], ['Air Conditioners', 8], ['Microwaves', 4]];
+      document.getElementById('products-chart').innerHTML = prods.map(([name, val]) => `
+    <div class="chart-bar-row"><div class="chart-bar-label">${name}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${val}%"></div></div><div class="chart-bar-val">${val}%</div></div>`).join('');
+    }
+
+    function clearAllData() {
+      if (!confirm('This will clear all test applications. Continue?')) return;
+      Store.set('applications', []);
+      Toast.success('All test data cleared.');
+      renderOverview();
+    }
+
+    renderOverview();
+  </script>
+</body>
+
+</html>
