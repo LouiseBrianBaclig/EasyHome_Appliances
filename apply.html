@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apply for Installment – EasyHome Appliances</title>
+  <title>Apply – EasyHome</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
   <link
@@ -12,855 +12,587 @@
     rel="stylesheet">
   <link rel="stylesheet" href="shared.css">
   <style>
+    .apply-page {
+      padding-top: var(--nav-h);
+      background: var(--bg-page);
+      min-height: 100vh
+    }
+
+    .apply-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 0
+    }
+
+    .product-summary-box {
+      background: var(--g50);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      border: 1px solid var(--g100);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px
+    }
+
+    .product-summary-img {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--gray1);
+      flex-shrink: 0
+    }
+
     .apply-layout {
       display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 40px;
-      align-items: start;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px
     }
 
-    .apply-sidebar {
-      position: sticky;
-      top: calc(var(--nav-h) + 24px);
-    }
-
-    .plan-card {
-      background: white;
+    .apply-section {
+      background: var(--surface);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
-      overflow: hidden;
-      margin-bottom: 16px;
+      padding: 24px
     }
 
-    .plan-card-header {
-      padding: 18px 20px;
-      background: var(--g50);
-      border-bottom: 1px solid var(--g100);
-    }
-
-    .plan-card-body {
-      padding: 18px 20px;
-    }
-
-    .plan-item {
+    .apply-section-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 8px 0;
-      font-size: 14px;
-      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      margin-bottom: 20px
     }
 
-    .plan-item:last-child {
-      border-bottom: none;
-    }
-
-    .plan-item-label {
-      color: var(--muted);
-    }
-
-    .plan-item-val {
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .progress-steps {
-      display: flex;
-      gap: 0;
-      margin-bottom: 36px;
-    }
-
-    .step-dot {
-      display: flex;
-      align-items: center;
-      flex: 1;
-    }
-
-    .step-dot:last-child {
-      flex: 0;
-    }
-
-    .step-circle {
+    .apply-section-num {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      border: 2px solid var(--border-md);
+      background: var(--g600);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      background: white;
-      flex-shrink: 0;
-      transition: all var(--transition);
-      cursor: pointer;
-    }
-
-    .step-circle.active {
-      border-color: var(--g600);
-      color: var(--g600);
-      background: var(--g50);
-    }
-
-    .step-circle.done {
-      border-color: var(--g600);
-      background: var(--g600);
-      color: white;
-    }
-
-    .step-line {
-      flex: 1;
-      height: 2px;
-      background: var(--border);
-      margin: 0 -1px;
-    }
-
-    .step-line.done {
-      background: var(--g600);
-    }
-
-    .step-label {
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 6px;
-    }
-
-    .form-step {
-      display: none;
-    }
-
-    .form-step.active {
-      display: block;
-      animation: fadeUp .4s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px)
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0)
-      }
-    }
-
-    .form-section-title {
-      font-size: 18px;
-      color: var(--g900);
-      margin-bottom: 4px;
-    }
-
-    .form-section-sub {
       font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 24px;
+      font-weight: 600;
+      flex-shrink: 0
     }
 
-    .form-row {
+    .apply-section-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text)
+    }
+
+    .form-row-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 14px
     }
 
-    .pw-strength {
-      margin-top: 6px;
+    .pay-method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .pay-method {
+      border: 1.5px solid var(--border-md);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center
+    }
+
+    .pay-method:hover {
+      border-color: var(--g200);
+      background: var(--g50)
+    }
+
+    .pay-method.active {
+      border-color: var(--g600);
+      background: var(--g50)
+    }
+
+    .pay-method-icon {
+      font-size: 28px;
+      margin-bottom: 6px
+    }
+
+    .pay-method-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text)
+    }
+
+    .pay-method-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .apply-actions {
       display: flex;
-      gap: 3px;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border)
     }
 
-    .pw-bar {
-      height: 3px;
-      flex: 1;
-      border-radius: 2px;
-      background: var(--gray2);
-      transition: background .3s;
-    }
-
-    .pw-bar.weak {
-      background: var(--r400);
-    }
-
-    .pw-bar.medium {
-      background: var(--a400);
-    }
-
-    .pw-bar.strong {
-      background: var(--g400);
-    }
-
-    .success-screen {
+    .success-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: linear-gradient(135deg, var(--g50) 0%, var(--t50) 100%);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       text-align: center;
-      padding: 40px 20px;
+      padding: 40px
+    }
+
+    .success-overlay.show {
+      display: flex
+    }
+
+    .success-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: var(--shadow-lg)
     }
 
     .success-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-      animation: bounceIn .6s cubic-bezier(.34, 1.56, .64, 1);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--g50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 24px
     }
 
-    @keyframes bounceIn {
-      from {
-        opacity: 0;
-        transform: scale(.5)
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1)
-      }
+    .confetti {
+      position: absolute;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      height: 200px
     }
 
-    @media(max-width:900px) {
+    @media(max-width:1024px) {
       .apply-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .apply-sidebar {
-        position: static;
+        grid-template-columns: 1fr 1fr
       }
     }
 
-    @media(max-width:600px) {
-      .form-row {
-        grid-template-columns: 1fr;
+    @media(max-width:768px) {
+      .apply-layout {
+        grid-template-columns: 1fr
+      }
+
+      .form-row-2 {
+        grid-template-columns: 1fr
+      }
+
+      .apply-actions {
+        flex-direction: column-reverse
+      }
+
+      .apply-actions .btn {
+        width: 100%;
+        justify-content: center
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- NAV -->
-  <nav id="main-nav">
-    <div class="nav-inner">
-      <a class="nav-logo" href="index.html">
-        <div class="nav-logo-mark">🏠</div>EasyHome
-      </a>
-      <div class="nav-links">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="catalog.html">Catalog</a>
-        <a class="nav-link active" href="apply.html">Apply</a>
-        <a class="nav-link" href="dashboard.html">Dashboard</a>
-        <a class="nav-link" href="about.html">About</a>
-      </div>
-      <div class="nav-actions">
-        <a class="nav-cart-btn" href="dashboard.html#cart">🛒<span id="cart-badge"></span></a>
-        <a class="btn-nav-primary" href="apply.html">Apply Now</a>
-        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-      </div>
-    </div>
-  </nav>
-  <div class="mobile-menu" id="mobile-menu">
-    <a class="nav-link" href="index.html">Home</a>
-    <a class="nav-link" href="catalog.html">Catalog</a>
-    <a class="nav-link" href="apply.html">Apply</a>
-    <a class="nav-link" href="dashboard.html">Dashboard</a>
-    <a class="nav-link" href="about.html">About</a>
-  </div>
-
-  <!-- PAGE HEADER -->
-  <div class="page-top">
-    <div class="page-header">
-      <div class="container">
-        <span class="label">Get Started</span>
-        <h1 class="display-3">Apply for an Installment Plan</h1>
-        <p>Fill out the form below. Takes less than 5 minutes. Get approved within hours.</p>
-      </div>
-    </div>
-
-    <section class="section-sm">
-      <div class="container">
-        <div class="apply-layout">
-          <!-- MAIN FORM -->
-          <div>
-            <!-- PROGRESS STEPS -->
-            <div>
-              <div class="progress-steps" id="progress-steps">
-                <div class="step-dot">
-                  <div>
-                    <div class="step-circle active" id="sc-1">1</div>
-                  </div>
-                  <div class="step-line" id="sl-1"></div>
-                </div>
-                <div class="step-dot">
-                  <div>
-                    <div class="step-circle" id="sc-2">2</div>
-                  </div>
-                  <div class="step-line" id="sl-2"></div>
-                </div>
-                <div class="step-dot">
-                  <div>
-                    <div class="step-circle" id="sc-3">3</div>
-                  </div>
-                  <div class="step-line" id="sl-3"></div>
-                </div>
-                <div class="step-dot">
-                  <div>
-                    <div class="step-circle" id="sc-4">4</div>
-                  </div>
-                </div>
-              </div>
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:36px;">
-                <div class="step-label">Personal</div>
-                <div class="step-label">Account</div>
-                <div class="step-label">Appliance</div>
-                <div class="step-label">Confirm</div>
-              </div>
-            </div>
-
-            <div class="card" style="padding:32px;">
-              <!-- STEP 1: PERSONAL INFO -->
-              <div class="form-step active" id="step-1">
-                <div class="form-section-title">Personal Information</div>
-                <div class="form-section-sub">Tell us a bit about yourself so we can process your application.</div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">First Name *</label>
-                    <input class="form-control" id="s1-fname" placeholder="e.g. Maria">
-                    <div class="form-error" id="e-s1-fname">First name is required</div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Last Name *</label>
-                    <input class="form-control" id="s1-lname" placeholder="e.g. Reyes">
-                    <div class="form-error" id="e-s1-lname">Last name is required</div>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">Email Address *</label>
-                    <input class="form-control" id="s1-email" type="email" placeholder="maria@email.com">
-                    <div class="form-error" id="e-s1-email">Valid email is required</div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Phone Number *</label>
-                    <input class="form-control" id="s1-phone" placeholder="09XX-XXX-XXXX" maxlength="13">
-                    <div class="form-error" id="e-s1-phone">Valid phone number required</div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Complete Address *</label>
-                  <input class="form-control" id="s1-addr" placeholder="House/Unit No., Street, Barangay">
-                  <div class="form-error" id="e-s1-addr">Address is required</div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">City *</label>
-                    <input class="form-control" id="s1-city" placeholder="e.g. Davao City">
-                    <div class="form-error" id="e-s1-city">City is required</div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Employment Status *</label>
-                    <select class="form-select" id="s1-employ">
-                      <option value="">Select…</option>
-                      <option>Employed</option>
-                      <option>Self-Employed</option>
-                      <option>Student</option>
-                      <option>OFW</option>
-                      <option>Retired</option>
-                    </select>
-                    <div class="form-error" id="e-s1-employ">Please select employment status</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- STEP 2: ACCOUNT CREATION -->
-              <div class="form-step" id="step-2">
-                <div class="form-section-title">Create Your Account</div>
-                <div class="form-section-sub">Set up your EasyHome account to track your application and payments.</div>
-                <div class="form-group">
-                  <label class="form-label">Username *</label>
-                  <input class="form-control" id="s2-user" placeholder="Choose a username">
-                  <div class="form-error" id="e-s2-user">Username is required (min 4 characters)</div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Password *</label>
-                  <div class="pw-wrapper">
-                    <input class="form-control" id="s2-pw" type="password" placeholder="Create a strong password"
-                      oninput="checkPwStrength(this.value)">
-                    <button type="button" class="pw-toggle" title="Show/hide password">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                  </div>
-                  <div class="pw-strength">
-                    <div class="pw-bar" id="pw-b1"></div>
-                    <div class="pw-bar" id="pw-b2"></div>
-                    <div class="pw-bar" id="pw-b3"></div>
-                    <div class="pw-bar" id="pw-b4"></div>
-                  </div>
-                  <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="pw-label">Min 8 characters with
-                    uppercase, number & symbol</div>
-                  <div class="form-error" id="e-s2-pw">Password must be at least 8 characters</div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Confirm Password *</label>
-                  <div class="pw-wrapper">
-                    <input class="form-control" id="s2-pwc" type="password" placeholder="Repeat your password">
-                    <button type="button" class="pw-toggle" title="Show/hide password">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                  </div>
-                  <div class="form-error" id="e-s2-pwc">Passwords do not match</div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label"
-                    style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:14px;color:var(--text);">
-                    <input type="checkbox" id="s2-terms" style="margin-top:2px;accent-color:var(--g600);">
-                    I agree to the <a href="#" style="color:var(--g600);">Terms of Service</a> and <a href="#"
-                      style="color:var(--g600);">Privacy Policy</a>
-                  </label>
-                  <div class="form-error" id="e-s2-terms">You must accept the terms</div>
-                </div>
-              </div>
-
-              <!-- STEP 3: APPLIANCE SELECTION -->
-              <div class="form-step" id="step-3">
-                <div class="form-section-title">Choose Your Appliance & Plan</div>
-                <div class="form-section-sub">Select the appliance and payment plan that works best for you.</div>
-                <div class="form-group">
-                  <label class="form-label">Appliance *</label>
-                  <select class="form-select" id="s3-item" onchange="updatePlanPreview()">
-                    <option value="">Select an appliance…</option>
-                    <option value="3500|Front Load Washing Machine">Washing Machine — ₱3,500</option>
-                    <option value="4200|Double Door Refrigerator">Refrigerator — ₱4,200</option>
-                    <option value="2200|Split-Type Air Conditioner">Air Conditioner — ₱2,200</option>
-                    <option value="1800|55" 4K Smart TV">Smart TV — ₱1,800</option>
-                    <option value="800|Electric Stand Fan">Electric Fan — ₱800</option>
-                    <option value="1100|Microwave Oven">Microwave Oven — ₱1,100</option>
-                    <option value="5500|Side-by-Side Refrigerator">Side-by-Side Ref — ₱5,500</option>
-                    <option value="6800|Inverter Air Conditioner 2HP">Inverter Aircon — ₱6,800</option>
-                  </select>
-                  <div class="form-error" id="e-s3-item">Please select an appliance</div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Payment Plan *</label>
-                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-                    <label class="plan-opt-label" onclick="setPlan(3)">
-                      <input type="radio" name="plan" value="3" style="accent-color:var(--g600);">
-                      <span>3 months</span>
-                    </label>
-                    <label class="plan-opt-label selected" onclick="setPlan(6)">
-                      <input type="radio" name="plan" value="6" checked style="accent-color:var(--g600);">
-                      <span>6 months</span>
-                    </label>
-                    <label class="plan-opt-label" onclick="setPlan(12)">
-                      <input type="radio" name="plan" value="12" style="accent-color:var(--g600);">
-                      <span>12 months</span>
-                    </label>
-                    <label class="plan-opt-label" onclick="setPlan(18)">
-                      <input type="radio" name="plan" value="18" style="accent-color:var(--g600);">
-                      <span>18 months</span>
-                    </label>
-                    <label class="plan-opt-label" onclick="setPlan(24)">
-                      <input type="radio" name="plan" value="24" style="accent-color:var(--g600);">
-                      <span>24 months</span>
-                    </label>
-                    <label class="plan-opt-label" onclick="setPlan(36)">
-                      <input type="radio" name="plan" value="36" style="accent-color:var(--g600);">
-                      <span>36 months</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Payment Method *</label>
-                  <select class="form-select" id="s3-payment">
-                    <option value="">Select payment method…</option>
-                    <option>GCash</option>
-                    <option>BDO Online</option>
-                    <option>Metrobank Online</option>
-                    <option>BPI Express</option>
-                    <option>Over-the-Counter (7-Eleven)</option>
-                    <option>LBC Payment</option>
-                  </select>
-                  <div class="form-error" id="e-s3-payment">Please select a payment method</div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Preferred Delivery Date</label>
-                  <input class="form-control" id="s3-date" type="date">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Notes / Special Instructions</label>
-                  <textarea class="form-control" id="s3-notes" rows="3"
-                    placeholder="Any special delivery or installation instructions…"></textarea>
-                </div>
-              </div>
-
-              <!-- STEP 4: REVIEW & CONFIRM -->
-              <div class="form-step" id="step-4">
-                <div class="form-section-title">Review Your Application</div>
-                <div class="form-section-sub">Please review everything before submitting your application.</div>
-                <div id="review-content"></div>
-                <div class="alert alert-info" style="margin-top:20px;">
-                  <span>ℹ</span>
-                  <span>By submitting, you agree that EasyHome may contact you for verification purposes via phone or
-                    email.</span>
-                </div>
-              </div>
-
-              <!-- SUCCESS -->
-              <div class="form-step" id="step-success">
-                <div class="success-screen">
-                  <div class="success-icon">🎉</div>
-                  <h2 class="display-3" style="color:var(--g900);margin-bottom:8px;">Application Submitted!</h2>
-                  <p style="color:var(--muted);margin-bottom:24px;font-size:16px;">We've received your application and
-                    will contact you within 2–4 hours for verification and approval.</p>
-                  <div
-                    style="background:var(--g50);border-radius:var(--radius-md);padding:20px;margin-bottom:28px;text-align:left;">
-                    <div style="font-size:13px;color:var(--g600);font-weight:500;margin-bottom:4px;">Application
-                      Reference</div>
-                    <div style="font-size:22px;font-family:'Fraunces',serif;color:var(--g800);" id="app-ref-num">
-                      EH-2025-00001</div>
-                  </div>
-                  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                    <a class="btn btn-primary" href="dashboard.html">Track Application →</a>
-                    <a class="btn btn-secondary" href="catalog.html">Browse More</a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- NAV BUTTONS -->
-              <div id="form-nav-btns" style="display:flex;justify-content:space-between;margin-top:28px;gap:10px;">
-                <button class="btn btn-secondary" id="btn-back" onclick="prevStep()" style="display:none;">←
-                  Back</button>
-                <div style="flex:1;"></div>
-                <button class="btn btn-primary" id="btn-next" onclick="nextStep()">Continue →</button>
-              </div>
-            </div>
+  <div class="apply-page">
+    <nav id="main-nav">
+      <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+          <div class="nav-logo-mark">🏠</div><span>Easy<span style="color:var(--g400)">Home</span></span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="catalog.html">Products</a>
+          <a class="nav-link" href="index.html#howitworks">How It Works</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
+        </div>
+        <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
+          <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+            <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
           </div>
-
-          <!-- SIDEBAR -->
-          <div class="apply-sidebar" data-reveal>
-            <div class="plan-card">
-              <div class="plan-card-header">
-                <div
-                  style="font-size:12px;color:var(--g600);font-weight:600;text-transform:uppercase;letter-spacing:.08em;">
-                  Plan Summary</div>
-              </div>
-              <div class="plan-card-body">
-                <div class="plan-item"><span class="plan-item-label">Appliance</span><span class="plan-item-val"
-                    id="sum-item">Not selected</span></div>
-                <div class="plan-item"><span class="plan-item-label">Price</span><span class="plan-item-val"
-                    id="sum-price">—</span></div>
-                <div class="plan-item"><span class="plan-item-label">Term</span><span class="plan-item-val"
-                    id="sum-term">6 months</span></div>
-                <div class="plan-item"><span class="plan-item-label">Monthly Payment</span><span class="plan-item-val"
-                    id="sum-monthly" style="color:var(--g600);font-size:18px;font-family:'Fraunces',serif;">—</span>
-                </div>
-                <div class="plan-item"><span class="plan-item-label">Total Amount</span><span class="plan-item-val"
-                    id="sum-total">—</span></div>
-              </div>
-            </div>
-            <div class="plan-card">
-              <div class="plan-card-body">
-                <div style="font-size:13px;font-weight:600;color:var(--g900);margin-bottom:12px;">What's Included</div>
-                <div style="display:flex;flex-direction:column;gap:8px;">
-                  <div style="display:flex;gap:8px;font-size:13px;"><span>✅</span><span>Free delivery to your
-                      door</span></div>
-                  <div style="display:flex;gap:8px;font-size:13px;"><span>✅</span><span>Professional installation</span>
-                  </div>
-                  <div style="display:flex;gap:8px;font-size:13px;"><span>✅</span><span>1-year service warranty</span>
-                  </div>
-                  <div style="display:flex;gap:8px;font-size:13px;"><span>✅</span><span>Maintenance support
-                      access</span></div>
-                  <div style="display:flex;gap:8px;font-size:13px;"><span>✅</span><span>Flexible payment schedule</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="plan-card">
-              <div class="plan-card-body">
-                <div style="font-size:13px;font-weight:600;color:var(--g900);margin-bottom:8px;">Need Help?</div>
-                <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Our team is ready to assist you.</p>
-                <div style="font-size:14px;color:var(--g600);">📞 0917-EASYHOME</div>
-                <div style="font-size:14px;color:var(--g600);margin-top:4px;">✉️ apply@easyhome.ph</div>
-              </div>
-            </div>
-          </div>
+          <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+          <a class="btn btn-primary btn-sm" href="apply.html" style="margin-left:12px;">Apply Now</a>
+          <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
       </div>
-    </section>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
+    </nav>
+    <div class="settings-panel" id="settings-panel">
+      <div class="settings-panel-title">⚙️ Settings</div>
+      <div class="settings-row">
         <div>
-          <div class="footer-logo">🏠 EasyHome Appliances</div>
-          <p class="footer-tagline">Making modern living accessible for every Filipino.</p>
+          <div class="settings-label">🌙 Dark Mode</div>
+        </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
+            onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+      </div>
+      <div class="settings-row" style="border:none;padding-bottom:0;"><a href="login.html"
+          style="font-size:13px;color:var(--g600);font-weight:500;">Login →</a></div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="catalog.html">Products</a>
+      <a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <div class="mobile-menu-divider"></div><a class="nav-link" href="login.html">Login</a>
+    </div>
+
+    <div class="apply-header">
+      <div class="container">
+        <div class="breadcrumb" style="margin-bottom:14px;">
+          <a href="index.html">Home</a><span class="breadcrumb-sep">›</span>
+          <a href="catalog.html">Products</a><span class="breadcrumb-sep">›</span>
+          <span class="breadcrumb-current">Application Form</span>
         </div>
-        <div class="footer-col">
-          <h5>Products</h5><a href="catalog.html">All Appliances</a>
+        <h1 class="display-3" style="color:var(--text);margin-bottom:6px;">Application Form</h1>
+        <p style="font-size:15px;color:var(--muted);">Fill out the form below to start your installment application.</p>
+      </div>
+    </div>
+
+    <div class="section" style="padding-top:32px;">
+      <div class="container">
+        <div class="product-summary-box" id="product-summary" style="display:none;">
+          <img class="product-summary-img" id="ps-img" src="" alt="">
+          <div>
+            <div style="font-size:15px;font-weight:500;color:var(--text);" id="ps-name"></div>
+            <div style="font-size:13px;color:var(--muted);margin-top:2px;">Monthly Payment: <strong id="ps-monthly"
+                style="color:var(--g600);"></strong></div>
+            <div style="font-size:13px;color:var(--muted);">Payment Term: <span id="ps-term"></span></div>
+          </div>
         </div>
-        <div class="footer-col">
-          <h5>Company</h5><a href="about.html">About Us</a>
+
+        <div class="apply-layout">
+          <!-- Personal Info -->
+          <div class="apply-section">
+            <div class="apply-section-header">
+              <div class="apply-section-num">1</div>
+              <div class="apply-section-title">Personal Information</div>
+            </div>
+            <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control" id="a-name"
+                type="text" placeholder="Enter your full name">
+              <div class="form-error" id="a-name-err"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Date of Birth *</label><input class="form-control"
+                id="a-dob" type="date">
+              <div class="form-error" id="a-dob-err"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Civil Status *</label><select class="form-select"
+                id="a-civil">
+                <option value="">Select civil status</option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Widowed</option>
+                <option>Separated</option>
+              </select>
+              <div class="form-error" id="a-civil-err"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Email Address</label><input class="form-control"
+                id="a-email" type="email" placeholder="Enter your email address"></div>
+            <div class="form-group"><label class="form-label">Mobile Number *</label><input class="form-control"
+                id="a-phone" type="tel" placeholder="09XXXXXXXXX">
+              <div class="form-error" id="a-phone-err"></div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label class="form-label">Government ID *</label><select class="form-select"
+                  id="a-idtype">
+                  <option value="">Select ID type</option>
+                  <option>PhilSys ID</option>
+                  <option>Driver's License</option>
+                  <option>SSS ID</option>
+                  <option>GSIS ID</option>
+                  <option>Passport</option>
+                  <option>Voter's ID</option>
+                </select>
+                <div class="form-error" id="a-idtype-err"></div>
+              </div>
+              <div class="form-group"><label class="form-label">ID Number *</label><input class="form-control"
+                  id="a-idnum" type="text" placeholder="Enter ID number">
+                <div class="form-error" id="a-idnum-err"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="apply-section">
+            <div class="apply-section-header">
+              <div class="apply-section-num">2</div>
+              <div class="apply-section-title">Address Information</div>
+            </div>
+            <div class="form-group"><label class="form-label">House / Unit / Building *</label><input
+                class="form-control" id="a-house" type="text" placeholder="House number, unit, or building name">
+              <div class="form-error" id="a-house-err"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Street *</label><input class="form-control" id="a-street"
+                type="text" placeholder="Enter street name">
+              <div class="form-error" id="a-street-err"></div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label class="form-label">Barangay *</label><input class="form-control"
+                  id="a-brgy" type="text" placeholder="Barangay">
+                <div class="form-error" id="a-brgy-err"></div>
+              </div>
+              <div class="form-group"><label class="form-label">City / Municipality *</label><input class="form-control"
+                  id="a-city" type="text" placeholder="City / Municipality">
+                <div class="form-error" id="a-city-err"></div>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label class="form-label">Province *</label><select class="form-select"
+                  id="a-province">
+                  <option value="">Select province</option>
+                  <option>Metro Manila</option>
+                  <option>Davao del Sur</option>
+                  <option>Cebu</option>
+                  <option>Laguna</option>
+                  <option>Cavite</option>
+                  <option>Rizal</option>
+                  <option>Bulacan</option>
+                  <option>Other</option>
+                </select>
+                <div class="form-error" id="a-province-err"></div>
+              </div>
+              <div class="form-group"><label class="form-label">ZIP Code *</label><input class="form-control" id="a-zip"
+                  type="text" placeholder="ZIP code" maxlength="4">
+                <div class="form-error" id="a-zip-err"></div>
+              </div>
+            </div>
+            <div class="form-group"><label class="form-label">Length of Stay *</label><select class="form-select"
+                id="a-stay">
+                <option value="">Select length of stay</option>
+                <option>Less than 1 year</option>
+                <option>1–2 years</option>
+                <option>3–5 years</option>
+                <option>More than 5 years</option>
+              </select>
+              <div class="form-error" id="a-stay-err"></div>
+            </div>
+          </div>
+
+          <!-- Payment & Employment -->
+          <div class="apply-section">
+            <div class="apply-section-header">
+              <div class="apply-section-num">3</div>
+              <div class="apply-section-title">Payment &amp; Employment</div>
+            </div>
+            <div class="form-group"><label class="form-label">Source of Income *</label><select class="form-select"
+                id="a-income-src">
+                <option value="">Select source of income</option>
+                <option>Employed (Private)</option>
+                <option>Employed (Government)</option>
+                <option>Self-Employed</option>
+                <option>Business Owner</option>
+                <option>OFW / Remittance</option>
+                <option>Pension / Retirement</option>
+              </select>
+              <div class="form-error" id="a-income-src-err"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Employment Status *</label><select class="form-select"
+                id="a-emp">
+                <option value="">Select employment status</option>
+                <option>Regularly Employed</option>
+                <option>Contractual</option>
+                <option>Self-Employed</option>
+                <option>Freelancer</option>
+                <option>Retired</option>
+              </select>
+              <div class="form-error" id="a-emp-err"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Monthly Income *</label>
+              <div style="position:relative;"><span
+                  style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;">₱</span><input
+                  class="form-control" id="a-income" type="number" placeholder="0.00" style="padding-left:28px;"></div>
+              <div class="form-error" id="a-income-err"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Payment Method *</label>
+              <div class="pay-method-grid">
+                <div class="pay-method active" id="pm-gcash" onclick="setPM('gcash')">
+                  <div class="pay-method-icon">💚</div>
+                  <div class="pay-method-name">GCash</div>
+                  <div class="pay-method-desc">Pay easily via GCash</div>
+                </div>
+                <div class="pay-method" id="pm-bank" onclick="setPM('bank')">
+                  <div class="pay-method-icon">🏦</div>
+                  <div class="pay-method-name">Bank Transfer</div>
+                  <div class="pay-method-desc">Major bank accounts</div>
+                </div>
+              </div>
+            </div>
+            <div class="apply-section-header" style="margin-top:20px;margin-bottom:16px;">
+              <div class="apply-section-num" style="background:var(--b600);">4</div>
+              <div class="apply-section-title">Additional Information</div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label class="form-label">Reference Name (Optional)</label><input
+                  class="form-control" id="a-ref-name" type="text" placeholder="Reference name"></div>
+              <div class="form-group"><label class="form-label">Reference Contact (Optional)</label><input
+                  class="form-control" id="a-ref-phone" type="tel" placeholder="09XXXXXXXXX"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Message / Notes (Optional)</label><textarea
+                class="form-control" id="a-notes" rows="3" placeholder="Any additional information..."></textarea></div>
+          </div>
         </div>
-        <div class="footer-col">
-          <h5>Support</h5><a href="dashboard.html">Dashboard</a>
+
+        <div class="apply-actions">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);flex:1;">
+            <input type="checkbox" id="a-certify" style="accent-color:var(--g600);width:15px;height:15px;">
+            <label for="a-certify">I hereby certify that all information provided is true and correct to the best of my
+              knowledge.</label>
+          </div>
+          <a href="catalog.html" class="btn btn-secondary">← Back</a>
+          <button class="btn btn-primary" onclick="submitApplication()" id="submit-btn">
+            🔒 Submit Application
+          </button>
+        </div>
+        <div style="text-align:right;font-size:12px;color:var(--muted);margin-top:8px;">🔒 Your information is secure
+          and will be used for application processing only.</div>
+        <div class="form-error" id="a-certify-err" style="text-align:right;margin-top:4px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS OVERLAY -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2 style="font-size:28px;color:var(--g900);margin-bottom:8px;">Thank You!</h2>
+      <h3 style="font-size:18px;font-weight:400;color:var(--text);margin-bottom:16px;">Your application has been
+        submitted!</h3>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6;">We have received your application
+        and our team will review it shortly. You will be contacted once your application is approved.</p>
+      <div
+        style="background:var(--gray1);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">📋</span>
+        <div>
+          <div style="font-size:12px;color:var(--muted);">Application Reference Number</div>
+          <div style="font-size:20px;font-weight:600;color:var(--g600);" id="ref-number">EH-2025-000001</div>
         </div>
       </div>
-      <div class="footer-bottom"><span>© 2025 EasyHome Appliances</span><span>Aniñon · Baclig · Tagalog</span></div>
+      <a href="index.html" class="btn btn-primary" style="width:100%;justify-content:center;">🏠 Back to Home</a>
+      <a href="dashboard.html" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:10px;">View
+        My Dashboard</a>
     </div>
-  </footer>
+  </div>
 
   <script src="shared.js"></script>
   <script>
-    let currentStep = 1;
-    let selectedPlanMonths = 6;
-    let selectedItemPrice = 0;
-    let selectedItemName = '';
+    // Load product from URL params
+    const PRODUCTS_DB = [
+      { id: 1, name: 'Panasonic 2-Door Refrigerator', model: 'NR-BB221V', price: 17990, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=200&q=80', terms: [{ m: 12, mo: 1450 }, { m: 18, mo: 1090 }, { m: 24, mo: 890 }] },
+      { id: 2, name: 'LG Front Load Washing Machine', model: '8.5kg', price: 24500, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=200&q=80', terms: [{ m: 12, mo: 1350 }, { m: 18, mo: 1020 }, { m: 24, mo: 800 }] },
+      { id: 3, name: 'Samsung 43" Smart TV', model: '4K UHD', price: 18000, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&q=80', terms: [{ m: 6, mo: 3090 }, { m: 12, mo: 1200 }, { m: 18, mo: 920 }] },
+      { id: 5, name: 'Carrier Inverter Aircon', model: '1.0 HP', price: 22000, img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=200&q=80', terms: [{ m: 12, mo: 1600 }, { m: 18, mo: 1200 }, { m: 24, mo: 960 }] },
+    ];
 
-    // ── PLAN OPTION STYLES ──────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.plan-opt-label').forEach(l => {
-        Object.assign(l.style, {
-          display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px',
-          border: '1.5px solid var(--border-md)', borderRadius: 'var(--radius-sm)',
-          cursor: 'pointer', fontSize: '13px', fontWeight: '500', transition: 'all var(--transition)',
-          background: 'white'
-        });
-      });
-      document.querySelector('.plan-opt-label.selected').style.cssText += 'background:var(--g50);border-color:var(--g400);color:var(--g800);';
-      // Set min date for delivery
-      const d = document.getElementById('s3-date');
-      if (d) {
-        const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
-        d.min = tomorrow.toISOString().split('T')[0];
-      }
-    });
+    const params = new URLSearchParams(location.search);
+    const pid = parseInt(params.get('id'));
+    const term = parseInt(params.get('term')) || 12;
+    const p = PRODUCTS_DB.find(x => x.id === pid);
 
-    function setPlan(m) {
-      selectedPlanMonths = m;
-      document.querySelectorAll('.plan-opt-label').forEach(l => {
-        const val = l.querySelector('input').value;
-        Object.assign(l.style, parseInt(val) === m
-          ? { background: 'var(--g50)', borderColor: 'var(--g400)', color: 'var(--g800)' }
-          : { background: 'white', borderColor: 'var(--border-md)', color: 'var(--text)' }
-        );
-      });
-      updatePlanPreview();
+    if (p) {
+      document.getElementById('bc-product').textContent = p.name;
+      const t = p.terms.find(x => x.m === term) || p.terms[0];
+      const psBox = document.getElementById('product-summary');
+      psBox.style.display = 'flex';
+      document.getElementById('ps-img').src = p.img;
+      document.getElementById('ps-name').textContent = p.name + ' · ' + p.model;
+      document.getElementById('ps-monthly').textContent = '₱' + t.mo.toLocaleString() + '/month';
+      document.getElementById('ps-term').textContent = t.m + ' months';
     }
 
-    function updatePlanPreview() {
-      const sel = document.getElementById('s3-item');
-      if (!sel.value) return;
-      const [price, name] = sel.value.split('|');
-      selectedItemPrice = parseFloat(price);
-      selectedItemName = name;
-      const total = Math.round(selectedItemPrice * 1.06);
-      const monthly = Math.round(total / selectedPlanMonths);
-      document.getElementById('sum-item').textContent = name;
-      document.getElementById('sum-price').textContent = '₱' + selectedItemPrice.toLocaleString();
-      document.getElementById('sum-term').textContent = selectedPlanMonths + ' months';
-      document.getElementById('sum-monthly').textContent = '₱' + monthly.toLocaleString() + '/mo';
-      document.getElementById('sum-total').textContent = '₱' + total.toLocaleString();
-    }
-
-    function checkPwStrength(val) {
-      const bars = [1, 2, 3, 4].map(i => document.getElementById('pw-b' + i));
-      const lbl = document.getElementById('pw-label');
-      bars.forEach(b => { b.className = 'pw-bar'; });
-      if (!val) { lbl.textContent = 'Min 8 characters with uppercase, number & symbol'; return; }
-      let score = 0;
-      if (val.length >= 8) score++;
-      if (/[A-Z]/.test(val)) score++;
-      if (/[0-9]/.test(val)) score++;
-      if (/[^A-Za-z0-9]/.test(val)) score++;
-      const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
-      const labels = { weak: 'Weak password', medium: 'Medium strength', strong: 'Strong password' };
-      for (let i = 0; i < score; i++) bars[i].classList.add(cls);
-      lbl.textContent = labels[cls] || '';
-      lbl.style.color = cls === 'weak' ? 'var(--r600)' : cls === 'medium' ? 'var(--a600)' : 'var(--g600)';
-    }
-
-    function validate(step) {
-      const req = (id, test, errId) => {
-        const ok = test(document.getElementById(id));
-        document.getElementById(id).classList.toggle('error', !ok);
-        document.getElementById(errId).classList.toggle('show', !ok);
-        return ok;
-      };
-      if (step === 1) {
-        const v = [
-          req('s1-fname', el => el.value.trim().length > 0, 'e-s1-fname'),
-          req('s1-lname', el => el.value.trim().length > 0, 'e-s1-lname'),
-          req('s1-email', el => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value), 'e-s1-email'),
-          req('s1-phone', el => /^09\d{9}$/.test(el.value.replace(/-/g, '')), 'e-s1-phone'),
-          req('s1-addr', el => el.value.trim().length > 4, 'e-s1-addr'),
-          req('s1-city', el => el.value.trim().length > 1, 'e-s1-city'),
-          req('s1-employ', el => el.value !== '', 'e-s1-employ'),
-        ];
-        return v.every(Boolean);
-      }
-      if (step === 2) {
-        const pw = document.getElementById('s2-pw').value;
-        const pwc = document.getElementById('s2-pwc').value;
-        const terms = document.getElementById('s2-terms').checked;
-        const v = [
-          req('s2-user', el => el.value.trim().length >= 4, 'e-s2-user'),
-          req('s2-pw', el => el.value.length >= 8, 'e-s2-pw'),
-          (() => {
-            const ok = pw === pwc && pwc.length > 0;
-            document.getElementById('s2-pwc').classList.toggle('error', !ok);
-            document.getElementById('e-s2-pwc').classList.toggle('show', !ok);
-            return ok;
-          })(),
-        ];
-        if (!terms) {
-          document.getElementById('e-s2-terms').classList.add('show');
-          v.push(false);
-        } else {
-          document.getElementById('e-s2-terms').classList.remove('show');
-        }
-        return v.every(Boolean);
-      }
-      if (step === 3) {
-        const v = [
-          req('s3-item', el => el.value !== '', 'e-s3-item'),
-          req('s3-payment', el => el.value !== '', 'e-s3-payment'),
-        ];
-        return v.every(Boolean);
-      }
-      return true;
-    }
-
-    function buildReview() {
-      const get = id => document.getElementById(id)?.value || '—';
-      return `
-    <div style="display:flex;flex-direction:column;gap:16px;">
-      <div class="card" style="border-radius:var(--radius-md);overflow:hidden;">
-        <div style="padding:12px 16px;background:var(--gray1);font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;">Personal Information</div>
-        <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:14px;">
-          <div><span style="color:var(--muted)">Name: </span><strong>${get('s1-fname')} ${get('s1-lname')}</strong></div>
-          <div><span style="color:var(--muted)">Email: </span><strong>${get('s1-email')}</strong></div>
-          <div><span style="color:var(--muted)">Phone: </span><strong>${get('s1-phone')}</strong></div>
-          <div><span style="color:var(--muted)">City: </span><strong>${get('s1-city')}</strong></div>
-          <div style="grid-column:1/-1"><span style="color:var(--muted)">Address: </span><strong>${get('s1-addr')}</strong></div>
-          <div><span style="color:var(--muted)">Employment: </span><strong>${get('s1-employ')}</strong></div>
-        </div>
-      </div>
-      <div class="card" style="border-radius:var(--radius-md);overflow:hidden;">
-        <div style="padding:12px 16px;background:var(--g50);font-size:12px;font-weight:600;color:var(--g600);letter-spacing:.06em;text-transform:uppercase;">Installment Plan</div>
-        <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:14px;">
-          <div><span style="color:var(--muted)">Appliance: </span><strong>${selectedItemName || '—'}</strong></div>
-          <div><span style="color:var(--muted)">Price: </span><strong>₱${selectedItemPrice ? selectedItemPrice.toLocaleString() : '—'}</strong></div>
-          <div><span style="color:var(--muted)">Term: </span><strong>${selectedPlanMonths} months</strong></div>
-          <div><span style="color:var(--muted)">Monthly: </span><strong style="color:var(--g600);">₱${selectedItemPrice ? Math.round(selectedItemPrice * 1.06 / selectedPlanMonths).toLocaleString() : '—'}</strong></div>
-          <div><span style="color:var(--muted)">Payment: </span><strong>${get('s3-payment')}</strong></div>
-          <div><span style="color:var(--muted)">Delivery: </span><strong>${get('s3-date') || 'ASAP'}</strong></div>
-        </div>
-      </div>
-    </div>`;
-    }
-
-    function nextStep() {
-      if (currentStep < 4 && !validate(currentStep)) {
-        Toast.error('Please fix the errors above before continuing.');
-        return;
-      }
-      if (currentStep === 4) {
-        submitApplication();
-        return;
-      }
-      if (currentStep === 3) {
-        document.getElementById('review-content').innerHTML = buildReview();
-        document.getElementById('btn-next').textContent = '🚀 Submit Application';
-      }
-      goToStep(currentStep + 1);
-    }
-
-    function prevStep() {
-      if (currentStep > 1) {
-        goToStep(currentStep - 1);
-        if (currentStep < 4) document.getElementById('btn-next').textContent = 'Continue →';
-      }
-    }
-
-    function goToStep(n) {
-      document.getElementById('step-' + currentStep).classList.remove('active');
-      currentStep = n;
-      document.getElementById('step-' + n).classList.add('active');
-      // Update circles
-      for (let i = 1; i <= 4; i++) {
-        const c = document.getElementById('sc-' + i);
-        if (i < n) { c.className = 'step-circle done'; c.textContent = '✓'; }
-        else if (i === n) { c.className = 'step-circle active'; c.textContent = i; }
-        else { c.className = 'step-circle'; c.textContent = i; }
-      }
-      for (let i = 1; i <= 3; i++) {
-        const l = document.getElementById('sl-' + i);
-        if (l) l.className = 'step-line' + (i < n ? ' done' : '');
-      }
-      document.getElementById('btn-back').style.display = n > 1 ? 'inline-flex' : 'none';
+    let payMethod = 'gcash';
+    function setPM(m) {
+      payMethod = m;
+      document.getElementById('pm-gcash').classList.toggle('active', m === 'gcash');
+      document.getElementById('pm-bank').classList.toggle('active', m === 'bank');
     }
 
     function submitApplication() {
-      const btn = document.getElementById('btn-next');
-      btn.innerHTML = '<span class="spinner"></span> Submitting…';
+      let valid = true;
+      const required = [
+        ['a-name', 'Full name is required.'],
+        ['a-dob', 'Date of birth is required.'],
+        ['a-civil', 'Civil status is required.'],
+        ['a-phone', 'Mobile number is required.'],
+        ['a-idtype', 'Government ID type is required.'],
+        ['a-idnum', 'ID number is required.'],
+        ['a-house', 'House/Unit is required.'],
+        ['a-street', 'Street is required.'],
+        ['a-brgy', 'Barangay is required.'],
+        ['a-city', 'City/Municipality is required.'],
+        ['a-province', 'Province is required.'],
+        ['a-zip', 'ZIP code is required.'],
+        ['a-stay', 'Length of stay is required.'],
+        ['a-income-src', 'Source of income is required.'],
+        ['a-emp', 'Employment status is required.'],
+        ['a-income', 'Monthly income is required.'],
+      ];
+
+      required.forEach(([id, msg]) => {
+        clearFieldError(id);
+        const el = document.getElementById(id);
+        if (el && !el.value.trim()) { showFieldError(id, msg); valid = false; }
+      });
+
+      const phone = document.getElementById('a-phone').value;
+      if (phone && !/^(09|\+639)\d{9}$/.test(phone)) { showFieldError('a-phone', 'Enter a valid PH mobile number.'); valid = false; }
+
+      if (!document.getElementById('a-certify').checked) {
+        document.getElementById('a-certify-err').textContent = 'You must certify the information above.';
+        document.getElementById('a-certify-err').classList.add('show');
+        valid = false;
+      } else {
+        document.getElementById('a-certify-err').classList.remove('show');
+      }
+
+      if (!valid) { Toast.error('Please fix the errors above.'); return; }
+
+      const btn = document.getElementById('submit-btn');
+      btn.innerHTML = '<span class="spinner"></span> Submitting...';
       btn.disabled = true;
+
       setTimeout(() => {
-        const ref = 'EH-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-5);
-        document.getElementById('app-ref-num').textContent = ref;
-        // Save to dashboard
+        // Save application to localStorage
         const apps = Store.get('applications', []);
-        apps.unshift({
-          ref, name: selectedItemName, price: selectedItemPrice,
-          monthly: Math.round(selectedItemPrice * 1.06 / selectedPlanMonths),
-          months: selectedPlanMonths, status: 'Pending',
-          date: new Date().toLocaleDateString('en-PH'),
-          applicant: document.getElementById('s1-fname').value + ' ' + document.getElementById('s1-lname').value,
+        const refNum = 'EH-2025-' + String(apps.length + 1).padStart(6, '0');
+        apps.push({
+          ref: refNum,
+          productId: pid || null,
+          productName: p ? p.name : 'General Application',
+          payMethod,
+          status: 'In Review',
+          submittedAt: new Date().toISOString(),
+          applicant: document.getElementById('a-name').value,
+          phone: document.getElementById('a-phone').value,
         });
         Store.set('applications', apps);
-        document.getElementById('step-4').classList.remove('active');
-        document.getElementById('step-success').classList.add('active');
-        document.getElementById('form-nav-btns').style.display = 'none';
-        Toast.success('Application submitted successfully!');
-      }, 2000);
-    }
 
-    document.getElementById('hamburger').addEventListener('click', function () {
-      this.classList.toggle('open');
-      const m = document.getElementById('mobile-menu');
-      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
-      m.classList.toggle('open');
-    });
+        document.getElementById('ref-number').textContent = refNum;
+        document.getElementById('success-overlay').classList.add('show');
+      }, 1200);
+    }
   </script>
-  <style>
-    .plan-opt-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border: 1.5px solid var(--border-md);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all var(--transition);
-      background: white;
-    }
-
-    .plan-opt-label.selected {
-      background: var(--g50);
-      border-color: var(--g400);
-      color: var(--g800);
-    }
-
-    .plan-opt-label:hover {
-      border-color: var(--g200);
-    }
-  </style>
 </body>
 
 </html>
