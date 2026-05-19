@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – EasyHome</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh
+    }
+
+    .auth-left {
+      background: linear-gradient(145deg, #edf6e0 0%, #d4edc0 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden
+    }
+
+    [data-theme="dark"] .auth-left {
+      background: linear-gradient(145deg, #0d1f06 0%, #112808 100%)
+    }
+
+    .auth-left-content {
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+      text-align: center
+    }
+
+    .auth-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      color: var(--g800);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px
+    }
+
+    [data-theme="dark"] .auth-logo {
+      color: var(--g900)
+    }
+
+    .auth-tagline {
+      font-size: clamp(24px, 3vw, 36px);
+      color: var(--g900);
+      margin-bottom: 16px
+    }
+
+    [data-theme="dark"] .auth-tagline {
+      color: var(--g900)
+    }
+
+    .auth-sub {
+      font-size: 15px;
+      color: var(--g600);
+      line-height: 1.7;
+      margin-bottom: 32px
+    }
+
+    .auth-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left
+    }
+
+    .auth-feat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--g700);
+      background: rgba(255, 255, 255, .6);
+      border-radius: 10px;
+      padding: 12px 16px
+    }
+
+    [data-theme="dark"] .auth-feat {
+      background: rgba(0, 0, 0, .2);
+      color: var(--g900)
+    }
+
+    .auth-feat-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--g600);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 15px
+    }
+
+    .auth-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      background: var(--bg-page)
+    }
+
+    .auth-form-box {
+      width: 100%;
+      max-width: 420px
+    }
+
+    .auth-form-title {
+      font-size: clamp(26px, 3vw, 34px);
+      color: var(--text);
+      margin-bottom: 6px
+    }
+
+    .auth-form-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      font-size: 13px;
+      color: var(--hint)
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border)
+    }
+
+    .social-btn {
+      width: 100%;
+      padding: 11px;
+      border: 1.5px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px
+    }
+
+    .social-btn:hover {
+      border-color: var(--g200);
+      background: var(--g50)
+    }
+
+    .auth-footer-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    .auth-footer-link a {
+      color: var(--g600);
+      font-weight: 500
+    }
+
+    .auth-bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(59, 109, 17, .07)
+    }
+
+    .admin-hint {
+      background: var(--b50);
+      border: 1px solid var(--b400)22;
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 12px;
+      color: var(--b600);
+      margin-bottom: 20px;
+      line-height: 1.6
+    }
+
+    @media(max-width:768px) {
+      .auth-layout {
+        grid-template-columns: 1fr
+      }
+
+      .auth-left {
+        display: none
+      }
+
+      .auth-right {
+        padding: 40px 24px;
+        min-height: 100vh
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-layout">
+    <div class="auth-left">
+      <div class="auth-bg-circle" style="width:300px;height:300px;top:-80px;left:-60px;"></div>
+      <div class="auth-bg-circle" style="width:180px;height:180px;bottom:-40px;right:-30px;"></div>
+      <div class="auth-left-content">
+        <div class="auth-logo">
+          <div class="nav-logo-mark">🏠</div>EasyHome
+        </div>
+        <h2 class="auth-tagline">Affordable Appliances for Every Home</h2>
+        <p class="auth-sub">Quality appliances with easy installment plans. No large upfront payment needed.</p>
+        <div class="auth-features">
+          <div class="auth-feat">
+            <div class="auth-feat-icon">🛡️</div><span><strong>Trusted Quality</strong> — 100% authentic
+              appliances</span>
+          </div>
+          <div class="auth-feat">
+            <div class="auth-feat-icon">📅</div><span><strong>Easy Installments</strong> — Flexible payment plans</span>
+          </div>
+          <div class="auth-feat">
+            <div class="auth-feat-icon">🎧</div><span><strong>Customer Support</strong> — We're here every step</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <a href="index.html" class="back-link" style="margin-bottom:24px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 5l-7 7 7 7" />
+          </svg>
+          Back to Home
+        </a>
+        <h1 class="auth-form-title">Welcome Back!</h1>
+        <p class="auth-form-sub">Login to your EasyHome account</p>
+
+        <div class="admin-hint">
+          🔧 <strong>Admin Login:</strong> easyhome2026@gmail.com<br>
+          Use admin credentials to access the full admin dashboard.
+        </div>
+
+        <div id="login-error" class="alert alert-error" style="display:none;"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input class="form-control" id="login-email" type="email" placeholder="Enter your email address"
+            autocomplete="email">
+          <div class="form-error" id="login-email-err"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-pw">Password</label>
+          <div class="pw-wrapper">
+            <input class="form-control" id="login-pw" type="password" placeholder="Enter your password"
+              autocomplete="current-password">
+            <button class="pw-toggle" type="button" aria-label="Show password"></button>
+          </div>
+          <div class="form-error" id="login-pw-err"></div>
+          <div style="text-align:right;margin-top:6px;"><a href="#" style="font-size:13px;color:var(--g600);">Forgot
+              Password?</a></div>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doLogin()" id="login-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3" />
+          </svg>
+          Login
+        </button>
+
+        <div class="auth-divider">or continue with</div>
+        <button class="social-btn" onclick="Toast.info('Google login integration coming soon!')">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          Login with Google
+        </button>
+
+        <div class="auth-footer-link">Don't have an account? <a href="register.html">Sign Up</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared.js"></script>
+  <script>
+    const loginRedirect = getRedirectTarget(Auth.isAdmin() ? 'admin.html' : 'dashboard.html');
+    const loginSwitch = document.querySelector('.auth-footer-link a');
+    const currentRedirect = new URLSearchParams(location.search).get('redirect');
+    if (loginSwitch) {
+      loginSwitch.href = 'register.html' + (currentRedirect ? `?redirect=${encodeURIComponent(currentRedirect)}` : '');
+    }
+    if (Auth.isLoggedIn()) {
+      window.location.href = loginRedirect;
+    }
+
+    function doLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-pw').value;
+      let valid = true;
+      clearFieldError('login-email'); clearFieldError('login-pw');
+      document.getElementById('login-error').style.display = 'none';
+
+      if (!email) { showFieldError('login-email', 'Email is required.'); valid = false; }
+      else if (!validateEmail(email)) { showFieldError('login-email', 'Please enter a valid email address.'); valid = false; }
+      if (!pass) { showFieldError('login-pw', 'Password is required.'); valid = false; }
+
+      if (!valid) return;
+      const btn = document.getElementById('login-btn');
+      btn.innerHTML = '<span class="spinner"></span> Logging in...';
+      btn.disabled = true;
+      setTimeout(() => {
+        const result = Auth.login(email, pass);
+        if (result.ok) {
+          Toast.success('Login successful! Redirecting...');
+          const target = result.role === 'admin' ? 'admin.html' : getRedirectTarget('dashboard.html');
+          setTimeout(() => { window.location.href = target; }, 800);
+        } else {
+          document.getElementById('login-error').style.display = 'flex';
+          document.getElementById('login-error').innerHTML = '⚠️ ' + result.error;
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg> Login';
+          btn.disabled = false;
+        }
+      }, 800);
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  </script>
+</body>
+
+</html>
