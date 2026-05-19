@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us – EasyHome</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .contact-hero {
+      padding-top: calc(var(--nav-h)+60px);
+      padding-bottom: 60px;
+      background: linear-gradient(145deg, #edf6e0 0%, #d4edc0 100%)
+    }
+
+    [data-theme="dark"] .contact-hero {
+      background: linear-gradient(145deg, #0d1f06 0%, #112808 100%)
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 48px;
+      align-items: start
+    }
+
+    .contact-info-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      padding: 32px
+    }
+
+    .contact-method {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .contact-method:last-child {
+      border-bottom: none
+    }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--g50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0
+    }
+
+    .contact-method-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--g600);
+      margin-bottom: 3px
+    }
+
+    .contact-method-val {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 2px
+    }
+
+    .contact-method-sub {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .form-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      padding: 32px
+    }
+
+    .form-card-title {
+      font-size: 22px;
+      color: var(--text);
+      margin-bottom: 6px
+    }
+
+    .form-card-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px
+    }
+
+    .contact-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .map-placeholder {
+      background: linear-gradient(135deg, var(--g50), var(--t50));
+      border-radius: var(--radius-lg);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-top: 20px;
+      border: 1px solid var(--border)
+    }
+
+    @media(max-width:900px) {
+      .contact-layout {
+        grid-template-columns: 1fr
+      }
+
+      .contact-form-row {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <div class="nav-logo-mark">🏠</div><span>Easy<span style="color:var(--g400)">Home</span></span>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="catalog.html">Products</a>
+        <a class="nav-link" href="index.html#howitworks">How It Works</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link active" href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
+        <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+          <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
+        </div>
+        <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+        <a class="btn btn-primary btn-sm" href="apply.html" style="margin-left:12px;">Apply Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="settings-panel" id="settings-panel">
+    <div class="settings-panel-title">⚙️ Settings</div>
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">🌙 Dark Mode</div>
+      </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
+          onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+    </div>
+    <div class="settings-row" style="border:none;padding-bottom:0;"><a href="login.html"
+        style="font-size:13px;color:var(--g600);font-weight:500;">Login →</a><button onclick="Auth.logout()"
+        style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;">Logout</button></div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="catalog.html">Products</a>
+    <a class="nav-link" href="about.html">About</a><a class="nav-link active" href="contact.html">Contact</a>
+    <div class="mobile-menu-divider"></div><a class="nav-link" href="login.html">Login</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="contact-hero">
+    <div class="container">
+      <a href="index.html" class="back-link" style="margin-bottom:20px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 5l-7 7 7 7" />
+        </svg>
+        Back to Home
+      </a>
+      <span class="label">Contact Us</span>
+      <h1 class="display-2" style="color:var(--text);margin-bottom:12px;">We're Here to Help You</h1>
+      <p class="lead" style="max-width:520px;">Have questions about our products, plans, or application process? Our
+        team is ready to assist you.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <section class="section" style="padding-top:40px;">
+    <div class="container">
+      <div class="contact-layout">
+        <!-- Left: Contact info -->
+        <div>
+          <div class="contact-info-card" data-reveal>
+            <h3 style="font-size:20px;color:var(--text);margin-bottom:4px;">Get in Touch</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">We typically respond within 24 hours on
+              business days.</p>
+            <div class="contact-method">
+              <div class="contact-icon">📞</div>
+              <div>
+                <div class="contact-method-title">Call Us</div>
+                <div class="contact-method-val">+63 (82) 123-4567</div>
+                <div class="contact-method-sub">Mon–Fri: 9:00 AM – 6:00 PM</div>
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <div class="contact-method-title">Email Us</div>
+                <div class="contact-method-val">support@easyhome.ph</div>
+                <div class="contact-method-sub">We'll respond within 24 hours.</div>
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="contact-icon">📍</div>
+              <div>
+                <div class="contact-method-title">Visit Us</div>
+                <div class="contact-method-val">123 Appliance Avenue,<br>Davao City, Philippines 8000</div>
+                <div class="contact-method-sub">Mon–Fri: 9:00 AM – 6:00 PM</div>
+              </div>
+            </div>
+            <div class="map-placeholder">🗺️</div>
+          </div>
+
+          <div
+            style="margin-top:20px;background:var(--g50);border-radius:var(--radius-lg);padding:20px;border:1px solid var(--g100);"
+            data-reveal>
+            <h4 style="font-size:15px;color:var(--g800);margin-bottom:8px;">Connect on Social Media</h4>
+            <div style="display:flex;gap:10px;margin-top:10px;">
+              <button onclick="Toast.info('Facebook page coming soon!')"
+                style="flex:1;padding:10px;border:1px solid var(--border-md);border-radius:var(--radius-sm);background:var(--surface);font-size:13px;color:var(--text);cursor:pointer;">📘
+                Facebook</button>
+              <button onclick="Toast.info('Instagram page coming soon!')"
+                style="flex:1;padding:10px;border:1px solid var(--border-md);border-radius:var(--radius-sm);background:var(--surface);font-size:13px;color:var(--text);cursor:pointer;">📸
+                Instagram</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="form-card" data-reveal data-reveal-delay="1">
+          <h2 class="form-card-title">Send Us a Message</h2>
+          <p class="form-card-sub">Fill out the form and we'll get back to you shortly.</p>
+
+          <div id="contact-success" class="alert alert-success" style="display:none;">
+            ✅ Your message has been sent! We'll get back to you within 24 hours.
+          </div>
+
+          <div class="contact-form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input class="form-control" id="c-name" type="text" placeholder="Enter your full name">
+              <div class="form-error" id="c-name-err"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input class="form-control" id="c-email" type="email" placeholder="Enter your email">
+              <div class="form-error" id="c-email-err"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number <span style="color:var(--hint);">(Optional)</span></label>
+            <input class="form-control" id="c-phone" type="tel" placeholder="09XXXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject *</label>
+            <select class="form-select" id="c-subject">
+              <option value="">Select a subject</option>
+              <option>Product Inquiry</option>
+              <option>Application Status</option>
+              <option>Payment Concern</option>
+              <option>Delivery &amp; Installation</option>
+              <option>Maintenance &amp; Repair</option>
+              <option>Other</option>
+            </select>
+            <div class="form-error" id="c-subject-err"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message *</label>
+            <textarea class="form-control" id="c-message" rows="5" placeholder="Type your message here..."></textarea>
+            <div class="form-error" id="c-message-err"></div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="sendMessage()"
+            id="send-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+            Send Message
+          </button>
+          <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px;">🔒 Your information is kept
+            private and secure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="section-sm" style="background:var(--gray1);">
+    <div class="container">
+      <div class="grid-4">
+        <div class="feature-row" data-reveal>
+          <div class="feature-icon">🛡️</div>
+          <div>
+            <div class="feature-title">Trusted Quality</div>
+            <div class="feature-desc">100% authentic and reliable appliances.</div>
+          </div>
+        </div>
+        <div class="feature-row" data-reveal data-reveal-delay="1">
+          <div class="feature-icon">📅</div>
+          <div>
+            <div class="feature-title">Flexible Payments</div>
+            <div class="feature-desc">Easy installment plans for every budget.</div>
+          </div>
+        </div>
+        <div class="feature-row" data-reveal data-reveal-delay="2">
+          <div class="feature-icon">🎧</div>
+          <div>
+            <div class="feature-title">Customer Support</div>
+            <div class="feature-desc">Our team is here to help every step.</div>
+          </div>
+        </div>
+        <div class="feature-row" data-reveal data-reveal-delay="3">
+          <div class="feature-icon">🔒</div>
+          <div>
+            <div class="feature-title">Secure &amp; Safe</div>
+            <div class="feature-desc">Your information is protected with top security.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">🏠 EasyHome</div>
+          <p class="footer-tagline">Making modern living accessible for every Filipino family — one appliance at a time.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Products</h5><a href="catalog.html">All Appliances</a><a
+            href="catalog.html?cat=refrigerators">Refrigerators</a><a href="catalog.html?cat=washers">Washing
+            Machines</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5><a href="about.html">About Us</a><a href="about.html#faq">FAQ</a><a
+            href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h5>Account</h5><a href="login.html">Login</a><a href="register.html">Register</a><a
+            href="dashboard.html">Dashboard</a>
+        </div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 EasyHome. All rights reserved.</span><span>Terms · Privacy ·
+          Cookies</span></div>
+    </div>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script>
+    function sendMessage() {
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const subject = document.getElementById('c-subject').value;
+      const message = document.getElementById('c-message').value.trim();
+      let valid = true;
+
+      ['c-name', 'c-email', 'c-subject', 'c-message'].forEach(id => clearFieldError(id));
+
+      if (!name) { showFieldError('c-name', 'Your name is required.'); valid = false; }
+      if (!email) { showFieldError('c-email', 'Email is required.'); valid = false; }
+      else if (!validateEmail(email)) { showFieldError('c-email', 'Please enter a valid email.'); valid = false; }
+      if (!subject) { showFieldError('c-subject', 'Please select a subject.'); valid = false; }
+      if (!message || message.length < 10) { showFieldError('c-message', 'Please enter a message (at least 10 characters).'); valid = false; }
+      if (!valid) return;
+
+      const btn = document.getElementById('send-btn');
+      btn.innerHTML = '<span class="spinner"></span> Sending...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        // Save message to localStorage
+        const msgs = Store.get('contact_messages', []);
+        msgs.push({ name, email, subject, message, sentAt: new Date().toISOString(), id: Date.now() });
+        Store.set('contact_messages', msgs);
+
+        document.getElementById('contact-success').style.display = 'flex';
+        document.getElementById('c-name').value = '';
+        document.getElementById('c-email').value = '';
+        document.getElementById('c-phone').value = '';
+        document.getElementById('c-subject').value = '';
+        document.getElementById('c-message').value = '';
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message';
+        btn.disabled = false;
+        Toast.success('Message sent successfully!');
+        setTimeout(() => { document.getElementById('contact-success').style.display = 'none'; }, 5000);
+      }, 1000);
+    }
+  </script>
+</body>
+
+</html>
