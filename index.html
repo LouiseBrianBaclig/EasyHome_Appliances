@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyHome Appliances – Affordable Access to Essential Home Appliances</title>
+  <title>EasyHome – Affordable Access to Essential Home Appliances</title>
   <meta name="description"
-    content="EasyHome Appliances – Get essential home appliances through affordable installment and rental plans. Zero large upfront payment. Free delivery and installation.">
+    content="EasyHome – Get essential home appliances through affordable installment plans. Zero large upfront payment. Free delivery and installation across the Philippines.">
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
   <link
@@ -14,7 +14,6 @@
     rel="stylesheet">
   <link rel="stylesheet" href="shared.css">
   <style>
-    /* PAGE-SPECIFIC */
     .hero-section {
       min-height: 100vh;
       padding-top: var(--nav-h);
@@ -24,12 +23,16 @@
       gap: 60px;
       background: linear-gradient(145deg, #edf6e0 0%, #e2f0d4 60%, #cce5b0 100%);
       position: relative;
-      overflow: hidden;
+      overflow: hidden
+    }
+
+    [data-theme="dark"] .hero-section {
+      background: linear-gradient(145deg, #0d1f06 0%, #112808 60%, #142e08 100%)
     }
 
     .hero-content {
       padding: 80px 0 80px 5vw;
-      max-width: 600px;
+      max-width: 600px
     }
 
     .hero-badge {
@@ -43,7 +46,7 @@
       border-radius: 20px;
       font-size: 13px;
       font-weight: 500;
-      margin-bottom: 24px;
+      margin-bottom: 24px
     }
 
     .hero-badge .dot {
@@ -51,69 +54,70 @@
       height: 7px;
       background: var(--g400);
       border-radius: 50%;
-      animation: pulse 2s infinite;
+      animation: pulse 2s infinite
     }
 
     @keyframes pulse {
 
       0%,
       100% {
-        opacity: 1;
+        opacity: 1
       }
 
       50% {
-        opacity: .4;
+        opacity: .4
       }
     }
 
     .hero h1 {
       font-size: clamp(42px, 5.5vw, 68px);
       letter-spacing: -0.028em;
-      color: var(--g900);
-      margin-bottom: 20px;
+      color: var(--text);
+      margin-bottom: 20px
     }
 
     .hero h1 em {
       font-style: italic;
-      color: var(--g400);
+      color: var(--g400)
     }
 
     .hero .lead {
       max-width: 480px;
-      margin-bottom: 36px;
+      margin-bottom: 36px
     }
 
     .hero-btns {
       display: flex;
       gap: 12px;
-      flex-wrap: wrap;
+      flex-wrap: wrap
     }
 
     .hero-visual {
       padding-right: 5vw;
       display: flex;
-      justify-content: center;
+      justify-content: center
     }
 
     .hero-card {
-      background: white;
+      background: var(--surface);
       border-radius: 22px;
       padding: 26px;
       box-shadow: 0 24px 64px rgba(59, 109, 17, .12);
       width: 330px;
       position: relative;
       animation: heroFloat 6s ease-in-out infinite;
+      border: 1px solid var(--border)
     }
 
     @keyframes heroFloat {
 
       0%,
       100% {
-        transform: translateY(0);
+        transform: translateY(0)
       }
 
       50% {
-        transform: translateY(-10px);
+        transform: translateY(-10px)
       }
     }
 
@@ -121,7 +125,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 18px;
+      margin-bottom: 18px
     }
 
     .hca-item {
@@ -131,24 +135,24 @@
       text-align: center;
       cursor: pointer;
       border: 1.5px solid transparent;
-      transition: all var(--transition);
+      transition: all var(--transition)
     }
 
     .hca-item:hover,
     .hca-item.active {
       background: var(--g50);
-      border-color: var(--g200);
+      border-color: var(--g200)
     }
 
     .hca-icon {
-      font-size: 26px;
+      font-size: 26px
     }
 
     .hca-name {
       font-size: 11px;
       font-weight: 500;
       color: var(--muted);
-      margin-top: 4px;
+      margin-top: 4px
     }
 
     .hero-plan-strip {
@@ -157,25 +161,25 @@
       padding: 14px 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-between
     }
 
     .hero-plan-label {
       font-size: 12px;
       color: var(--g600);
-      font-weight: 500;
+      font-weight: 500
     }
 
     .hero-plan-price {
       font-family: 'Fraunces', serif;
       font-size: 24px;
-      color: var(--g800);
+      color: var(--g800)
     }
 
     .hero-plan-price small {
       font-family: 'DM Sans';
       font-size: 12px;
-      color: var(--g600);
+      color: var(--g600)
     }
 
     .hero-pill {
@@ -186,7 +190,7 @@
       font-weight: 500;
       line-height: 1.4;
       box-shadow: var(--shadow-md);
-      animation: heroFloat 6s ease-in-out infinite;
+      animation: heroFloat 6s ease-in-out infinite
     }
 
     .hero-pill-1 {
@@ -195,7 +199,7 @@
       background: var(--a50);
       color: var(--a600);
       border: 1px solid var(--a100);
-      animation-delay: -2s;
+      animation-delay: -2s
     }
 
     .hero-pill-2 {
@@ -204,76 +208,74 @@
       background: var(--t50);
       color: var(--t600);
       border: 1px solid var(--t100);
-      animation-delay: -4s;
+      animation-delay: -4s
     }
 
     .hero-circles {
       position: absolute;
       inset: 0;
-      pointer-events: none;
+      pointer-events: none
     }
 
     .hc {
       position: absolute;
       border-radius: 50%;
-      background: rgba(59, 109, 17, .05);
+      background: rgba(59, 109, 17, .05)
     }
 
-    /* PROBLEMS SECTION */
     .problems-section {
       background: var(--gray1);
-      padding: 80px 0;
+      padding: 80px 0
     }
 
-    /* SOLUTION SECTION */
     .solution-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
-      align-items: center;
+      align-items: center
     }
 
     .solution-features {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 14px
     }
 
     .calc-card {
-      background: white;
+      background: var(--surface);
       border-radius: var(--radius-xl);
       padding: 32px;
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-md)
     }
 
     .months-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 8px
     }
 
     .month-btn {
       padding: 10px 6px;
       border: 1.5px solid var(--border-md);
       border-radius: var(--radius-sm);
-      background: white;
+      background: var(--surface);
       font-size: 13px;
       color: var(--muted);
       font-family: 'DM Sans';
       transition: all var(--transition);
-      font-weight: 500;
+      font-weight: 500
     }
 
     .month-btn:hover {
       border-color: var(--g200);
-      color: var(--g600);
+      color: var(--g600)
     }
 
     .month-btn.active {
       background: var(--g600);
       color: white;
-      border-color: var(--g600);
+      border-color: var(--g600)
     }
 
     .calc-result-box {
@@ -283,19 +285,22 @@
       margin-top: 18px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-between
     }
 
     .calc-monthly-amt {
       font-family: 'Fraunces', serif;
       font-size: 34px;
-      color: var(--g800);
+      color: var(--g800)
     }
 
-    /* HOW IT WORKS */
     .how-section {
       background: var(--g900);
-      padding: 80px 0;
+      padding: 80px 0
+    }
+
+    [data-theme="dark"] .how-section {
+      background: #080e04
     }
 
     .how-grid {
@@ -303,97 +308,133 @@
       grid-template-columns: repeat(4, 1fr);
       background: rgba(255, 255, 255, .06);
       border-radius: 20px;
-      overflow: hidden;
+      overflow: hidden
     }
 
-    /* CATALOG PREVIEW */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+      gap: 20px
     }
 
-    /* WHO WE SERVE */
     .users-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 18px
     }
 
     .user-card {
       border-radius: var(--radius-lg);
       padding: 28px;
       border: 1px solid transparent;
-      transition: transform var(--transition), box-shadow var(--transition);
+      transition: transform var(--transition), box-shadow var(--transition)
     }
 
     .user-card:hover {
       transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-md)
     }
 
     .uc-green {
       background: var(--g50);
-      border-color: var(--g100);
+      border-color: var(--g100)
     }
 
     .uc-teal {
       background: var(--t50);
-      border-color: var(--t100);
+      border-color: var(--t100)
     }
 
     .uc-amber {
       background: var(--a50);
-      border-color: var(--a100);
+      border-color: var(--a100)
     }
 
     .user-emoji {
       font-size: 38px;
-      margin-bottom: 14px;
+      margin-bottom: 14px
     }
 
     .user-type {
       font-size: 17px;
       font-weight: 500;
-      color: var(--g900);
-      margin-bottom: 8px;
+      color: var(--text);
+      margin-bottom: 8px
     }
 
     .user-desc {
       font-size: 14px;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.7
     }
 
-    @media (max-width:900px) {
+    @media(max-width:900px) {
       .hero-section {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
 
       .hero-visual {
-        display: none;
+        display: none
       }
 
       .hero-content {
         padding: 80px 5vw 60px;
+        text-align: center;
       }
 
       .solution-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
 
       .how-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr)
       }
 
       .users-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
     }
 
-    @media (max-width:768px) {
+    @media(max-width:768px) {
+      .hero-content {
+        padding: 64px 5vw 48px;
+      }
+
       .how-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
+      }
+
+      .hero-badge,
+      .hero-plan-strip {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media(max-width:600px) {
+      .hero-section {
+        padding-top: calc(var(--nav-h) + 20px);
+        gap: 40px;
+      }
+
+      .hero-content {
+        padding: 40px 5vw 40px;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 7vw, 48px);
+      }
+
+      .hero-card {
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero-plan-strip {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
     }
   </style>
@@ -401,60 +442,83 @@
 
 <body>
 
-  <!-- ════════════ NAV ════════════ -->
+  <!-- NAV -->
   <nav id="main-nav">
     <div class="nav-inner">
       <a class="nav-logo" href="index.html">
         <div class="nav-logo-mark">🏠</div>
-        EasyHome
+        <span>Easy<span style="color:var(--g400)">Home</span></span>
       </a>
       <div class="nav-links">
         <a class="nav-link active" href="index.html">Home</a>
-        <a class="nav-link" href="catalog.html">Catalog</a>
-        <a class="nav-link" href="apply.html">Apply</a>
-        <a class="nav-link" href="dashboard.html">Dashboard</a>
+        <a class="nav-link" href="catalog.html">Products</a>
+        <a class="nav-link" href="index.html#howitworks">How It Works</a>
         <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
       </div>
-      <div class="nav-actions">
-        <a class="nav-cart-btn" href="dashboard.html#cart">
-          🛒
-          <span id="cart-badge"></span>
-        </a>
-        <a class="btn-nav-primary" href="apply.html">Apply Now</a>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
+      <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
+        <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+          <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
+        </div>
+        <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+        <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')" style="margin-left:12px;">Apply Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
 
+  <!-- Settings Panel -->
+  <div class="settings-panel" id="settings-panel">
+    <div class="settings-panel-title">⚙️ Settings</div>
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">🌙 Dark Mode</div>
+        <div class="settings-desc">Switch to dark theme</div>
+      </div>
+      <label class="toggle-switch"><input type="checkbox" id="theme-toggle" onchange="toggleTheme(this.checked)"><span
+          class="toggle-track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div>
+        <div class="settings-label">🔔 Notifications</div>
+        <div class="settings-desc">Enable alerts</div>
+      </div>
+      <label class="toggle-switch"><input type="checkbox" checked onchange="Store.set('notifs',this.checked)"><span
+          class="toggle-track"></span></label>
+    </div>
+    <div class="settings-row" style="border:none;padding-bottom:0;margin-top:4px;">
+      <a href="login.html" style="font-size:13px;color:var(--g600);font-weight:500;">Login / Register →</a>
+      <button onclick="Auth.logout()"
+        style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;font-weight:500;">Logout</button>
+    </div>
+  </div>
+
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
     <a class="nav-link" href="index.html">Home</a>
-    <a class="nav-link" href="catalog.html">Catalog</a>
-    <a class="nav-link" href="apply.html">Apply</a>
-    <a class="nav-link" href="dashboard.html">Dashboard</a>
+    <a class="nav-link" href="catalog.html">Products</a>
+    <a class="nav-link" href="index.html#howitworks">How It Works</a>
     <a class="nav-link" href="about.html">About</a>
-    <a class="btn btn-primary btn-sm" href="apply.html" style="margin-top:8px;width:fit-content;">Apply Now</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+    <div class="mobile-menu-divider"></div>
+    <a class="nav-link" href="login.html">Login</a>
+    <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')" style="margin-top:8px;width:fit-content;">Apply Now →</a>
   </div>
 
-  <!-- ════════════ HERO ════════════ -->
+  <!-- HERO -->
   <section class="hero-section">
     <div class="hero-circles">
-      <div class="hc"
-        style="width:400px;height:400px;top:-100px;right:8%;animation:floatCircle 14s ease-in-out infinite;"></div>
-      <div class="hc"
-        style="width:200px;height:200px;bottom:10%;left:5%;animation:floatCircle 10s ease-in-out infinite reverse;">
-      </div>
+      <div class="hc" style="width:400px;height:400px;top:-100px;right:8%"></div>
+      <div class="hc" style="width:200px;height:200px;bottom:10%;left:5%"></div>
     </div>
     <div class="hero-content">
-      <div class="hero-badge" data-reveal><span class="dot"></span> Now serving families across the Philippines</div>
-      <h1 data-reveal data-reveal-delay="1">Essential appliances, <em>accessible</em> for everyone.</h1>
+      <div class="hero-badge" data-reveal><span class="dot"></span> Serving families across the Philippines</div>
+      <h1 class="hero" data-reveal data-reveal-delay="1">Essential appliances, <em>accessible</em> for everyone.</h1>
       <p class="lead" data-reveal data-reveal-delay="2">EasyHome lets you bring home the appliances you need today —
-        through affordable installment or rental plans, with zero large upfront payment required.</p>
+        through affordable installment plans with zero large upfront payment required.</p>
       <div class="hero-btns" data-reveal data-reveal-delay="3">
         <a class="btn btn-primary" href="catalog.html">Browse Appliances →</a>
-        <a class="btn btn-secondary" href="apply.html">Apply in Minutes</a>
+        <a class="btn btn-secondary" href="apply.html" onclick="return ensureAuth('apply.html')">Apply in Minutes</a>
       </div>
     </div>
     <div class="hero-visual" data-reveal data-reveal-delay="2">
@@ -465,15 +529,15 @@
             <div class="hca-icon">🌀</div>
             <div class="hca-name">Washer</div>
           </div>
-          <div class="hca-item" onclick="heroSetAppliance(this,4200)">
+          <div class="hca-item" onclick="heroSetAppliance(this,17990)">
             <div class="hca-icon">❄️</div>
             <div class="hca-name">Refrigerator</div>
           </div>
-          <div class="hca-item" onclick="heroSetAppliance(this,2200)">
+          <div class="hca-item" onclick="heroSetAppliance(this,22000)">
             <div class="hca-icon">🌬️</div>
             <div class="hca-name">Aircon</div>
           </div>
-          <div class="hca-item" onclick="heroSetAppliance(this,1800)">
+          <div class="hca-item" onclick="heroSetAppliance(this,18000)">
             <div class="hca-icon">📺</div>
             <div class="hca-name">Smart TV</div>
           </div>
@@ -483,7 +547,7 @@
             <div class="hero-plan-label">Monthly installment</div>
             <div class="hero-plan-price" id="hero-price">₱309 <small>/ 12 mos</small></div>
           </div>
-          <a href="apply.html" class="btn btn-primary btn-sm">Apply</a>
+          <a href="apply.html" class="btn btn-primary btn-sm" onclick="return ensureAuth('apply.html')">Apply</a>
         </div>
         <div class="hero-pill hero-pill-1">✔ Free Delivery<br>✔ Free Installation</div>
         <div class="hero-pill hero-pill-2">🔧 Maintenance Included<br>on All Plans</div>
@@ -491,7 +555,7 @@
     </div>
   </section>
 
-  <!-- ════════════ STATS ════════════ -->
+  <!-- STATS -->
   <section class="stats-bar">
     <div class="container">
       <div class="stats-grid">
@@ -508,15 +572,15 @@
           <div class="stat-label">Appliance Models</div>
         </div>
         <div data-reveal data-reveal-delay="3">
-          <div class="stat-num">GCash</div>
-          <div class="stat-label">Easy Payment Methods</div>
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Happy Customers</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════ PROBLEMS ════════════ -->
-  <section class="problems-section" id="problems">
+  <!-- PROBLEMS -->
+  <section class="problems-section">
     <div class="container">
       <div class="section-header" data-reveal>
         <span class="label">The Problem</span>
@@ -550,22 +614,21 @@
     </div>
   </section>
 
-  <!-- ════════════ SOLUTION ════════════ -->
-  <section class="section" id="solution">
+  <!-- SOLUTION -->
+  <section class="section">
     <div class="container">
       <div class="solution-grid">
         <div>
           <span class="label" data-reveal>Our Solution</span>
-          <h2 class="display-2" data-reveal data-reveal-delay="1">Pay weekly or monthly —<br>start living today.</h2>
-          <p class="lead" data-reveal data-reveal-delay="2" style="margin-bottom:28px;">Affordable installment and
-            rental plans so everyone can access essential appliances — no large upfront payment needed.</p>
+          <h2 class="display-2" data-reveal data-reveal-delay="1">Pay monthly — start living today.</h2>
+          <p class="lead" data-reveal data-reveal-delay="2" style="margin-bottom:28px;">Affordable installment plans so
+            everyone can access essential appliances — no large upfront payment needed.</p>
           <div class="solution-features">
             <div class="feature-row" data-reveal>
               <div class="feature-icon">📦</div>
               <div>
                 <div class="feature-title">Flexible Installment Plans</div>
-                <div class="feature-desc">Weekly or monthly payments. Terms from 3 to 36 months. Zero or low down
-                  payment.</div>
+                <div class="feature-desc">Monthly payments. Terms from 6 to 24 months. Zero or low down payment.</div>
               </div>
             </div>
             <div class="feature-row" data-reveal data-reveal-delay="1">
@@ -573,77 +636,73 @@
               <div>
                 <div class="feature-title">Free Delivery & Installation</div>
                 <div class="feature-desc">We deliver and professionally install your appliance at no extra charge —
-                  within 3 hours of approval.</div>
+                  within selected areas.</div>
               </div>
             </div>
             <div class="feature-row" data-reveal data-reveal-delay="2">
               <div class="feature-icon">🔧</div>
               <div>
                 <div class="feature-title">Ongoing Maintenance Support</div>
-                <div class="feature-desc">All plans include access to our certified repair and maintenance team. We keep
-                  you covered.</div>
+                <div class="feature-desc">All plans include access to our certified repair and maintenance team.</div>
               </div>
             </div>
             <div class="feature-row" data-reveal data-reveal-delay="3">
               <div class="feature-icon">💳</div>
               <div>
-                <div class="feature-title">Pay via GCash, Banks & More</div>
+                <div class="feature-title">Pay via GCash & Banks</div>
                 <div class="feature-desc">Multiple payment channels — GCash, major banks, or over-the-counter. No
                   complex paperwork.</div>
               </div>
             </div>
           </div>
         </div>
-        <!-- CALCULATOR -->
         <div class="calc-card" data-reveal data-reveal-delay="2">
-          <h3 style="font-size:20px;color:var(--g900);margin-bottom:22px;">Installment Calculator</h3>
+          <h3 style="font-size:20px;color:var(--text);margin-bottom:22px;">Installment Calculator</h3>
           <div class="form-group">
             <label class="form-label">Choose an Appliance</label>
             <select class="form-select" id="calc-select" onchange="calcUpdate()">
               <option value="3500">Washing Machine — ₱3,500</option>
-              <option value="4200">Refrigerator — ₱4,200</option>
-              <option value="2200">Air Conditioner — ₱2,200</option>
-              <option value="1800">Smart TV — ₱1,800</option>
+              <option value="17990">Panasonic Refrigerator — ₱17,990</option>
+              <option value="22000">Air Conditioner — ₱22,000</option>
+              <option value="18000">55" Smart TV — ₱18,000</option>
               <option value="1200">Electric Fan — ₱1,200</option>
               <option value="900">Rice Cooker — ₱900</option>
-              <option value="5500">Side-by-Side Ref — ₱5,500</option>
-              <option value="6800">Inverter Aircon — ₱6,800</option>
+              <option value="35000">Side-by-Side Ref — ₱35,000</option>
+              <option value="28000">Inverter Aircon — ₱28,000</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Payment Term (Months)</label>
+            <label class="form-label">Payment Term</label>
             <div class="months-grid">
-              <button class="month-btn" onclick="setMonths(3,this)">3 mos</button>
-              <button class="month-btn active" onclick="setMonths(6,this)">6 mos</button>
-              <button class="month-btn" onclick="setMonths(12,this)">12 mos</button>
+              <button class="month-btn" onclick="setMonths(6,this)">6 mos</button>
+              <button class="month-btn active" onclick="setMonths(12,this)">12 mos</button>
               <button class="month-btn" onclick="setMonths(18,this)">18 mos</button>
               <button class="month-btn" onclick="setMonths(24,this)">24 mos</button>
-              <button class="month-btn" onclick="setMonths(36,this)">36 mos</button>
             </div>
           </div>
           <div class="calc-result-box">
             <div>
               <div style="font-size:12px;color:var(--g600);font-weight:500;margin-bottom:2px;">Monthly Payment</div>
-              <div class="calc-monthly-amt" id="calc-monthly">₱617</div>
+              <div class="calc-monthly-amt" id="calc-monthly">₱1,574</div>
             </div>
             <div style="text-align:right;">
               <div style="font-size:11px;color:var(--g600);margin-bottom:2px;">Total Amount</div>
-              <div style="font-size:17px;font-weight:500;color:var(--g800);" id="calc-total">₱3,700</div>
+              <div style="font-size:17px;font-weight:500;color:var(--g800);" id="calc-total">₱18,890</div>
             </div>
           </div>
-          <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px;">Apply
+          <a href="apply.html" class="btn btn-primary" onclick="return ensureAuth('apply.html')" style="width:100%;justify-content:center;margin-top:16px;">Apply
             for This Plan →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════ HOW IT WORKS ════════════ -->
+  <!-- HOW IT WORKS -->
   <section class="how-section" id="howitworks">
     <div class="container">
       <div class="section-header" data-reveal>
         <span class="label" style="color:var(--g100);">How It Works</span>
-        <h2 class="display-2" style="color:white;">Get your appliance in 4 simple steps</h2>
+        <h2 class="display-2" style="color:white;">Get your appliance in 5 simple steps</h2>
         <p class="lead" style="color:var(--t100);opacity:.8;">From browsing to delivery — fast, easy, and stress-free.
         </p>
       </div>
@@ -652,42 +711,43 @@
           <div class="step-num">01</div>
           <div class="step-icon">🛍️</div>
           <div class="step-title">Browse & Choose</div>
-          <div class="step-desc">Explore 200+ appliance models. Filter by category, brand, or price range that fits your
-            needs.</div>
+          <div class="step-desc">Explore 200+ appliance models. Filter by category, brand, or price range.</div>
         </div>
         <div class="step-card" data-reveal data-reveal-delay="1">
           <div class="step-num">02</div>
-          <div class="step-icon">📋</div>
-          <div class="step-title">Apply Online</div>
-          <div class="step-desc">Fill out a short application form. No complex documents — just basic personal
-            information required.</div>
+          <div class="step-icon">🧮</div>
+          <div class="step-title">Choose & Calculate</div>
+          <div class="step-desc">Select your appliance and use our calculator to see your installment plan.</div>
         </div>
         <div class="step-card" data-reveal data-reveal-delay="2">
           <div class="step-num">03</div>
-          <div class="step-icon">✅</div>
-          <div class="step-title">Get Approved</div>
-          <div class="step-desc">Receive approval within hours. Choose your preferred payment plan and delivery
-            schedule.</div>
+          <div class="step-icon">📋</div>
+          <div class="step-title">Apply Online</div>
+          <div class="step-desc">Fill out a short application form. Basic personal information required.</div>
         </div>
         <div class="step-card" data-reveal data-reveal-delay="3">
           <div class="step-num">04</div>
+          <div class="step-icon">✅</div>
+          <div class="step-title">We Review</div>
+          <div class="step-desc">Our team reviews your application and verifies your details quickly.</div>
+        </div>
+        <div class="step-card" data-reveal data-reveal-delay="4" style="border-right:none;">
+          <div class="step-num">05</div>
           <div class="step-icon">🏠</div>
-          <div class="step-title">Delivered & Installed</div>
-          <div class="step-desc">We deliver and professionally install your appliance same day at your door — at no
-            extra charge.</div>
+          <div class="step-title">Approve & Deliver</div>
+          <div class="step-desc">Once approved, we deliver and install your appliance right to your home!</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════ FEATURED PRODUCTS ════════════ -->
+  <!-- FEATURED PRODUCTS -->
   <section class="section">
     <div class="container">
       <div
         style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
-        <div>
-          <span class="label">Popular Appliances</span>
-          <h2 class="display-3" style="color:var(--g900);">Top picks this month</h2>
+        <div><span class="label">Popular Appliances</span>
+          <h2 class="display-3" style="color:var(--text);">Top picks this month</h2>
         </div>
         <a class="btn btn-secondary" href="catalog.html">View Full Catalog →</a>
       </div>
@@ -695,7 +755,7 @@
     </div>
   </section>
 
-  <!-- ════════════ WHO WE SERVE ════════════ -->
+  <!-- WHO WE SERVE -->
   <section class="section" style="padding-top:0;">
     <div class="container">
       <div class="section-header" data-reveal>
@@ -707,26 +767,26 @@
         <div class="user-card uc-green" data-reveal>
           <div class="user-emoji">👨‍👩‍👧</div>
           <div class="user-type">Families & Households</div>
-          <div class="user-desc">Low to middle-income families who need appliances for daily living — food storage,
-            laundry, and cooking — without draining savings.</div>
+          <div class="user-desc">Low to middle-income families who need appliances for daily living without draining
+            savings.</div>
         </div>
         <div class="user-card uc-teal" data-reveal data-reveal-delay="1">
           <div class="user-emoji">🎓</div>
           <div class="user-type">Students & Young Renters</div>
-          <div class="user-desc">Students and young professionals setting up their first home need appliances fast, with
-            payments that fit an entry-level budget.</div>
+          <div class="user-desc">Young professionals setting up their first home who need appliances fast, with payments
+            that fit an entry-level budget.</div>
         </div>
         <div class="user-card uc-amber" data-reveal data-reveal-delay="2">
           <div class="user-emoji">🏪</div>
           <div class="user-type">Small Business Owners</div>
           <div class="user-desc">Laundry shops, food stalls, and small entrepreneurs who need appliances to generate
-            income but cannot afford large upfront costs.</div>
+            income without large upfront costs.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════ TESTIMONIALS ════════════ -->
+  <!-- TESTIMONIALS -->
   <section class="section" style="background:var(--gray1);padding:80px 0;">
     <div class="container">
       <div class="section-header" data-reveal>
@@ -737,11 +797,11 @@
         <div class="testi-card" data-reveal>
           <div class="testi-stars">★★★★★</div>
           <p class="testi-text">"I never thought I could own a refrigerator this soon. EasyHome made it possible with
-            their monthly plan — the delivery was fast and the team was very professional."</p>
+            their monthly plan — delivery was fast and professional."</p>
           <div class="testi-author">
             <div class="avatar" style="background:var(--g50);color:var(--g600);">MR</div>
             <div>
-              <div style="font-size:14px;font-weight:500;color:var(--g900);">Maria Reyes</div>
+              <div style="font-size:14px;font-weight:500;color:var(--text);">Maria Reyes</div>
               <div style="font-size:12px;color:var(--muted);">Stay-at-home mom, Davao City</div>
             </div>
           </div>
@@ -749,11 +809,11 @@
         <div class="testi-card" data-reveal data-reveal-delay="1">
           <div class="testi-stars">★★★★★</div>
           <p class="testi-text">"As a student renting a small room, I couldn't imagine paying full price for a washing
-            machine. EasyHome's installment plan saved me so much time and money."</p>
+            machine. EasyHome's plan saved me so much time and money."</p>
           <div class="testi-author">
             <div class="avatar" style="background:var(--t50);color:var(--t600);">JM</div>
             <div>
-              <div style="font-size:14px;font-weight:500;color:var(--g900);">Jake Morales</div>
+              <div style="font-size:14px;font-weight:500;color:var(--text);">Jake Morales</div>
               <div style="font-size:12px;color:var(--muted);">College student, Cebu</div>
             </div>
           </div>
@@ -761,11 +821,11 @@
         <div class="testi-card" data-reveal data-reveal-delay="2">
           <div class="testi-stars">★★★★★</div>
           <p class="testi-text">"I started my laundry business with two washing machines from EasyHome. No big capital
-            needed — just a small weekly payment, and now I earn daily!"</p>
+            needed — just small monthly payments, and now I earn daily!"</p>
           <div class="testi-author">
             <div class="avatar" style="background:var(--a50);color:var(--a600);">LP</div>
             <div>
-              <div style="font-size:14px;font-weight:500;color:var(--g900);">Liza Pascual</div>
+              <div style="font-size:14px;font-weight:500;color:var(--text);">Liza Pascual</div>
               <div style="font-size:12px;color:var(--muted);">Laundry shop owner, Manila</div>
             </div>
           </div>
@@ -774,7 +834,7 @@
     </div>
   </section>
 
-  <!-- ════════════ CTA BANNER ════════════ -->
+  <!-- CTA BANNER -->
   <section class="section">
     <div class="container">
       <div class="cta-banner" data-reveal>
@@ -783,53 +843,53 @@
           <p>Apply online in minutes. Get approved fast. Delivered today.</p>
         </div>
         <div class="cta-actions">
-          <a class="btn btn-white" href="apply.html">Apply Now</a>
+          <a class="btn btn-white" href="apply.html" onclick="return ensureAuth('apply.html')">Apply Now</a>
           <a class="btn btn-outline-white" href="catalog.html">Browse Catalog</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════ FOOTER ════════════ -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-logo">🏠 EasyHome Appliances</div>
+          <div class="footer-logo">🏠 EasyHome</div>
           <p class="footer-tagline">Making modern living accessible for every Filipino family, student, and small
             business owner — one appliance at a time.</p>
-          <div class="footer-socials" style="margin-top:20px;">
-            <button class="footer-social-btn">f</button>
-            <button class="footer-social-btn">in</button>
-            <button class="footer-social-btn">t</button>
+          <div class="footer-socials">
+            <button class="footer-social-btn" title="Facebook">f</button>
+            <button class="footer-social-btn" title="Instagram">in</button>
+            <button class="footer-social-btn" title="Twitter">𝕏</button>
           </div>
         </div>
         <div class="footer-col">
           <h5>Products</h5>
-          <a href="catalog.html">Refrigerators</a>
-          <a href="catalog.html">Washing Machines</a>
-          <a href="catalog.html">Air Conditioners</a>
-          <a href="catalog.html">Smart TVs</a>
+          <a href="catalog.html?cat=refrigerators">Refrigerators</a>
+          <a href="catalog.html?cat=washers">Washing Machines</a>
+          <a href="catalog.html?cat=aircon">Air Conditioners</a>
+          <a href="catalog.html?cat=tvs">Smart TVs</a>
           <a href="catalog.html">All Appliances</a>
         </div>
         <div class="footer-col">
           <h5>Company</h5>
           <a href="about.html">About Us</a>
           <a href="index.html#howitworks">How It Works</a>
-          <a href="about.html#team">Our Team</a>
-          <a href="about.html#contact">Contact Us</a>
+          <a href="about.html#mission">Our Mission</a>
+          <a href="contact.html">Contact Us</a>
         </div>
         <div class="footer-col">
           <h5>Support</h5>
-          <a href="apply.html">Apply for a Plan</a>
-          <a href="apply.html">Payment Options</a>
+          <a href="apply.html" onclick="return ensureAuth('apply.html')">Apply for a Plan</a>
+          <a href="calculator.html">Payment Calculator</a>
           <a href="dashboard.html">My Dashboard</a>
           <a href="about.html#faq">FAQ</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 EasyHome Appliances. All rights reserved.</span>
-        <span>Aniñon · Baclig · Tagalog</span>
+        <span>© 2025 EasyHome. All rights reserved.</span>
+        <span>Terms · Privacy · Cookies</span>
       </div>
     </div>
   </footer>
@@ -837,10 +897,10 @@
   <script src="shared.js"></script>
   <script>
     const APPLIANCES = [
-      { id: 1, name: 'Double Door Refrigerator', price: 4200, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=500&q=80', category: 'refrigerators', badge: 'Popular' },
-      { id: 2, name: 'Front Load Washing Machine', price: 3500, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=500&q=80', category: 'washers', badge: 'Best Seller' },
-      { id: 3, name: 'Split-Type Air Conditioner', price: 2200, img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&q=80', category: 'aircon', badge: 'Available' },
-      { id: 4, name: '55" 4K Smart TV', price: 1800, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80', category: 'tvs', badge: 'Available' },
+      { id: 1, name: 'Panasonic 2-Door Refrigerator', model: 'NR-BB221V', price: 17990, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=500&q=80', category: 'refrigerators', badge: 'Best Seller', monthly: 1450, term: 12 },
+      { id: 2, name: 'LG Front Load Washing Machine', model: '8.5kg Inverter', price: 24500, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=500&q=80', category: 'washers', badge: 'Popular', monthly: 1350, term: 12 },
+      { id: 3, name: 'Samsung 43" Crystal UHD TV', model: '4K Smart TV', price: 18000, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80', category: 'tvs', badge: 'New', monthly: 1200, term: 12 },
+      { id: 4, name: 'Sharp Microwave Oven', model: '20L Digital', price: 3900, img: 'https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=500&q=80', category: 'microwaves', badge: 'Available', monthly: 650, term: 6 },
     ];
 
     function renderFeatured() {
@@ -849,22 +909,22 @@
     <div class="product-card card-hover" data-reveal>
       <img class="product-img" src="${a.img}" alt="${a.name}" loading="lazy" onerror="this.style.background='var(--gray1)'">
       <div class="product-body">
-        <span class="badge badge-green" style="width:fit-content;">${a.badge}</span>
+        <span class="badge badge-green">${a.badge}</span>
         <div class="product-name">${a.name}</div>
-        <div class="product-price">₱${a.price.toLocaleString()}</div>
-        <div class="product-monthly">From ₱${Math.round(a.price * 1.06 / 12).toLocaleString()}/mo for 12 months</div>
+        <div style="font-size:12px;color:var(--muted);">${a.model}</div>
+        <div class="product-price">₱${a.monthly.toLocaleString()}/mo</div>
+        <div class="product-monthly">for ${a.term} months · Cash: ₱${a.price.toLocaleString()}</div>
       </div>
       <div class="product-actions">
-        <button class="btn btn-primary btn-sm" style="flex:1;" onclick='Cart.add(${JSON.stringify(a)})'>Add to Cart</button>
-        <a class="btn btn-secondary btn-sm" href="catalog.html">Details</a>
+        <a class="btn btn-primary btn-sm" style="flex:1;" href="product.html?id=${a.id}">View Details</a>
+        <button class="btn btn-secondary btn-sm" onclick="if (ensureAuth('index.html')) Cart.add(${JSON.stringify(a)})">🛒</button>
       </div>
     </div>
   `).join('');
       initScrollReveal();
     }
 
-    // Calculator
-    let calcMonths = 6;
+    let calcMonths = 12;
     function setMonths(m, btn) {
       calcMonths = m;
       document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
@@ -873,29 +933,21 @@
     }
     function calcUpdate() {
       const price = parseFloat(document.getElementById('calc-select').value);
-      const total = Math.round(price * 1.06);
+      const rate = 0.025;
+      const total = Math.round(price * Math.pow(1 + rate, calcMonths / 12) * 100) / 100;
       const monthly = Math.round(total / calcMonths);
       document.getElementById('calc-monthly').textContent = '₱' + monthly.toLocaleString();
-      document.getElementById('calc-total').textContent = '₱' + total.toLocaleString();
+      document.getElementById('calc-total').textContent = '₱' + Math.round(total).toLocaleString();
     }
 
-    // Hero calculator
     let heroPrice = 3500;
     function heroSetAppliance(el, price) {
       heroPrice = price;
       document.querySelectorAll('.hca-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
-      const m = Math.round(price * 1.06 / 12);
+      const m = Math.round(price * 1.025 / 12);
       document.getElementById('hero-price').innerHTML = `₱${m.toLocaleString()} <small>/ 12 mos</small>`;
     }
-
-    // Hamburger
-    document.getElementById('hamburger').addEventListener('click', function () {
-      this.classList.toggle('open');
-      const m = document.getElementById('mobile-menu');
-      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
-      m.classList.toggle('open');
-    });
 
     calcUpdate();
     renderFeatured();
