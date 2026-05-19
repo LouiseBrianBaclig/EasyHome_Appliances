@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard – EasyHome Appliances</title>
+  <title>My Dashboard – EasyHome</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
   <link
@@ -12,28 +12,34 @@
     rel="stylesheet">
   <link rel="stylesheet" href="shared.css">
   <style>
+    .dash-page {
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+      background: var(--bg-page)
+    }
+
     .dash-layout {
       display: grid;
       grid-template-columns: 240px 1fr;
-      gap: 28px;
+      gap: 24px;
       align-items: start;
-      min-height: calc(100vh - var(--nav-h) - 120px);
+      padding: 24px 0
     }
 
     .dash-sidebar {
-      background: white;
+      background: var(--surface);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       overflow: hidden;
       position: sticky;
-      top: calc(var(--nav-h) + 16px);
+      top: calc(var(--nav-h)+16px)
     }
 
     .dash-user-card {
       padding: 24px;
       text-align: center;
       background: linear-gradient(145deg, var(--g50), var(--t50));
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border)
     }
 
     .dash-avatar {
@@ -47,23 +53,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 10px;
+      margin: 0 auto 10px
     }
 
     .dash-username {
       font-size: 16px;
       font-weight: 500;
-      color: var(--g900);
+      color: var(--text)
     }
 
     .dash-role {
       font-size: 12px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 2px
     }
 
     .dash-nav {
-      padding: 8px 0;
+      padding: 8px 0
     }
 
     .dash-nav-item {
@@ -77,33 +83,37 @@
       cursor: pointer;
       transition: all var(--transition);
       border-left: 3px solid transparent;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left
     }
 
     .dash-nav-item:hover {
       background: var(--gray0);
-      color: var(--g800);
+      color: var(--g800)
     }
 
     .dash-nav-item.active {
       background: var(--g50);
       color: var(--g800);
-      border-left-color: var(--g600);
+      border-left: 3px solid var(--g600)
     }
 
     .dash-nav-item .nav-icon {
       font-size: 17px;
       width: 22px;
       text-align: center;
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
     .dash-panel {
-      display: none;
+      display: none
     }
 
     .dash-panel.active {
       display: block;
-      animation: fadeUp .35s cubic-bezier(.4, 0, .2, 1);
+      animation: fadeUp .35s cubic-bezier(.4, 0, .2, 1)
     }
 
     @keyframes fadeUp {
@@ -120,102 +130,85 @@
 
     .stat-cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px
     }
 
     .stat-card {
-      background: white;
+      background: var(--surface);
       border-radius: var(--radius-md);
       border: 1px solid var(--border);
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-    }
-
-    .stat-card-icon {
-      font-size: 26px;
-      margin-bottom: 4px;
+      gap: 6px
     }
 
     .stat-card-val {
       font-family: 'Fraunces', serif;
       font-size: 28px;
-      color: var(--g800);
+      color: var(--text)
     }
 
     .stat-card-lbl {
       font-size: 12px;
-      color: var(--muted);
+      color: var(--muted)
     }
 
-    .order-row {
+    .app-row {
       display: flex;
       align-items: center;
       gap: 14px;
       padding: 14px 16px;
       border-top: 1px solid var(--border);
-      transition: background var(--transition);
+      transition: background var(--transition)
     }
 
-    .order-row:hover {
-      background: var(--gray0);
+    .app-row:hover {
+      background: var(--gray0)
     }
 
-    .order-img {
+    .app-img {
       width: 50px;
       height: 50px;
       border-radius: var(--radius-sm);
       object-fit: cover;
       background: var(--gray1);
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
-    .order-info {
+    .app-info {
       flex: 1;
-      min-width: 0;
+      min-width: 0
     }
 
-    .order-name {
+    .app-name {
       font-size: 14px;
       font-weight: 500;
-      color: var(--g900);
+      color: var(--text);
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
+      text-overflow: ellipsis
     }
 
-    .order-meta {
+    .app-meta {
       font-size: 12px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 2px
     }
 
-    .order-right {
+    .app-right {
       text-align: right;
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
-    .order-price {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--g600);
-    }
-
-    .order-date {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    /* Cart */
     .cart-item {
       display: flex;
       align-items: center;
       gap: 14px;
       padding: 16px 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border)
     }
 
     .cart-img {
@@ -224,30 +217,13 @@
       border-radius: var(--radius-sm);
       object-fit: cover;
       background: var(--gray1);
-      flex-shrink: 0;
-    }
-
-    .cart-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .cart-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--g900);
-    }
-
-    .cart-price {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 2px;
+      flex-shrink: 0
     }
 
     .cart-qty-ctrl {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 6px
     }
 
     .qty-btn {
@@ -255,39 +231,17 @@
       height: 28px;
       border: 1px solid var(--border-md);
       border-radius: 6px;
-      background: white;
+      background: var(--surface);
       font-size: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background var(--transition);
+      transition: background var(--transition)
     }
 
     .qty-btn:hover {
-      background: var(--g50);
-    }
-
-    .qty-num {
-      font-size: 14px;
-      font-weight: 500;
-      min-width: 20px;
-      text-align: center;
-    }
-
-    .cart-remove {
-      padding: 6px 10px;
-      border: 1px solid #F7C1C1;
-      border-radius: 6px;
-      background: none;
-      color: var(--r600);
-      font-size: 12px;
-      cursor: pointer;
-      transition: background var(--transition);
-    }
-
-    .cart-remove:hover {
-      background: var(--r50);
+      background: var(--g50)
     }
 
     .cart-total-bar {
@@ -297,33 +251,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 16px;
+      margin-top: 16px
     }
 
-    /* Payments */
-    .payment-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-top: 1px solid var(--border);
-    }
-
-    .payment-due {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .payment-amt {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    /* Profile edit */
     .profile-avatar-wrap {
       position: relative;
-      display: inline-block;
+      display: inline-block
     }
 
     .avatar-edit-btn {
@@ -335,816 +268,736 @@
       border-radius: 50%;
       background: var(--g600);
       color: white;
-      border: 2px solid white;
+      border: 2px solid var(--surface);
       font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      cursor: pointer
     }
 
-    /* Settings toggle */
-    .section-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 24px;
-      margin-bottom: 20px;
-    }
-
-    .section-card-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--g900);
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
+    .need-help {
+      background: linear-gradient(145deg, var(--g50), var(--t50));
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 16px
     }
 
     @media(max-width:900px) {
       .dash-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
 
       .dash-sidebar {
         position: static;
+        display: flex;
+        flex-direction: column
+      }
+
+      .dash-user-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        background: linear-gradient(145deg, var(--g50), var(--t50));
+        border-bottom: 1px solid var(--border);
+        text-align: left
+      }
+
+      .dash-nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        gap: 0
+      }
+
+      .dash-nav-item {
+        flex: 1;
+        min-width: 150px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        padding: 12px 16px;
+        text-align: center;
+        border-radius: 0
+      }
+
+      .dash-nav-item.active {
+        border-left: none;
+        border-bottom: 3px solid var(--g600);
+        background: var(--g50)
+      }
+
+      .need-help {
+        display: none
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr
       }
 
       .stat-cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:600px) {
+      .dash-sidebar {
+        margin-bottom: 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid var(--border)
+      }
+
+      .dash-user-card {
+        padding: 12px 16px;
+        gap: 12px
+      }
+
+      .dash-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 18px
+      }
+
+      .dash-username {
+        font-size: 14px
+      }
+
+      .dash-role {
+        font-size: 11px
+      }
+
+      .dash-nav {
+        overflow-x: auto
+      }
+
+      .dash-nav-item {
+        min-width: 100px;
+        padding: 10px 12px;
+        font-size: 12px
+      }
+
+      .dash-nav-item .nav-icon {
+        font-size: 16px
+      }
+
+      .stat-cards {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .section-card {
+        padding: 16px
+      }
+
+      .section-card-title {
+        font-size: 14px;
+        margin-bottom: 12px
+      }
+
+      .cart-item {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 0
+      }
+
+      .cart-img {
+        width: 50px;
+        height: 50px
+      }
+
+      .app-row {
+        padding: 10px 12px;
+        gap: 10px
+      }
+
+      .app-img {
+        width: 45px;
+        height: 45px
+      }
+
+      .app-name {
+        font-size: 12px
+      }
+
+      .app-meta {
+        font-size: 10px
       }
     }
 
     @media(max-width:480px) {
       .stat-cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
+      }
+
+      .dash-nav-item {
+        min-width: 80px;
+        padding: 8px 10px;
+        font-size: 11px
+      }
+
+      .section-card {
+        padding: 12px
+        margin-bottom: 16px
+      }
+
+      .form-group {
+        margin-bottom: 14px
+      }
+
+      .grid-2 {
+        gap: 12px
+      }
+
+      .btn-sm {
+        width: 100%;
+        justify-content: center
+      }
+
+      .settings-row {
+        flex-wrap: wrap;
+        gap: 10px
+      }
+
+      .form-label {
+        font-size: 12px
+      }
+
+      .form-control,
+      .form-select {
+        font-size: 14px;
+        padding: 10px 12px
       }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- NAV -->
-  <nav id="main-nav">
-    <div class="nav-inner">
-      <a class="nav-logo" href="index.html">
-        <div class="nav-logo-mark">🏠</div>EasyHome
-      </a>
-      <div class="nav-links">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="catalog.html">Catalog</a>
-        <a class="nav-link" href="apply.html">Apply</a>
-        <a class="nav-link active" href="dashboard.html">Dashboard</a>
-        <a class="nav-link" href="about.html">About</a>
-      </div>
-      <div class="nav-actions">
-        <a class="nav-cart-btn" href="#" onclick="showPanel('cart');return false;">🛒<span id="cart-badge"></span></a>
-        <a class="btn-nav-primary" href="apply.html">Apply Now</a>
-        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-      </div>
-    </div>
-  </nav>
-  <div class="mobile-menu" id="mobile-menu">
-    <a class="nav-link" href="index.html">Home</a>
-    <a class="nav-link" href="catalog.html">Catalog</a>
-    <a class="nav-link" href="apply.html">Apply</a>
-    <a class="nav-link" href="dashboard.html">Dashboard</a>
-    <a class="nav-link" href="about.html">About</a>
-  </div>
-
-  <div class="page-top">
-    <div style="background:white;border-bottom:1px solid var(--border);padding:14px 0;">
-      <div class="container"
-        style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-        <div>
-          <h1 style="font-size:22px;color:var(--g900);">My Dashboard</h1>
-          <p style="font-size:13px;color:var(--muted);">Welcome back, <span id="dash-welcome-name">Customer</span> 👋
-          </p>
+  <div class="dash-page">
+    <nav id="main-nav">
+      <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+          <div class="nav-logo-mark">🏠</div><span>Easy<span style="color:var(--g400)">Home</span></span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="catalog.html">Products</a>
+          <a class="nav-link" href="index.html#howitworks">How It Works</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
         </div>
-        <a class="btn btn-primary btn-sm" href="apply.html">+ New Application</a>
+        <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
+          <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+            <span style="font-size:18px;line-height:1;">👤</span><span id="nav-user-name"></span>
+          </div>
+          <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+          <a class="btn btn-primary btn-sm" href="apply.html" style="margin-left:12px;">Apply Now</a>
+          <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </nav>
+    <div class="settings-panel" id="settings-panel">
+      <div class="settings-panel-title">⚙️ Settings</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">🌙 Dark Mode</div>
+          <div class="settings-desc">Switch theme</div>
+        </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
+            onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">🔔 Notifications</div>
+        </div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-track"></span></label>
+      </div>
+      <div class="settings-row" style="border:none;padding-bottom:0;">
+        <button onclick="Auth.logout()"
+          style="font-size:13px;color:var(--r600);background:none;border:none;cursor:pointer;font-weight:500;">🚪
+          Logout</button>
       </div>
     </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="catalog.html">Products</a>
+      <a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <div class="mobile-menu-divider"></div>
+      <button onclick="Auth.logout()"
+        style="font-size:14px;color:var(--r600);background:none;border:none;cursor:pointer;padding:10px 14px;text-align:left;width:100%;">🚪
+        Logout</button>
+    </div>
 
-    <section class="section-sm">
-      <div class="container">
-        <div class="dash-layout">
-
-          <!-- SIDEBAR NAV -->
-          <div class="dash-sidebar" data-reveal>
-            <div class="dash-user-card">
-              <div class="dash-avatar" id="dash-avatar-initials">👤</div>
-              <div class="dash-username" id="dash-display-name">Guest User</div>
-              <div class="dash-role">EasyHome Customer</div>
+    <div class="container">
+      <div class="dash-layout">
+        <!-- Sidebar -->
+        <div class="dash-sidebar">
+          <div class="dash-user-card">
+            <div class="profile-avatar-wrap">
+              <div class="dash-avatar" id="dash-avatar">JD</div>
+              <div class="avatar-edit-btn" onclick="showPanel('profile')" title="Edit profile">✏️</div>
             </div>
-            <nav class="dash-nav">
-              <div class="dash-nav-item active" onclick="showPanel('overview')"><span class="nav-icon">📊</span>Overview
+            <div class="dash-username" id="dash-name">John Doe</div>
+            <div class="dash-role" id="dash-email">user@email.com</div>
+          </div>
+          <div class="dash-nav">
+            <button class="dash-nav-item active" onclick="showPanel('overview')"><span class="nav-icon">🏠</span>
+              Dashboard</button>
+            <button class="dash-nav-item" onclick="showPanel('applications')"><span class="nav-icon">📋</span> My
+              Applications</button>
+            <button class="dash-nav-item" onclick="showPanel('payments')"><span class="nav-icon">📅</span> Payment
+              Plans</button>
+            <button class="dash-nav-item" onclick="showPanel('cart')" id="cart-nav-item"><span
+                class="nav-icon">🛒</span> My Cart <span id="cart-sidebar-badge"
+                style="margin-left:auto;background:var(--g600);color:white;font-size:11px;padding:2px 7px;border-radius:10px;display:none;"></span></button>
+            <button class="dash-nav-item" onclick="showPanel('wishlist')"><span class="nav-icon">♥</span>
+              Wishlist</button>
+            <button class="dash-nav-item" onclick="showPanel('profile')"><span class="nav-icon">👤</span>
+              Profile</button>
+            <button class="dash-nav-item" onclick="showPanel('settings-dash')"><span class="nav-icon">⚙️</span>
+              Settings</button>
+            <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+            <button class="dash-nav-item" style="color:var(--r600);" onclick="Auth.logout()"><span
+                class="nav-icon">🚪</span> Logout</button>
+          </div>
+          <div class="need-help">
+            <div style="font-size:13px;font-weight:600;color:var(--g800);margin-bottom:4px;">Need Help?</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Our support team is here to help you.
+            </div>
+            <a href="contact.html" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">Contact
+              Support</a>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div id="dash-content">
+          <!-- OVERVIEW -->
+          <div class="dash-panel active" id="panel-overview">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+              <div>
+                <h2 style="font-size:26px;color:var(--text);">Welcome back, <span id="welcome-name">there</span>! 👋
+                </h2>
+                <p style="font-size:14px;color:var(--muted);">Here's what's happening with your account.</p>
               </div>
-              <div class="dash-nav-item" onclick="showPanel('applications')"><span
-                  class="nav-icon">📋</span>Applications</div>
-              <div class="dash-nav-item" onclick="showPanel('cart')" id="cart-nav-item"><span
-                  class="nav-icon">🛒</span>My Cart</div>
-              <div class="dash-nav-item" onclick="showPanel('payments')"><span class="nav-icon">💳</span>Payments</div>
-              <div class="dash-nav-item" onclick="showPanel('profile')"><span class="nav-icon">👤</span>Profile</div>
-              <div class="dash-nav-item" onclick="showPanel('settings')"><span class="nav-icon">⚙️</span>Settings</div>
-              <div class="dash-nav-item" onclick="confirmLogout()"
-                style="border-top:1px solid var(--border);margin-top:8px;color:var(--r600);"><span
-                  class="nav-icon">🚪</span>Sign Out</div>
-            </nav>
+              <a href="apply.html" class="btn btn-primary btn-sm">+ New Application</a>
+            </div>
+            <div class="stat-cards">
+              <div class="stat-card">
+                <div style="font-size:24px;">📋</div>
+                <div class="stat-card-val" id="stat-apps">0</div>
+                <div class="stat-card-lbl">Active Applications</div>
+              </div>
+              <div class="stat-card">
+                <div style="font-size:24px;">✅</div>
+                <div class="stat-card-val" id="stat-approved">0</div>
+                <div class="stat-card-lbl">Approved</div>
+              </div>
+              <div class="stat-card">
+                <div style="font-size:24px;">🕐</div>
+                <div class="stat-card-val" id="stat-review">0</div>
+                <div class="stat-card-lbl">In Review</div>
+              </div>
+            </div>
+            <div class="grid-2" style="gap:24px;">
+              <div class="section-card">
+                <div class="section-card-title" style="display:flex;align-items:center;justify-content:space-between;">
+                  My Applications <button class="btn btn-secondary btn-sm" onclick="showPanel('applications')">View
+                    All</button></div>
+                <div id="overview-apps">
+                  <div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">No applications yet. <a
+                      href="apply.html" style="color:var(--g600);">Apply now →</a></div>
+                </div>
+              </div>
+              <div class="section-card">
+                <div class="section-card-title">Quick Links</div>
+                <div class="grid-2" style="gap:10px;">
+                  <a href="catalog.html" class="feature-row" style="text-decoration:none;">
+                    <div class="feature-icon">🛒</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">Browse Products</div>
+                    </div>
+                  </a>
+                  <button class="feature-row" onclick="showPanel('payments')"
+                    style="border:none;cursor:pointer;text-align:left;">
+                    <div class="feature-icon">📅</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">Payment Plans</div>
+                    </div>
+                  </button>
+                  <a href="index.html#howitworks" class="feature-row" style="text-decoration:none;">
+                    <div class="feature-icon">❓</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">How It Works</div>
+                    </div>
+                  </a>
+                  <a href="contact.html" class="feature-row" style="text-decoration:none;">
+                    <div class="feature-icon">🎧</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">Help Center</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- MAIN CONTENT -->
-          <div>
+          <!-- APPLICATIONS -->
+          <div class="dash-panel" id="panel-applications">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+              <h2 style="font-size:22px;color:var(--text);">My Applications</h2>
+              <a href="apply.html" class="btn btn-primary btn-sm">+ New Application</a>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">All Applications</div>
+              <div id="applications-list"></div>
+            </div>
+          </div>
 
-            <!-- OVERVIEW -->
-            <div class="dash-panel active" id="panel-overview">
-              <div class="stat-cards">
-                <div class="stat-card" data-reveal>
-                  <div class="stat-card-icon">📋</div>
-                  <div class="stat-card-val" id="stat-apps">0</div>
-                  <div class="stat-card-lbl">Applications</div>
-                </div>
-                <div class="stat-card" data-reveal data-reveal-delay="1">
-                  <div class="stat-card-icon">🛒</div>
-                  <div class="stat-card-val" id="stat-cart">0</div>
-                  <div class="stat-card-lbl">Items in Cart</div>
-                </div>
-                <div class="stat-card" data-reveal data-reveal-delay="2">
-                  <div class="stat-card-icon">✅</div>
-                  <div class="stat-card-val" id="stat-approved">0</div>
-                  <div class="stat-card-lbl">Approved</div>
-                </div>
-                <div class="stat-card" data-reveal data-reveal-delay="3">
-                  <div class="stat-card-icon">💰</div>
-                  <div class="stat-card-val" id="stat-monthly">₱0</div>
-                  <div class="stat-card-lbl">Monthly Due</div>
-                </div>
-              </div>
-
-              <div class="card" data-reveal>
-                <div
-                  style="padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-                  <h3 style="font-size:16px;color:var(--g900);">Recent Applications</h3>
-                  <button class="btn btn-secondary btn-sm" onclick="showPanel('applications')">View All</button>
-                </div>
-                <div id="recent-apps-list">
-                  <div class="empty-state">
-                    <div class="empty-icon">📋</div>
-                    <div class="empty-title">No applications yet</div>
-                    <div class="empty-desc">Apply for an installment plan to get started.</div><a
-                      class="btn btn-primary btn-sm" href="apply.html">Apply Now</a>
-                  </div>
-                </div>
+          <!-- PAYMENTS -->
+          <div class="dash-panel" id="panel-payments">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">Payment Plans</h2>
+            <div class="section-card">
+              <div class="section-card-title">Active Payment Schedules</div>
+              <div id="payments-list">
+                <div style="text-align:center;padding:40px;color:var(--muted);">No active payment plans yet. <a
+                    href="catalog.html" style="color:var(--g600);">Browse products →</a></div>
               </div>
             </div>
+          </div>
 
-            <!-- APPLICATIONS -->
-            <div class="dash-panel" id="panel-applications">
-              <div
-                style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-                <h2 style="font-size:20px;color:var(--g900);">My Applications</h2>
-                <a class="btn btn-primary btn-sm" href="apply.html">+ New Application</a>
-              </div>
-              <div class="card">
-                <div id="applications-list"></div>
-              </div>
+          <!-- CART -->
+          <div class="dash-panel" id="panel-cart">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">My Cart</h2>
+            <div class="section-card">
+              <div class="section-card-title">Cart Items</div>
+              <div id="cart-list"></div>
             </div>
+          </div>
 
-            <!-- CART -->
-            <div class="dash-panel" id="panel-cart" id="cart">
-              <div
-                style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-                <h2 style="font-size:20px;color:var(--g900);">My Cart</h2>
-                <a class="btn btn-secondary btn-sm" href="catalog.html">+ Add More</a>
-              </div>
-              <div class="grid-2" style="align-items:start;">
-                <div class="card" style="padding:20px;">
-                  <div id="cart-items-list"></div>
-                  <div id="cart-empty-state" class="empty-state" style="display:none;">
-                    <div class="empty-icon">🛒</div>
-                    <div class="empty-title">Your cart is empty</div>
-                    <div class="empty-desc">Browse our catalog and add appliances to your cart.</div>
-                    <a class="btn btn-primary btn-sm" href="catalog.html">Browse Catalog</a>
-                  </div>
+          <!-- WISHLIST -->
+          <div class="dash-panel" id="panel-wishlist">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">My Wishlist</h2>
+            <div id="wishlist-grid" class="grid-auto"></div>
+          </div>
+
+          <!-- PROFILE -->
+          <div class="dash-panel" id="panel-profile">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">Profile Information</h2>
+            <div class="section-card">
+              <div class="section-card-title">Personal Details</div>
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+                <div class="profile-avatar-wrap">
+                  <div class="dash-avatar" id="profile-avatar" style="width:72px;height:72px;font-size:26px;">JD</div>
                 </div>
                 <div>
-                  <div class="card" style="padding:20px;margin-bottom:16px;" id="cart-summary-card">
-                    <div style="font-size:15px;font-weight:500;color:var(--g900);margin-bottom:14px;">Order Summary
-                    </div>
-                    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;margin-bottom:16px;">
-                      <div style="display:flex;justify-content:space-between;"><span
-                          style="color:var(--muted)">Subtotal</span><span id="cart-subtotal">₱0</span></div>
-                      <div style="display:flex;justify-content:space-between;"><span
-                          style="color:var(--muted)">Delivery</span><span style="color:var(--g600)">FREE</span></div>
-                      <div style="display:flex;justify-content:space-between;"><span
-                          style="color:var(--muted)">Installation</span><span style="color:var(--g600)">FREE</span>
-                      </div>
-                      <div style="height:1px;background:var(--border);margin:4px 0;"></div>
-                      <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:500;">
-                        <span>Total</span><span id="cart-total-display"
-                          style="color:var(--g600);font-family:'Fraunces',serif;font-size:20px;">₱0</span></div>
-                    </div>
-                    <a href="apply.html" class="btn btn-primary" style="width:100%;justify-content:center;">Proceed to
-                      Apply →</a>
-                    <button onclick="clearCart()" class="btn btn-danger btn-sm"
-                      style="width:100%;justify-content:center;margin-top:8px;">Clear Cart</button>
-                  </div>
+                  <div style="font-size:18px;font-weight:500;color:var(--text);" id="profile-name">John Doe</div>
+                  <div style="font-size:14px;color:var(--muted);" id="profile-email">user@email.com</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="profile-joined">Joined —</div>
                 </div>
               </div>
+              <div class="grid-2" style="gap:14px;">
+                <div class="form-group"><label class="form-label">Full Name</label><input class="form-control"
+                    id="edit-name" type="text"></div>
+                <div class="form-group"><label class="form-label">Email Address</label><input class="form-control"
+                    id="edit-email" type="email" readonly style="background:var(--gray1);cursor:not-allowed;"></div>
+                <div class="form-group"><label class="form-label">Phone Number</label><input class="form-control"
+                    id="edit-phone" type="tel" placeholder="09XXXXXXXXX"></div>
+                <div class="form-group"><label class="form-label">Date of Birth</label><input class="form-control"
+                    id="edit-dob" type="date"></div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save Changes</button>
             </div>
-
-            <!-- PAYMENTS -->
-            <div class="dash-panel" id="panel-payments">
-              <h2 style="font-size:20px;color:var(--g900);margin-bottom:20px;">Payment Schedule</h2>
-              <div class="card" style="margin-bottom:20px;">
-                <div style="padding:20px 22px;border-bottom:1px solid var(--border);">
-                  <div style="font-size:14px;color:var(--muted);">Next Payment Due</div>
-                  <div style="font-family:'Fraunces',serif;font-size:32px;color:var(--g800);margin-top:4px;"
-                    id="next-payment-amt">₱0</div>
-                  <div style="font-size:13px;color:var(--muted);margin-top:2px;">Due on <span
-                      id="next-payment-date">—</span></div>
+            <div class="section-card">
+              <div class="section-card-title">Change Password</div>
+              <div class="grid-2" style="gap:14px;">
+                <div class="form-group"><label class="form-label">Current Password</label>
+                  <div class="pw-wrapper"><input class="form-control" id="old-pw" type="password"
+                      placeholder="Current password"><button class="pw-toggle" type="button"></button></div>
                 </div>
-                <div id="payments-list">
-                  <div class="empty-state">
-                    <div class="empty-icon">💳</div>
-                    <div class="empty-title">No active payments</div>
-                    <div class="empty-desc">Your payment schedule will appear here once your application is approved.
-                    </div><a href="apply.html" class="btn btn-primary btn-sm">Apply Now</a>
-                  </div>
+                <div class="form-group"></div>
+                <div class="form-group"><label class="form-label">New Password</label>
+                  <div class="pw-wrapper"><input class="form-control" id="new-pw" type="password"
+                      placeholder="New password"><button class="pw-toggle" type="button"></button></div>
+                </div>
+                <div class="form-group"><label class="form-label">Confirm New Password</label>
+                  <div class="pw-wrapper"><input class="form-control" id="new-pw2" type="password"
+                      placeholder="Confirm new password"><button class="pw-toggle" type="button"></button></div>
                 </div>
               </div>
+              <button class="btn btn-primary btn-sm" onclick="changePassword()">Update Password</button>
             </div>
-
-            <!-- PROFILE -->
-            <div class="dash-panel" id="panel-profile">
-              <h2 style="font-size:20px;color:var(--g900);margin-bottom:20px;">My Profile</h2>
-              <div class="section-card">
-                <div class="section-card-title">Personal Information</div>
-                <div style="text-align:center;margin-bottom:24px;">
-                  <div class="profile-avatar-wrap">
-                    <div class="dash-avatar" id="profile-avatar-big"
-                      style="width:80px;height:80px;font-size:28px;margin:0 auto;">👤</div>
-                    <div class="avatar-edit-btn" onclick="Toast.info('Photo upload coming soon!')">✏️</div>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">First Name</label>
-                    <input class="form-control" id="p-fname" placeholder="First name">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Last Name</label>
-                    <input class="form-control" id="p-lname" placeholder="Last name">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input class="form-control" id="p-email" type="email" placeholder="your@email.com">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Phone</label>
-                    <input class="form-control" id="p-phone" placeholder="09XX-XXX-XXXX">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Address</label>
-                  <input class="form-control" id="p-addr" placeholder="Your address">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">City</label>
-                  <input class="form-control" id="p-city" placeholder="Your city">
-                </div>
-                <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save Profile</button>
-              </div>
-              <div class="section-card">
-                <div class="section-card-title">Change Password</div>
-                <div class="form-group">
-                  <label class="form-label">Current Password</label>
-                  <div class="pw-wrapper">
-                    <input class="form-control" id="p-pw-cur" type="password" placeholder="Current password">
-                    <button type="button" class="pw-toggle">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">New Password</label>
-                  <div class="pw-wrapper">
-                    <input class="form-control" id="p-pw-new" type="password" placeholder="New password (min 8 chars)">
-                    <button type="button" class="pw-toggle">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Confirm New Password</label>
-                  <div class="pw-wrapper">
-                    <input class="form-control" id="p-pw-conf" type="password" placeholder="Repeat new password">
-                    <button type="button" class="pw-toggle">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <button class="btn btn-secondary btn-sm" onclick="changePassword()">Update Password</button>
-              </div>
-            </div>
-
-            <!-- SETTINGS -->
-            <div class="dash-panel" id="panel-settings">
-              <h2 style="font-size:20px;color:var(--g900);margin-bottom:20px;">Settings</h2>
-              <div class="section-card">
-                <div class="section-card-title">Notifications</div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">Email Notifications</div>
-                    <div class="settings-desc">Receive updates about your applications via email</div>
-                  </div>
-                  <label class="toggle-switch"><input type="checkbox" id="notif-email" checked
-                      onchange="saveSetting('notif-email',this.checked)"><span class="toggle-track"></span></label>
-                </div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">SMS Alerts</div>
-                    <div class="settings-desc">Get text messages for payment reminders</div>
-                  </div>
-                  <label class="toggle-switch"><input type="checkbox" id="notif-sms"
-                      onchange="saveSetting('notif-sms',this.checked)"><span class="toggle-track"></span></label>
-                </div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">Promotional Offers</div>
-                    <div class="settings-desc">Receive news about deals and new appliances</div>
-                  </div>
-                  <label class="toggle-switch"><input type="checkbox" id="notif-promo" checked
-                      onchange="saveSetting('notif-promo',this.checked)"><span class="toggle-track"></span></label>
-                </div>
-              </div>
-              <div class="section-card">
-                <div class="section-card-title">Privacy & Security</div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">Two-Factor Authentication</div>
-                    <div class="settings-desc">Add an extra layer of security to your account</div>
-                  </div>
-                  <label class="toggle-switch"><input type="checkbox" id="sec-2fa"
-                      onchange="saveSetting('sec-2fa',this.checked)"><span class="toggle-track"></span></label>
-                </div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">Login Alerts</div>
-                    <div class="settings-desc">Get notified of new logins to your account</div>
-                  </div>
-                  <label class="toggle-switch"><input type="checkbox" id="sec-login" checked
-                      onchange="saveSetting('sec-login',this.checked)"><span class="toggle-track"></span></label>
-                </div>
-              </div>
-              <div class="section-card">
-                <div class="section-card-title">Display Preferences</div>
-                <div class="form-group">
-                  <label class="form-label">Language</label>
-                  <select class="form-select" id="pref-lang" onchange="saveSetting('lang',this.value)">
-                    <option value="en">English</option>
-                    <option value="fil">Filipino</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Currency Display</label>
-                  <select class="form-select" id="pref-currency" onchange="saveSetting('currency',this.value)">
-                    <option value="php">Philippine Peso (₱)</option>
-                    <option value="usd">US Dollar ($)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="section-card">
-                <div class="section-card-title" style="color:var(--r600);">Danger Zone</div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">Clear All Data</div>
-                    <div class="settings-desc">Remove all saved applications and cart items</div>
-                  </div>
-                  <button class="btn btn-danger btn-sm" onclick="clearAllData()">Clear Data</button>
-                </div>
-                <div class="settings-row">
-                  <div>
-                    <div class="settings-label">Delete Account</div>
-                    <div class="settings-desc">Permanently delete your account and all data</div>
-                  </div>
-                  <button class="btn btn-danger btn-sm"
-                    onclick="Toast.warning('Account deletion requires email confirmation. Check your inbox.')">Delete
-                    Account</button>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /main content -->
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- LOGOUT MODAL -->
-  <div class="modal-overlay" id="logout-modal">
-    <div class="modal-box" style="max-width:360px;">
-      <div class="modal-header">
-        <h3 class="modal-title">Sign Out?</h3>
-        <button class="modal-close" onclick="Modal.close('logout-modal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size:15px;color:var(--muted);">You will be returned to the home page. Your cart and application
-          data will remain saved.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary btn-sm" onclick="Modal.close('logout-modal')">Cancel</button>
-        <button class="btn btn-danger btn-sm" onclick="window.location='index.html'">Sign Out</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- EDIT APPLICATION MODAL -->
-  <div class="modal-overlay" id="edit-app-modal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="modal-title">Edit Application</h3>
-        <button class="modal-close" onclick="Modal.close('edit-app-modal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" id="ea-idx">
-        <div class="form-group">
-          <label class="form-label">Appliance Name</label>
-          <input class="form-control" id="ea-name" placeholder="Appliance name">
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Monthly Payment (₱)</label>
-            <input class="form-control" id="ea-monthly" type="number" placeholder="e.g. 500">
           </div>
-          <div class="form-group">
-            <label class="form-label">Term (months)</label>
-            <input class="form-control" id="ea-months" type="number" placeholder="e.g. 12">
+
+          <!-- SETTINGS -->
+          <div class="dash-panel" id="panel-settings-dash">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">Settings</h2>
+            <div class="section-card">
+              <div class="section-card-title">Appearance</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🌙 Dark Mode</div>
+                  <div class="settings-desc">Use dark color scheme throughout the app</div>
+                </div><label class="toggle-switch"><input type="checkbox" id="dash-dark-mode"
+                    onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🔤 Font Size</div>
+                  <div class="settings-desc">Default text size</div>
+                </div><select class="form-select" style="width:120px;"
+                  onchange="document.documentElement.style.fontSize=this.value">
+                  <option value="15px">Small</option>
+                  <option value="16px" selected>Normal</option>
+                  <option value="17px">Large</option>
+                </select>
+              </div>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Notifications</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">📧 Email Notifications</div>
+                  <div class="settings-desc">Receive updates on your applications</div>
+                </div><label class="toggle-switch"><input type="checkbox" checked
+                    onchange="Store.set('email_notif',this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">📱 SMS Alerts</div>
+                  <div class="settings-desc">Get SMS for payment reminders</div>
+                </div><label class="toggle-switch"><input type="checkbox" checked
+                    onchange="Store.set('sms_notif',this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🔔 Push Notifications</div>
+                  <div class="settings-desc">In-app notifications</div>
+                </div><label class="toggle-switch"><input type="checkbox" checked><span
+                    class="toggle-track"></span></label>
+              </div>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Account</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🗑️ Clear Cart</div>
+                  <div class="settings-desc">Remove all items from cart</div>
+                </div><button class="btn btn-danger btn-sm"
+                  onclick="Cart.clear();renderCart();Toast.success('Cart cleared.')">Clear Cart</button>
+              </div>
+              <div class="settings-row" style="border:none;">
+                <div>
+                  <div class="settings-label">🚪 Logout</div>
+                  <div class="settings-desc">Sign out of your account</div>
+                </div><button class="btn btn-danger btn-sm" onclick="Auth.logout()">Logout</button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Status</label>
-          <select class="form-select" id="ea-status">
-            <option>Pending</option>
-            <option>Approved</option>
-            <option>Active</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary btn-sm" onclick="Modal.close('edit-app-modal')">Cancel</button>
-        <button class="btn btn-primary btn-sm" onclick="saveAppEdit()">Save Changes</button>
       </div>
     </div>
   </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo">🏠 EasyHome Appliances</div>
-          <p class="footer-tagline">Making modern living accessible for every Filipino.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Products</h5><a href="catalog.html">All Appliances</a>
-        </div>
-        <div class="footer-col">
-          <h5>Company</h5><a href="about.html">About Us</a>
-        </div>
-        <div class="footer-col">
-          <h5>Support</h5><a href="about.html#faq">FAQ</a>
-        </div>
-      </div>
-      <div class="footer-bottom"><span>© 2025 EasyHome Appliances</span><span>Aniñon · Baclig · Tagalog</span></div>
-    </div>
-  </footer>
 
   <script src="shared.js"></script>
   <script>
-    // ── PANEL NAVIGATION ─────────────────────────────────────────
+    // Auth guard - redirect to login if not logged in
+    const session = Auth.session();
+    if (!session) window.location.href = 'login.html';
+    // Redirect admin to admin panel
+    if (session && session.role === 'admin') window.location.href = 'admin.html';
+
+    function loadUserInfo() {
+      const s = Auth.session();
+      if (!s) return;
+      document.getElementById('dash-avatar').textContent = s.avatar;
+      document.getElementById('dash-name').textContent = s.name;
+      document.getElementById('dash-email').textContent = s.email;
+      document.getElementById('welcome-name').textContent = s.name.split(' ')[0];
+      document.getElementById('profile-avatar').textContent = s.avatar;
+      document.getElementById('profile-name').textContent = s.name;
+      document.getElementById('profile-email').textContent = s.email;
+      document.getElementById('edit-name').value = s.name;
+      document.getElementById('edit-email').value = s.email;
+      const users = Store.get('users', []);
+      const u = users.find(x => x.email === s.email);
+      if (u) {
+        document.getElementById('edit-phone').value = u.phone || '';
+        const joined = new Date(u.joined).toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('profile-joined').textContent = 'Joined ' + joined;
+      }
+    }
+
     function showPanel(id) {
       document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.dash-nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.dash-nav-item').forEach(b => b.classList.remove('active'));
       document.getElementById('panel-' + id).classList.add('active');
-      const navItems = document.querySelectorAll('.dash-nav-item');
-      navItems.forEach(item => {
-        if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
-          item.classList.add('active');
-        }
+      const navMap = { overview: 'overview', applications: 'applications', payments: 'payments', cart: 'cart', wishlist: 'wishlist', profile: 'profile', 'settings-dash': 'settings-dash' };
+      document.querySelectorAll('.dash-nav-item').forEach(b => {
+        if (b.textContent.toLowerCase().includes(id.replace('-dash', '').replace('settings', 'setting'))) b.classList.add('active');
       });
       if (id === 'cart') renderCart();
-      if (id === 'overview') renderOverview();
       if (id === 'applications') renderApplications();
       if (id === 'payments') renderPayments();
-      if (id === 'profile') loadProfile();
-      if (id === 'settings') loadSettings();
-    }
-
-    // ── INIT PROFILE DISPLAY ─────────────────────────────────────
-    function initDashUser() {
-      const profile = Store.get('profile', null);
-      if (profile) {
-        const name = (profile.fname || '') + ' ' + (profile.lname || '');
-        document.getElementById('dash-display-name').textContent = name.trim() || 'Guest User';
-        document.getElementById('dash-welcome-name').textContent = profile.fname || 'Customer';
-        const initials = ((profile.fname || 'G')[0] + (profile.lname || 'U')[0]).toUpperCase();
-        document.getElementById('dash-avatar-initials').textContent = initials;
+      if (id === 'wishlist') renderWishlist();
+      if (id === 'settings-dash') {
+        const dark = Store.get('theme') === 'dark';
+        document.getElementById('dash-dark-mode').checked = dark;
       }
     }
 
-    // ── OVERVIEW ─────────────────────────────────────────────────
-    function renderOverview() {
-      const apps = Store.get('applications', []);
-      const cartItems = Cart.items();
-      const approved = apps.filter(a => a.status === 'Approved' || a.status === 'Active').length;
-      const monthlyDue = apps.filter(a => a.status === 'Active').reduce((s, a) => s + (a.monthly || 0), 0);
-      document.getElementById('stat-apps').textContent = apps.length;
-      document.getElementById('stat-cart').textContent = Cart.count();
-      document.getElementById('stat-approved').textContent = approved;
-      document.getElementById('stat-monthly').textContent = '₱' + monthlyDue.toLocaleString();
-
-      const list = document.getElementById('recent-apps-list');
-      if (!apps.length) {
-        list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No applications yet</div><div class="empty-desc">Apply for an installment plan to get started.</div><a class="btn btn-primary btn-sm" href="apply.html">Apply Now</a></div>`;
-        return;
-      }
-      list.innerHTML = apps.slice(0, 4).map((a, i) => appRowHtml(a, i)).join('');
-    }
-
-    // ── APPLICATIONS ─────────────────────────────────────────────
     function renderApplications() {
       const apps = Store.get('applications', []);
       const list = document.getElementById('applications-list');
+      const ovApps = document.getElementById('overview-apps');
       if (!apps.length) {
-        list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No applications yet</div><div class="empty-desc">Submit a new application to get started.</div><a class="btn btn-primary btn-sm" href="apply.html">Apply Now</a></div>`;
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No applications yet</div><div class="empty-desc">Start by browsing our product catalog.</div><a href="catalog.html" class="btn btn-primary btn-sm">Browse Products</a></div>`;
+        ovApps.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">No applications yet. <a href="apply.html" style="color:var(--g600);">Apply now →</a></div>`;
         return;
       }
-      list.innerHTML = apps.map((a, i) => appRowHtml(a, i, true)).join('');
-    }
-
-    const STATUS_COLORS = { Pending: 'badge-amber', Approved: 'badge-green', Active: 'badge-teal', Completed: 'badge-blue', Cancelled: 'badge-red' };
-
-    function appRowHtml(a, i, showActions = false) {
-      const color = STATUS_COLORS[a.status] || 'badge-blue';
-      return `<div class="order-row">
-    <div style="width:46px;height:46px;border-radius:var(--radius-sm);background:var(--g50);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📦</div>
-    <div class="order-info">
-      <div class="order-name">${a.name || 'Appliance'}</div>
-      <div class="order-meta">Ref: ${a.ref} &nbsp;•&nbsp; Applied: ${a.date}</div>
-    </div>
-    <div class="order-right">
-      <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;flex-wrap:wrap;">
-        <span class="badge ${color}">${a.status}</span>
-        ${showActions ? `
-        <button class="btn btn-secondary btn-sm" style="padding:6px 10px;" onclick="openEditApp(${i})">Edit</button>
-        <button class="btn btn-danger btn-sm" style="padding:6px 10px;" onclick="deleteApp(${i})">Delete</button>` : ''}
-      </div>
-      <div class="order-price" style="margin-top:4px;">₱${(a.monthly || 0).toLocaleString()}/mo</div>
-      <div class="order-date">${a.months} months</div>
-    </div>
-  </div>`;
-    }
-
-    function openEditApp(idx) {
-      const apps = Store.get('applications', []);
-      const a = apps[idx];
-      document.getElementById('ea-idx').value = idx;
-      document.getElementById('ea-name').value = a.name;
-      document.getElementById('ea-monthly').value = a.monthly;
-      document.getElementById('ea-months').value = a.months;
-      document.getElementById('ea-status').value = a.status;
-      Modal.open('edit-app-modal');
-    }
-
-    function saveAppEdit() {
-      const idx = parseInt(document.getElementById('ea-idx').value);
-      const apps = Store.get('applications', []);
-      apps[idx] = {
-        ...apps[idx],
-        name: document.getElementById('ea-name').value,
-        monthly: parseFloat(document.getElementById('ea-monthly').value) || 0,
-        months: parseInt(document.getElementById('ea-months').value) || 12,
-        status: document.getElementById('ea-status').value,
+      const imgs = {
+        'Panasonic 2-Door Refrigerator': 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=100&q=80',
+        'LG Front Load Washing Machine': 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=100&q=80',
+        default: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&q=80'
       };
-      Store.set('applications', apps);
-      Modal.close('edit-app-modal');
-      renderApplications();
-      renderOverview();
-      Toast.success('Application updated!');
+      const badgeClass = { 'In Review': 'badge-blue', 'Approved': 'badge-green', 'Draft': 'badge-amber', 'Rejected': 'badge-red' };
+      const html = apps.map(a => `
+    <div class="app-row">
+      <img class="app-img" src="${imgs[a.productName] || imgs.default}" alt="" onerror="this.style.background='var(--gray1)'">
+      <div class="app-info">
+        <div class="app-name">${a.productName || 'General Application'}</div>
+        <div class="app-meta">Ref: ${a.ref} · ${new Date(a.submittedAt).toLocaleDateString()}</div>
+      </div>
+      <div class="app-right">
+        <span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span>
+      </div>
+    </div>`).join('');
+      list.innerHTML = html;
+      ovApps.innerHTML = apps.slice(0, 3).map(a => `
+    <div class="app-row">
+      <div class="app-info"><div class="app-name">${a.productName || 'General'}</div><div class="app-meta">${a.ref} · ${new Date(a.submittedAt).toLocaleDateString()}</div></div>
+      <span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span>
+    </div>`).join('');
+
+      const total = apps.length;
+      const approved = apps.filter(a => a.status === 'Approved').length;
+      const review = apps.filter(a => a.status === 'In Review').length;
+      document.getElementById('stat-apps').textContent = total;
+      document.getElementById('stat-approved').textContent = approved;
+      document.getElementById('stat-review').textContent = review;
     }
 
-    function deleteApp(idx) {
-      if (!confirm('Delete this application?')) return;
-      const apps = Store.get('applications', []);
-      apps.splice(idx, 1);
-      Store.set('applications', apps);
-      renderApplications();
-      renderOverview();
-      Toast.success('Application deleted.');
+    function renderPayments() {
+      const apps = Store.get('applications', []).filter(a => a.status === 'Approved');
+      const list = document.getElementById('payments-list');
+      if (!apps.length) { list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted);">No active payment plans yet.</div>`; return; }
+      list.innerHTML = apps.map(a => `
+    <div class="payment-row">
+      <div><div style="font-size:14px;font-weight:500;color:var(--text);">${a.productName}</div><div class="payment-due">Ref: ${a.ref}</div></div>
+      <div><span class="badge badge-green">Active</span></div>
+    </div>`).join('');
     }
 
-    // ── CART ─────────────────────────────────────────────────────
     function renderCart() {
       const items = Cart.items();
-      const list = document.getElementById('cart-items-list');
-      const empty = document.getElementById('cart-empty-state');
-      const summary = document.getElementById('cart-summary-card');
-
-      if (!items.length) {
-        list.innerHTML = '';
-        empty.style.display = 'block';
-        summary.style.display = 'none';
-        return;
-      }
-      empty.style.display = 'none';
-      summary.style.display = 'block';
-
+      const list = document.getElementById('cart-list');
+      if (!items.length) { list.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">Your cart is empty</div><div class="empty-desc">Browse our products and add items to your cart.</div><a href="catalog.html" class="btn btn-primary btn-sm">Browse Products</a></div>`; return; }
       list.innerHTML = items.map(item => `
     <div class="cart-item">
-      <img class="cart-img" src="${item.img || ''}" alt="${item.name}" onerror="this.style.background='var(--gray1)'">
-      <div class="cart-info">
-        <div class="cart-name">${item.name}</div>
-        <div class="cart-price">₱${item.price.toLocaleString()} each</div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <div class="cart-qty-ctrl">
-          <button class="qty-btn" onclick="updateQty(${item.id},-1)">−</button>
+      <img class="cart-img" src="${item.img}" alt="${item.name}" onerror="this.style.background='var(--gray1)'">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:14px;font-weight:500;color:var(--text);">${item.name}</div>
+        <div style="font-size:13px;color:var(--muted);">₱${item.price.toLocaleString()}</div>
+        <div class="cart-qty-ctrl" style="margin-top:8px;">
+          <button class="qty-btn" onclick="adjQty(${item.id},-1)">−</button>
           <span class="qty-num">${item.qty || 1}</span>
-          <button class="qty-btn" onclick="updateQty(${item.id},1)">+</button>
+          <button class="qty-btn" onclick="adjQty(${item.id},1)">+</button>
         </div>
-        <div style="font-weight:500;color:var(--g600);">₱${(item.price * (item.qty || 1)).toLocaleString()}</div>
-        <button class="cart-remove" onclick="removeItem(${item.id})">Remove</button>
       </div>
-    </div>
-  `).join('');
+      <div style="text-align:right;">
+        <div style="font-size:15px;font-weight:500;color:var(--g600);">₱${(item.price * (item.qty || 1)).toLocaleString()}</div>
+        <button onclick="Cart.remove(${item.id});renderCart();" style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;margin-top:6px;">Remove</button>
+      </div>
+    </div>`).join('') + `
+    <div class="cart-total-bar">
+      <div><div style="font-size:12px;color:var(--g600);font-weight:500;">Cart Total</div><div style="font-family:'Fraunces',serif;font-size:24px;color:var(--g800);">₱${Cart.total().toLocaleString()}</div></div>
+      <a href="apply.html" class="btn btn-primary btn-sm">Proceed to Apply →</a>
+    </div>`;
 
-      const subtotal = Cart.total();
-      document.getElementById('cart-subtotal').textContent = '₱' + subtotal.toLocaleString();
-      document.getElementById('cart-total-display').textContent = '₱' + subtotal.toLocaleString();
+      const badge = document.getElementById('cart-sidebar-badge');
+      const c = Cart.count();
+      badge.textContent = c; badge.style.display = c ? 'inline-block' : 'none';
     }
 
-    function updateQty(id, delta) {
+    function adjQty(id, delta) {
       const items = Cart.items();
       const idx = items.findIndex(i => i.id === id);
       if (idx < 0) return;
-      const newQty = (items[idx].qty || 1) + delta;
-      if (newQty < 1) { removeItem(id); return; }
-      items[idx].qty = newQty;
-      Store.set('cart', items);
-      Cart.updateBadge();
-      renderCart();
+      items[idx].qty = Math.max(1, (items[idx].qty || 1) + delta);
+      Store.set('cart', items); Cart.updateBadge(); renderCart();
     }
 
-    function removeItem(id) {
-      Cart.remove(id);
-      renderCart();
-      Toast.info('Item removed from cart.');
-    }
-
-    function clearCart() {
-      if (!confirm('Clear all items from cart?')) return;
-      Cart.clear();
-      renderCart();
-      Toast.info('Cart cleared.');
-    }
-
-    // ── PAYMENTS ─────────────────────────────────────────────────
-    function renderPayments() {
-      const apps = Store.get('applications', []).filter(a => a.status === 'Active' || a.status === 'Approved');
-      const list = document.getElementById('payments-list');
-      if (!apps.length) return;
-
-      const nextAmt = apps[0]?.monthly || 0;
-      const nextDate = new Date(); nextDate.setDate(nextDate.getDate() + 7);
-      document.getElementById('next-payment-amt').textContent = '₱' + nextAmt.toLocaleString();
-      document.getElementById('next-payment-date').textContent = nextDate.toLocaleDateString('en-PH', { month: 'long', day: 'numeric', year: 'numeric' });
-
-      const rows = apps.flatMap((a, i) =>
-        Array.from({ length: Math.min(3, a.months || 6) }, (_, m) => {
-          const d = new Date(); d.setMonth(d.getMonth() + m + 1);
-          const paid = m === 0;
-          return `<div class="payment-row">
-        <div>
-          <div style="font-size:14px;font-weight:500;color:var(--g900);">${a.name}</div>
-          <div class="payment-due">${d.toLocaleDateString('en-PH', { month: 'long', day: 'numeric', year: 'numeric' })} &nbsp;•&nbsp; Month ${m + 1} of ${a.months}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="payment-amt">₱${(a.monthly || 0).toLocaleString()}</div>
-          ${paid
-              ? `<span class="badge badge-green">Paid</span>`
-              : `<button class="btn btn-primary btn-sm" onclick="markPaid(this,'${a.ref}',${m})">Pay Now</button>`}
-        </div>
-      </div>`;
-        })
-      ).join('');
-      list.innerHTML = rows || `<div class="empty-state"><div class="empty-icon">💳</div><div class="empty-title">No payments found</div></div>`;
-    }
-
-    function markPaid(btn) {
-      btn.innerHTML = '<span class="spinner"></span>';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.outerHTML = '<span class="badge badge-green">Paid</span>';
-        Toast.success('Payment recorded successfully!');
-      }, 1500);
-    }
-
-    // ── PROFILE ──────────────────────────────────────────────────
-    function loadProfile() {
-      const p = Store.get('profile', {});
-      document.getElementById('p-fname').value = p.fname || '';
-      document.getElementById('p-lname').value = p.lname || '';
-      document.getElementById('p-email').value = p.email || '';
-      document.getElementById('p-phone').value = p.phone || '';
-      document.getElementById('p-addr').value = p.addr || '';
-      document.getElementById('p-city').value = p.city || '';
-      const initials = ((p.fname || 'G')[0] + (p.lname || 'U')[0]).toUpperCase();
-      document.getElementById('profile-avatar-big').textContent = initials;
+    function renderWishlist() {
+      const wl = Store.get('wishlist', []);
+      const PRODS = [
+        { id: 1, name: 'Panasonic 2-Door Refrigerator', price: 17990, monthly: 1450, term: 12, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&q=80' },
+        { id: 2, name: 'LG Front Load Washing Machine', price: 24500, monthly: 1350, term: 12, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80' },
+        { id: 5, name: 'Carrier Inverter Aircon', price: 22000, monthly: 1600, term: 12, img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80' },
+      ];
+      const wishProds = PRODS.filter(p => wl.includes(p.id));
+      const grid = document.getElementById('wishlist-grid');
+      grid.innerHTML = wishProds.length ? wishProds.map(p => `
+    <div class="product-card card-hover">
+      <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="product-body"><div class="product-name">${p.name}</div><div class="product-price">₱${p.monthly.toLocaleString()}/mo</div><div class="product-monthly">for ${p.term} mos</div></div>
+      <div class="product-actions"><a href="product.html?id=${p.id}" class="btn btn-primary btn-sm" style="flex:1;">View Details</a></div>
+    </div>`).join('') :
+        `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">♥</div><div class="empty-title">No wishlist items</div><div class="empty-desc">Browse products and tap ♥ to save them here.</div><a href="catalog.html" class="btn btn-primary btn-sm">Browse Products</a></div>`;
     }
 
     function saveProfile() {
-      const profile = {
-        fname: document.getElementById('p-fname').value.trim(),
-        lname: document.getElementById('p-lname').value.trim(),
-        email: document.getElementById('p-email').value.trim(),
-        phone: document.getElementById('p-phone').value.trim(),
-        addr: document.getElementById('p-addr').value.trim(),
-        city: document.getElementById('p-city').value.trim(),
-      };
-      if (!profile.fname) { Toast.error('First name is required.'); return; }
-      Store.set('profile', profile);
-      initDashUser();
-      Toast.success('Profile saved successfully!');
+      const s = Auth.session();
+      const name = document.getElementById('edit-name').value.trim();
+      if (!name) { Toast.error('Name is required.'); return; }
+      const users = Store.get('users', []);
+      const idx = users.findIndex(u => u.email === s.email);
+      if (idx >= 0) {
+        users[idx].name = name;
+        users[idx].phone = document.getElementById('edit-phone').value;
+        Store.set('users', users);
+      }
+      Store.set('session', { ...s, name, avatar: name.slice(0, 2).toUpperCase() });
+      Toast.success('Profile updated!');
+      loadUserInfo();
     }
 
     function changePassword() {
-      const cur = document.getElementById('p-pw-cur').value;
-      const newPw = document.getElementById('p-pw-new').value;
-      const conf = document.getElementById('p-pw-conf').value;
-      if (!cur) { Toast.error('Enter your current password.'); return; }
-      if (newPw.length < 8) { Toast.error('New password must be at least 8 characters.'); return; }
-      if (newPw !== conf) { Toast.error('New passwords do not match.'); return; }
-      ['p-pw-cur', 'p-pw-new', 'p-pw-conf'].forEach(id => document.getElementById(id).value = '');
+      const oldPw = document.getElementById('old-pw').value;
+      const newPw = document.getElementById('new-pw').value;
+      const newPw2 = document.getElementById('new-pw2').value;
+      const s = Auth.session();
+      const users = Store.get('users', []);
+      const u = users.find(x => x.email === s.email);
+      if (!u) { Toast.error('User not found.'); return; }
+      if (u.password !== oldPw) { Toast.error('Current password is incorrect.'); return; }
+      if (!newPw || newPw.length < 8) { Toast.error('New password must be at least 8 characters.'); return; }
+      if (newPw !== newPw2) { Toast.error('Passwords do not match.'); return; }
+      u.password = newPw;
+      Store.set('users', users);
       Toast.success('Password updated successfully!');
+      document.getElementById('old-pw').value = '';
+      document.getElementById('new-pw').value = '';
+      document.getElementById('new-pw2').value = '';
     }
 
-    // ── SETTINGS ─────────────────────────────────────────────────
-    function loadSettings() {
-      const settings = Store.get('settings', {});
-      ['notif-email', 'notif-sms', 'notif-promo', 'sec-2fa', 'sec-login'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el && settings[id] !== undefined) el.checked = settings[id];
-      });
+    // Handle hash routing
+    function handleHash() {
+      const hash = location.hash.replace('#', '') || 'overview';
+      const valid = ['overview', 'applications', 'payments', 'cart', 'wishlist', 'profile', 'settings-dash'];
+      if (valid.includes(hash)) showPanel(hash);
     }
 
-    function saveSetting(key, val) {
-      const s = Store.get('settings', {});
-      s[key] = val;
-      Store.set('settings', s);
-      Toast.info('Setting saved.');
-    }
-
-    function clearAllData() {
-      if (!confirm('This will clear all your applications and cart. Continue?')) return;
-      ['applications', 'cart', 'profile', 'settings'].forEach(k => Store.del(k));
-      Cart.updateBadge();
-      renderOverview();
-      Toast.success('All data cleared.');
-    }
-
-    function confirmLogout() { Modal.open('logout-modal'); }
-
-    // ── HAMBURGER ─────────────────────────────────────────────────
-    document.getElementById('hamburger').addEventListener('click', function () {
-      this.classList.toggle('open');
-      const m = document.getElementById('mobile-menu');
-      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
-      m.classList.toggle('open');
-    });
-
-    // ── INIT ─────────────────────────────────────────────────────
-    initDashUser();
-    renderOverview();
-
-    // Handle hash navigation
-    if (location.hash === '#cart') showPanel('cart');
+    loadUserInfo();
+    renderApplications();
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
   </script>
 </body>
 
