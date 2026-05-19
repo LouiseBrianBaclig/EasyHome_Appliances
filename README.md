@@ -1,1 +1,1 @@
-# TP-EasyHome_Appliances
+# EasyHome_Appliances
