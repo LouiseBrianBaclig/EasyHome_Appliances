@@ -457,11 +457,14 @@
         <a class="nav-link" href="contact.html">Contact</a>
       </div>
       <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
-        <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+        <div class="nav-user-btn" id="nav-user-btn"
+          style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
           <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
         </div>
-        <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
-        <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')" style="margin-left:12px;">Apply Now</a>
+        <a class="nav-link" id="nav-login-btn" href="login.html"
+          style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+        <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')"
+          style="margin-left:12px;">Apply Now</a>
         <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -502,7 +505,8 @@
     <a class="nav-link" href="contact.html">Contact</a>
     <div class="mobile-menu-divider"></div>
     <a class="nav-link" href="login.html">Login</a>
-    <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')" style="margin-top:8px;width:fit-content;">Apply Now →</a>
+    <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')"
+      style="margin-top:8px;width:fit-content;">Apply Now →</a>
   </div>
 
   <!-- HERO -->
@@ -690,7 +694,8 @@
               <div style="font-size:17px;font-weight:500;color:var(--g800);" id="calc-total">₱18,890</div>
             </div>
           </div>
-          <a href="apply.html" class="btn btn-primary" onclick="return ensureAuth('apply.html')" style="width:100%;justify-content:center;margin-top:16px;">Apply
+          <a href="apply.html" class="btn btn-primary" onclick="return ensureAuth('apply.html')"
+            style="width:100%;justify-content:center;margin-top:16px;">Apply
             for This Plan →</a>
         </div>
       </div>
@@ -897,10 +902,10 @@
   <script src="shared.js"></script>
   <script>
     const APPLIANCES = [
-      { id: 1, name: 'Panasonic 2-Door Refrigerator', model: 'NR-BB221V', price: 17990, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=500&q=80', category: 'refrigerators', badge: 'Best Seller', monthly: 1450, term: 12 },
-      { id: 2, name: 'LG Front Load Washing Machine', model: '8.5kg Inverter', price: 24500, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=500&q=80', category: 'washers', badge: 'Popular', monthly: 1350, term: 12 },
-      { id: 3, name: 'Samsung 43" Crystal UHD TV', model: '4K Smart TV', price: 18000, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80', category: 'tvs', badge: 'New', monthly: 1200, term: 12 },
-      { id: 4, name: 'Sharp Microwave Oven', model: '20L Digital', price: 3900, img: 'https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=500&q=80', category: 'microwaves', badge: 'Available', monthly: 650, term: 6 },
+      { id: 1, name: 'Panasonic 2-Door Refrigerator', model: 'NR-BB221V', price: 17990, img: 'https://www.smappliance.com/cdn/shop/products/CW530XMM__Front_1__website.jpg?v=1669708660', category: 'refrigerators', badge: 'Best Seller', monthly: 1500, term: 12 },
+      { id: 2, name: 'LG Front Load Washing Machine', model: '8.5kg Inverter Drive', price: 24500, img: 'https://emcor.com.ph/wp-content/uploads/2025/10/FV1208D4W-1.jpg', category: 'washers', badge: 'Popular', monthly: 1400, term: 12 },
+      { id: 3, name: 'Samsung 43" Smart TV', model: 'Crystal UHD 4K', price: 18000, img: 'https://emcor.com.ph/wp-content/uploads/2025/10/UA43U8000FGXXP-1.jpg', category: 'tvs', badge: 'New', monthly: 1200, term: 12 },
+      { id: 4, name: 'Sharp Microwave Oven', model: '20L Digital', price: 3900, img: 'https://ansons.ph/wp-content/uploads/2025/07/02_R-32F.png', category: 'microwaves', badge: 'Available', monthly: 650, term: 6 },
     ];
 
     function renderFeatured() {
