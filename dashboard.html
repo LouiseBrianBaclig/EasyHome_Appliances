@@ -4,9 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyHome – Affordable Access to Essential Home Appliances</title>
-  <meta name="description"
-    content="EasyHome – Get essential home appliances through affordable installment plans. Zero large upfront payment. Free delivery and installation across the Philippines.">
+  <title>My Dashboard – EasyHome</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
   <link
@@ -14,948 +12,992 @@
     rel="stylesheet">
   <link rel="stylesheet" href="shared.css">
   <style>
-    .hero-section {
-      min-height: 100vh;
+    .dash-page {
       padding-top: var(--nav-h);
+      min-height: 100vh;
+      background: var(--bg-page)
+    }
+
+    .dash-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+      align-items: start;
+      padding: 24px 0
+    }
+
+    .dash-sidebar {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: sticky;
+      top: calc(var(--nav-h)+16px)
+    }
+
+    .dash-user-card {
+      padding: 24px;
+      text-align: center;
+      background: linear-gradient(145deg, var(--g50), var(--t50));
+      border-bottom: 1px solid var(--border)
+    }
+
+    .dash-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--g600);
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
       align-items: center;
-      gap: 60px;
-      background: linear-gradient(145deg, #edf6e0 0%, #e2f0d4 60%, #cce5b0 100%);
-      position: relative;
-      overflow: hidden
+      justify-content: center;
+      margin: 0 auto 10px
     }
 
-    [data-theme="dark"] .hero-section {
-      background: linear-gradient(145deg, #0d1f06 0%, #112808 60%, #142e08 100%)
-    }
-
-    .hero-content {
-      padding: 80px 0 80px 5vw;
-      max-width: 600px
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(59, 109, 17, .12);
-      border: 1px solid rgba(59, 109, 17, .2);
-      color: var(--g600);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
+    .dash-username {
+      font-size: 16px;
       font-weight: 500;
+      color: var(--text)
+    }
+
+    .dash-role {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .dash-nav {
+      padding: 8px 0
+    }
+
+    .dash-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+      border-left: 3px solid transparent;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left
+    }
+
+    .dash-nav-item:hover {
+      background: var(--gray0);
+      color: var(--g800)
+    }
+
+    .dash-nav-item.active {
+      background: var(--g50);
+      color: var(--g800);
+      border-left: 3px solid var(--g600)
+    }
+
+    .dash-nav-item .nav-icon {
+      font-size: 17px;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0
+    }
+
+    .dash-panel {
+      display: none
+    }
+
+    .dash-panel.active {
+      display: block;
+      animation: fadeUp .35s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
       margin-bottom: 24px
     }
 
-    .hero-badge .dot {
-      width: 7px;
-      height: 7px;
-      background: var(--g400);
-      border-radius: 50%;
-      animation: pulse 2s infinite
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: .4
-      }
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 5.5vw, 68px);
-      letter-spacing: -0.028em;
-      color: var(--text);
-      margin-bottom: 20px
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--g400)
-    }
-
-    .hero .lead {
-      max-width: 480px;
-      margin-bottom: 36px
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap
-    }
-
-    .hero-visual {
-      padding-right: 5vw;
-      display: flex;
-      justify-content: center
-    }
-
-    .hero-card {
+    .stat-card {
       background: var(--surface);
-      border-radius: 22px;
-      padding: 26px;
-      box-shadow: 0 24px 64px rgba(59, 109, 17, .12);
-      width: 330px;
-      position: relative;
-      animation: heroFloat 6s ease-in-out infinite;
-      border: 1px solid var(--border)
-    }
-
-    @keyframes heroFloat {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(-10px)
-      }
-    }
-
-    .hero-card-appliances {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 18px
-    }
-
-    .hca-item {
-      background: var(--gray1);
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
-      cursor: pointer;
-      border: 1.5px solid transparent;
-      transition: all var(--transition)
-    }
-
-    .hca-item:hover,
-    .hca-item.active {
-      background: var(--g50);
-      border-color: var(--g200)
-    }
-
-    .hca-icon {
-      font-size: 26px
-    }
-
-    .hca-name {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--muted);
-      margin-top: 4px
-    }
-
-    .hero-plan-strip {
-      background: var(--g50);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between
-    }
-
-    .hero-plan-label {
-      font-size: 12px;
-      color: var(--g600);
-      font-weight: 500
-    }
-
-    .hero-plan-price {
-      font-family: 'Fraunces', serif;
-      font-size: 24px;
-      color: var(--g800)
-    }
-
-    .hero-plan-price small {
-      font-family: 'DM Sans';
-      font-size: 12px;
-      color: var(--g600)
-    }
-
-    .hero-pill {
-      position: absolute;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 1.4;
-      box-shadow: var(--shadow-md);
-      animation: heroFloat 6s ease-in-out infinite
-    }
-
-    .hero-pill-1 {
-      top: -20px;
-      right: -24px;
-      background: var(--a50);
-      color: var(--a600);
-      border: 1px solid var(--a100);
-      animation-delay: -2s
-    }
-
-    .hero-pill-2 {
-      bottom: -20px;
-      left: -24px;
-      background: var(--t50);
-      color: var(--t600);
-      border: 1px solid var(--t100);
-      animation-delay: -4s
-    }
-
-    .hero-circles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none
-    }
-
-    .hc {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(59, 109, 17, .05)
-    }
-
-    .problems-section {
-      background: var(--gray1);
-      padding: 80px 0
-    }
-
-    .solution-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center
-    }
-
-    .solution-features {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 14px
+      gap: 6px
     }
 
-    .calc-card {
-      background: var(--surface);
-      border-radius: var(--radius-xl);
-      padding: 32px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md)
+    .stat-card-val {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      color: var(--text)
     }
 
-    .months-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px
+    .stat-card-lbl {
+      font-size: 12px;
+      color: var(--muted)
     }
 
-    .month-btn {
-      padding: 10px 6px;
-      border: 1.5px solid var(--border-md);
-      border-radius: var(--radius-sm);
-      background: var(--surface);
-      font-size: 13px;
-      color: var(--muted);
-      font-family: 'DM Sans';
-      transition: all var(--transition);
-      font-weight: 500
-    }
-
-    .month-btn:hover {
-      border-color: var(--g200);
-      color: var(--g600)
-    }
-
-    .month-btn.active {
-      background: var(--g600);
-      color: white;
-      border-color: var(--g600)
-    }
-
-    .calc-result-box {
-      background: var(--g50);
-      border-radius: var(--radius-md);
-      padding: 18px 20px;
-      margin-top: 18px;
+    .app-row {
       display: flex;
       align-items: center;
-      justify-content: space-between
+      gap: 14px;
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      transition: background var(--transition)
     }
 
-    .calc-monthly-amt {
-      font-family: 'Fraunces', serif;
-      font-size: 34px;
-      color: var(--g800)
+    .app-row:hover {
+      background: var(--gray0)
     }
 
-    .how-section {
-      background: var(--g900);
-      padding: 80px 0
+    .app-img {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--gray1);
+      flex-shrink: 0
     }
 
-    [data-theme="dark"] .how-section {
-      background: #080e04
+    .app-info {
+      flex: 1;
+      min-width: 0
     }
 
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      background: rgba(255, 255, 255, .06);
-      border-radius: 20px;
-      overflow: hidden
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px
-    }
-
-    .users-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px
-    }
-
-    .user-card {
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      border: 1px solid transparent;
-      transition: transform var(--transition), box-shadow var(--transition)
-    }
-
-    .user-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md)
-    }
-
-    .uc-green {
-      background: var(--g50);
-      border-color: var(--g100)
-    }
-
-    .uc-teal {
-      background: var(--t50);
-      border-color: var(--t100)
-    }
-
-    .uc-amber {
-      background: var(--a50);
-      border-color: var(--a100)
-    }
-
-    .user-emoji {
-      font-size: 38px;
-      margin-bottom: 14px
-    }
-
-    .user-type {
-      font-size: 17px;
+    .app-name {
+      font-size: 14px;
       font-weight: 500;
       color: var(--text);
-      margin-bottom: 8px
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
     }
 
-    .user-desc {
-      font-size: 14px;
+    .app-meta {
+      font-size: 12px;
       color: var(--muted);
-      line-height: 1.7
+      margin-top: 2px
+    }
+
+    .app-right {
+      text-align: right;
+      flex-shrink: 0
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .cart-img {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--gray1);
+      flex-shrink: 0
+    }
+
+    .cart-qty-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border-md);
+      border-radius: 6px;
+      background: var(--surface);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition)
+    }
+
+    .qty-btn:hover {
+      background: var(--g50)
+    }
+
+    .cart-total-bar {
+      background: var(--g50);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px
+    }
+
+    .profile-avatar-wrap {
+      position: relative;
+      display: inline-block
+    }
+
+    .avatar-edit-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--g600);
+      color: white;
+      border: 2px solid var(--surface);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer
+    }
+
+    .need-help {
+      background: linear-gradient(145deg, var(--g50), var(--t50));
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 16px
     }
 
     @media(max-width:900px) {
-      .hero-section {
+      .dash-layout {
         grid-template-columns: 1fr
       }
 
-      .hero-visual {
+      .dash-sidebar {
+        position: static;
+        display: flex;
+        flex-direction: column
+      }
+
+      .dash-user-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        background: linear-gradient(145deg, var(--g50), var(--t50));
+        border-bottom: 1px solid var(--border);
+        text-align: left
+      }
+
+      .dash-nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        gap: 0
+      }
+
+      .dash-nav-item {
+        flex: 1;
+        min-width: 150px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        padding: 12px 16px;
+        text-align: center;
+        border-radius: 0
+      }
+
+      .dash-nav-item.active {
+        border-left: none;
+        border-bottom: 3px solid var(--g600);
+        background: var(--g50)
+      }
+
+      .need-help {
         display: none
       }
 
-      .hero-content {
-        padding: 80px 5vw 60px;
-        text-align: center;
-      }
-
-      .solution-grid {
+      .grid-2 {
         grid-template-columns: 1fr
       }
 
-      .how-grid {
+      .stat-cards {
         grid-template-columns: repeat(2, 1fr)
-      }
-
-      .users-grid {
-        grid-template-columns: 1fr
-      }
-    }
-
-    @media(max-width:768px) {
-      .hero-content {
-        padding: 64px 5vw 48px;
-      }
-
-      .how-grid {
-        grid-template-columns: 1fr
-      }
-
-      .hero-badge,
-      .hero-plan-strip {
-        margin-left: auto;
-        margin-right: auto;
       }
     }
 
     @media(max-width:600px) {
-      .hero-section {
-        padding-top: calc(var(--nav-h) + 20px);
-        gap: 40px;
+      .dash-sidebar {
+        margin-bottom: 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid var(--border)
       }
 
-      .hero-content {
-        padding: 40px 5vw 40px;
+      .dash-user-card {
+        padding: 12px 16px;
+        gap: 12px
       }
 
-      .hero h1 {
-        font-size: clamp(32px, 7vw, 48px);
+      .dash-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 18px
       }
 
-      .hero-card {
-        width: auto;
-        max-width: 100%;
-        margin: 0 auto;
+      .dash-username {
+        font-size: 14px
       }
 
-      .hero-plan-strip {
-        flex-direction: column;
-        align-items: flex-start;
+      .dash-role {
+        font-size: 11px
+      }
+
+      .dash-nav {
+        overflow-x: auto
+      }
+
+      .dash-nav-item {
+        min-width: 100px;
+        padding: 10px 12px;
+        font-size: 12px
+      }
+
+      .dash-nav-item .nav-icon {
+        font-size: 16px
+      }
+
+      .stat-cards {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .section-card {
+        padding: 16px
+      }
+
+      .section-card-title {
+        font-size: 14px;
+        margin-bottom: 12px
+      }
+
+      .cart-item {
+        flex-wrap: wrap;
         gap: 10px;
+        padding: 12px 0
+      }
+
+      .cart-img {
+        width: 50px;
+        height: 50px
+      }
+
+      .app-row {
+        padding: 10px 12px;
+        gap: 10px
+      }
+
+      .app-img {
+        width: 45px;
+        height: 45px
+      }
+
+      .app-name {
+        font-size: 12px
+      }
+
+      .app-meta {
+        font-size: 10px
+      }
+    }
+
+    @media(max-width:480px) {
+      .stat-cards {
+        grid-template-columns: 1fr
+      }
+
+      .dash-nav-item {
+        min-width: 80px;
+        padding: 8px 10px;
+        font-size: 11px
+      }
+
+      .section-card {
+        padding: 12px
+        margin-bottom: 16px
+      }
+
+      .form-group {
+        margin-bottom: 14px
+      }
+
+      .grid-2 {
+        gap: 12px
+      }
+
+      .btn-sm {
+        width: 100%;
+        justify-content: center
+      }
+
+      .settings-row {
+        flex-wrap: wrap;
+        gap: 10px
+      }
+
+      .form-label {
+        font-size: 12px
+      }
+
+      .form-control,
+      .form-select {
+        font-size: 14px;
+        padding: 10px 12px
       }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- NAV -->
-  <nav id="main-nav">
-    <div class="nav-inner">
-      <a class="nav-logo" href="index.html">
-        <div class="nav-logo-mark">🏠</div>
-        <span>Easy<span style="color:var(--g400)">Home</span></span>
-      </a>
-      <div class="nav-links">
-        <a class="nav-link active" href="index.html">Home</a>
-        <a class="nav-link" href="catalog.html">Products</a>
-        <a class="nav-link" href="index.html#howitworks">How It Works</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="contact.html">Contact</a>
-      </div>
-      <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
-        <div class="nav-user-btn" id="nav-user-btn"
-          style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
-          <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
+  <div class="dash-page">
+    <nav id="main-nav">
+      <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+          <div class="nav-logo-mark">🏠</div><span>Easy<span style="color:var(--g400)">Home</span></span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="catalog.html">Products</a>
+          <a class="nav-link" href="index.html#howitworks">How It Works</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
         </div>
-        <a class="nav-link" id="nav-login-btn" href="login.html"
-          style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
-        <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')"
-          style="margin-left:12px;">Apply Now</a>
-        <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
+          <div class="nav-user-btn" id="nav-user-btn" style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
+            <span style="font-size:18px;line-height:1;">👤</span><span id="nav-user-name"></span>
+          </div>
+          <a class="nav-link" id="nav-login-btn" href="login.html" style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
+          <a class="btn btn-primary btn-sm" href="apply.html" style="margin-left:12px;">Apply Now</a>
+          <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </nav>
+    <div class="settings-panel" id="settings-panel">
+      <div class="settings-panel-title">⚙️ Settings</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">🌙 Dark Mode</div>
+          <div class="settings-desc">Switch theme</div>
+        </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
+            onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">🔔 Notifications</div>
+        </div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-track"></span></label>
+      </div>
+      <div class="settings-row" style="border:none;padding-bottom:0;">
+        <button onclick="Auth.logout()"
+          style="font-size:13px;color:var(--r600);background:none;border:none;cursor:pointer;font-weight:500;">🚪
+          Logout</button>
       </div>
     </div>
-  </nav>
-
-  <!-- Settings Panel -->
-  <div class="settings-panel" id="settings-panel">
-    <div class="settings-panel-title">⚙️ Settings</div>
-    <div class="settings-row">
-      <div>
-        <div class="settings-label">🌙 Dark Mode</div>
-        <div class="settings-desc">Switch to dark theme</div>
-      </div>
-      <label class="toggle-switch"><input type="checkbox" id="theme-toggle" onchange="toggleTheme(this.checked)"><span
-          class="toggle-track"></span></label>
-    </div>
-    <div class="settings-row">
-      <div>
-        <div class="settings-label">🔔 Notifications</div>
-        <div class="settings-desc">Enable alerts</div>
-      </div>
-      <label class="toggle-switch"><input type="checkbox" checked onchange="Store.set('notifs',this.checked)"><span
-          class="toggle-track"></span></label>
-    </div>
-    <div class="settings-row" style="border:none;padding-bottom:0;margin-top:4px;">
-      <a href="login.html" style="font-size:13px;color:var(--g600);font-weight:500;">Login / Register →</a>
+    <div class="mobile-menu" id="mobile-menu">
+      <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="catalog.html">Products</a>
+      <a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <div class="mobile-menu-divider"></div>
       <button onclick="Auth.logout()"
-        style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;font-weight:500;">Logout</button>
+        style="font-size:14px;color:var(--r600);background:none;border:none;cursor:pointer;padding:10px 14px;text-align:left;width:100%;">🚪
+        Logout</button>
+    </div>
+
+    <div class="container">
+      <div class="dash-layout">
+        <!-- Sidebar -->
+        <div class="dash-sidebar">
+          <div class="dash-user-card">
+            <div class="profile-avatar-wrap">
+              <div class="dash-avatar" id="dash-avatar">JD</div>
+              <div class="avatar-edit-btn" onclick="showPanel('profile')" title="Edit profile">✏️</div>
+            </div>
+            <div class="dash-username" id="dash-name">John Doe</div>
+            <div class="dash-role" id="dash-email">user@email.com</div>
+          </div>
+          <div class="dash-nav">
+            <button class="dash-nav-item active" onclick="showPanel('overview')"><span class="nav-icon">🏠</span>
+              Dashboard</button>
+            <button class="dash-nav-item" onclick="showPanel('applications')"><span class="nav-icon">📋</span> My
+              Applications</button>
+            <button class="dash-nav-item" onclick="showPanel('payments')"><span class="nav-icon">📅</span> Payment
+              Plans</button>
+            <button class="dash-nav-item" onclick="showPanel('cart')" id="cart-nav-item"><span
+                class="nav-icon">🛒</span> My Cart <span id="cart-sidebar-badge"
+                style="margin-left:auto;background:var(--g600);color:white;font-size:11px;padding:2px 7px;border-radius:10px;display:none;"></span></button>
+            <button class="dash-nav-item" onclick="showPanel('wishlist')"><span class="nav-icon">♥</span>
+              Wishlist</button>
+            <button class="dash-nav-item" onclick="showPanel('profile')"><span class="nav-icon">👤</span>
+              Profile</button>
+            <button class="dash-nav-item" onclick="showPanel('settings-dash')"><span class="nav-icon">⚙️</span>
+              Settings</button>
+            <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+            <button class="dash-nav-item" style="color:var(--r600);" onclick="Auth.logout()"><span
+                class="nav-icon">🚪</span> Logout</button>
+          </div>
+          <div class="need-help">
+            <div style="font-size:13px;font-weight:600;color:var(--g800);margin-bottom:4px;">Need Help?</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Our support team is here to help you.
+            </div>
+            <a href="contact.html" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">Contact
+              Support</a>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div id="dash-content">
+          <!-- OVERVIEW -->
+          <div class="dash-panel active" id="panel-overview">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+              <div>
+                <h2 style="font-size:26px;color:var(--text);">Welcome back, <span id="welcome-name">there</span>! 👋
+                </h2>
+                <p style="font-size:14px;color:var(--muted);">Here's what's happening with your account.</p>
+              </div>
+              <a href="apply.html" class="btn btn-primary btn-sm">+ New Application</a>
+            </div>
+            <div class="stat-cards">
+              <div class="stat-card">
+                <div style="font-size:24px;">📋</div>
+                <div class="stat-card-val" id="stat-apps">0</div>
+                <div class="stat-card-lbl">Active Applications</div>
+              </div>
+              <div class="stat-card">
+                <div style="font-size:24px;">✅</div>
+                <div class="stat-card-val" id="stat-approved">0</div>
+                <div class="stat-card-lbl">Approved</div>
+              </div>
+              <div class="stat-card">
+                <div style="font-size:24px;">🕐</div>
+                <div class="stat-card-val" id="stat-review">0</div>
+                <div class="stat-card-lbl">In Review</div>
+              </div>
+            </div>
+            <div class="grid-2" style="gap:24px;">
+              <div class="section-card">
+                <div class="section-card-title" style="display:flex;align-items:center;justify-content:space-between;">
+                  My Applications <button class="btn btn-secondary btn-sm" onclick="showPanel('applications')">View
+                    All</button></div>
+                <div id="overview-apps">
+                  <div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">No applications yet. <a
+                      href="apply.html" style="color:var(--g600);">Apply now →</a></div>
+                </div>
+              </div>
+              <div class="section-card">
+                <div class="section-card-title">Quick Links</div>
+                <div class="grid-2" style="gap:10px;">
+                  <a href="catalog.html" class="feature-row" style="text-decoration:none;">
+                    <div class="feature-icon">🛒</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">Browse Products</div>
+                    </div>
+                  </a>
+                  <button class="feature-row" onclick="showPanel('payments')"
+                    style="border:none;cursor:pointer;text-align:left;">
+                    <div class="feature-icon">📅</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">Payment Plans</div>
+                    </div>
+                  </button>
+                  <a href="index.html#howitworks" class="feature-row" style="text-decoration:none;">
+                    <div class="feature-icon">❓</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">How It Works</div>
+                    </div>
+                  </a>
+                  <a href="contact.html" class="feature-row" style="text-decoration:none;">
+                    <div class="feature-icon">🎧</div>
+                    <div>
+                      <div class="feature-title" style="font-size:13px;">Help Center</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- APPLICATIONS -->
+          <div class="dash-panel" id="panel-applications">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+              <h2 style="font-size:22px;color:var(--text);">My Applications</h2>
+              <a href="apply.html" class="btn btn-primary btn-sm">+ New Application</a>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">All Applications</div>
+              <div id="applications-list"></div>
+            </div>
+          </div>
+
+          <!-- PAYMENTS -->
+          <div class="dash-panel" id="panel-payments">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">Payment Plans</h2>
+            <div class="section-card">
+              <div class="section-card-title">Active Payment Schedules</div>
+              <div id="payments-list">
+                <div style="text-align:center;padding:40px;color:var(--muted);">No active payment plans yet. <a
+                    href="catalog.html" style="color:var(--g600);">Browse products →</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CART -->
+          <div class="dash-panel" id="panel-cart">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">My Cart</h2>
+            <div class="section-card">
+              <div class="section-card-title">Cart Items</div>
+              <div id="cart-list"></div>
+            </div>
+          </div>
+
+          <!-- WISHLIST -->
+          <div class="dash-panel" id="panel-wishlist">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">My Wishlist</h2>
+            <div id="wishlist-grid" class="grid-auto"></div>
+          </div>
+
+          <!-- PROFILE -->
+          <div class="dash-panel" id="panel-profile">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">Profile Information</h2>
+            <div class="section-card">
+              <div class="section-card-title">Personal Details</div>
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+                <div class="profile-avatar-wrap">
+                  <div class="dash-avatar" id="profile-avatar" style="width:72px;height:72px;font-size:26px;">JD</div>
+                </div>
+                <div>
+                  <div style="font-size:18px;font-weight:500;color:var(--text);" id="profile-name">John Doe</div>
+                  <div style="font-size:14px;color:var(--muted);" id="profile-email">user@email.com</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="profile-joined">Joined —</div>
+                </div>
+              </div>
+              <div class="grid-2" style="gap:14px;">
+                <div class="form-group"><label class="form-label">Full Name</label><input class="form-control"
+                    id="edit-name" type="text"></div>
+                <div class="form-group"><label class="form-label">Email Address</label><input class="form-control"
+                    id="edit-email" type="email" readonly style="background:var(--gray1);cursor:not-allowed;"></div>
+                <div class="form-group"><label class="form-label">Phone Number</label><input class="form-control"
+                    id="edit-phone" type="tel" placeholder="09XXXXXXXXX"></div>
+                <div class="form-group"><label class="form-label">Date of Birth</label><input class="form-control"
+                    id="edit-dob" type="date"></div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save Changes</button>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Change Password</div>
+              <div class="grid-2" style="gap:14px;">
+                <div class="form-group"><label class="form-label">Current Password</label>
+                  <div class="pw-wrapper"><input class="form-control" id="old-pw" type="password"
+                      placeholder="Current password"><button class="pw-toggle" type="button"></button></div>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-group"><label class="form-label">New Password</label>
+                  <div class="pw-wrapper"><input class="form-control" id="new-pw" type="password"
+                      placeholder="New password"><button class="pw-toggle" type="button"></button></div>
+                </div>
+                <div class="form-group"><label class="form-label">Confirm New Password</label>
+                  <div class="pw-wrapper"><input class="form-control" id="new-pw2" type="password"
+                      placeholder="Confirm new password"><button class="pw-toggle" type="button"></button></div>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="changePassword()">Update Password</button>
+            </div>
+          </div>
+
+          <!-- SETTINGS -->
+          <div class="dash-panel" id="panel-settings-dash">
+            <h2 style="font-size:22px;color:var(--text);margin-bottom:24px;">Settings</h2>
+            <div class="section-card">
+              <div class="section-card-title">Appearance</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🌙 Dark Mode</div>
+                  <div class="settings-desc">Use dark color scheme throughout the app</div>
+                </div><label class="toggle-switch"><input type="checkbox" id="dash-dark-mode"
+                    onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🔤 Font Size</div>
+                  <div class="settings-desc">Default text size</div>
+                </div><select class="form-select" style="width:120px;"
+                  onchange="document.documentElement.style.fontSize=this.value">
+                  <option value="15px">Small</option>
+                  <option value="16px" selected>Normal</option>
+                  <option value="17px">Large</option>
+                </select>
+              </div>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Notifications</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">📧 Email Notifications</div>
+                  <div class="settings-desc">Receive updates on your applications</div>
+                </div><label class="toggle-switch"><input type="checkbox" checked
+                    onchange="Store.set('email_notif',this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">📱 SMS Alerts</div>
+                  <div class="settings-desc">Get SMS for payment reminders</div>
+                </div><label class="toggle-switch"><input type="checkbox" checked
+                    onchange="Store.set('sms_notif',this.checked)"><span class="toggle-track"></span></label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🔔 Push Notifications</div>
+                  <div class="settings-desc">In-app notifications</div>
+                </div><label class="toggle-switch"><input type="checkbox" checked><span
+                    class="toggle-track"></span></label>
+              </div>
+            </div>
+            <div class="section-card">
+              <div class="section-card-title">Account</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">🗑️ Clear Cart</div>
+                  <div class="settings-desc">Remove all items from cart</div>
+                </div><button class="btn btn-danger btn-sm"
+                  onclick="Cart.clear();renderCart();Toast.success('Cart cleared.')">Clear Cart</button>
+              </div>
+              <div class="settings-row" style="border:none;">
+                <div>
+                  <div class="settings-label">🚪 Logout</div>
+                  <div class="settings-desc">Sign out of your account</div>
+                </div><button class="btn btn-danger btn-sm" onclick="Auth.logout()">Logout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobile-menu">
-    <a class="nav-link" href="index.html">Home</a>
-    <a class="nav-link" href="catalog.html">Products</a>
-    <a class="nav-link" href="index.html#howitworks">How It Works</a>
-    <a class="nav-link" href="about.html">About</a>
-    <a class="nav-link" href="contact.html">Contact</a>
-    <div class="mobile-menu-divider"></div>
-    <a class="nav-link" href="login.html"><span style="margin-right:8px;">👤</span>Login</a>
-    <a class="btn btn-primary btn-sm" href="apply.html" onclick="return ensureAuth('apply.html')"
-      style="margin-top:8px;">Apply Now →</a>
-  </div>
-
-  <!-- HERO -->
-  <section class="hero-section">
-    <div class="hero-circles">
-      <div class="hc" style="width:400px;height:400px;top:-100px;right:8%"></div>
-      <div class="hc" style="width:200px;height:200px;bottom:10%;left:5%"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-badge" data-reveal><span class="dot"></span> Serving families across the Philippines</div>
-      <h1 class="hero" data-reveal data-reveal-delay="1">Essential appliances, <em>accessible</em> for everyone.</h1>
-      <p class="lead" data-reveal data-reveal-delay="2">EasyHome lets you bring home the appliances you need today —
-        through affordable installment plans with zero large upfront payment required.</p>
-      <div class="hero-btns" data-reveal data-reveal-delay="3">
-        <a class="btn btn-primary" href="catalog.html">Browse Appliances →</a>
-        <a class="btn btn-secondary" href="apply.html" onclick="return ensureAuth('apply.html')">Apply in Minutes</a>
-      </div>
-    </div>
-    <div class="hero-visual" data-reveal data-reveal-delay="2">
-      <div class="hero-card">
-        <p style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:12px;">Quick Calculator</p>
-        <div class="hero-card-appliances">
-          <div class="hca-item active" onclick="heroSetAppliance(this,3500)">
-            <div class="hca-icon">🌀</div>
-            <div class="hca-name">Washer</div>
-          </div>
-          <div class="hca-item" onclick="heroSetAppliance(this,17990)">
-            <div class="hca-icon">❄️</div>
-            <div class="hca-name">Refrigerator</div>
-          </div>
-          <div class="hca-item" onclick="heroSetAppliance(this,22000)">
-            <div class="hca-icon">🌬️</div>
-            <div class="hca-name">Aircon</div>
-          </div>
-          <div class="hca-item" onclick="heroSetAppliance(this,18000)">
-            <div class="hca-icon">📺</div>
-            <div class="hca-name">Smart TV</div>
-          </div>
-        </div>
-        <div class="hero-plan-strip">
-          <div>
-            <div class="hero-plan-label">Monthly installment</div>
-            <div class="hero-plan-price" id="hero-price">₱309 <small>/ 12 mos</small></div>
-          </div>
-          <a href="apply.html" class="btn btn-primary btn-sm" onclick="return ensureAuth('apply.html')">Apply</a>
-        </div>
-        <div class="hero-pill hero-pill-1">✔ Free Delivery<br>✔ Free Installation</div>
-        <div class="hero-pill hero-pill-2">🔧 Maintenance Included<br>on All Plans</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <section class="stats-bar">
-    <div class="container">
-      <div class="stats-grid">
-        <div data-reveal>
-          <div class="stat-num">₱0</div>
-          <div class="stat-label">Down Payment Required</div>
-        </div>
-        <div data-reveal data-reveal-delay="1">
-          <div class="stat-num">3 hrs</div>
-          <div class="stat-label">Average Delivery Time</div>
-        </div>
-        <div data-reveal data-reveal-delay="2">
-          <div class="stat-num">200+</div>
-          <div class="stat-label">Appliance Models</div>
-        </div>
-        <div data-reveal data-reveal-delay="3">
-          <div class="stat-num">10K+</div>
-          <div class="stat-label">Happy Customers</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROBLEMS -->
-  <section class="problems-section">
-    <div class="container">
-      <div class="section-header" data-reveal>
-        <span class="label">The Problem</span>
-        <h2 class="display-2">Why appliances are out of reach for most</h2>
-        <p class="lead">Millions of Filipinos need essential appliances but face one common barrier — the high upfront
-          cost.</p>
-      </div>
-      <div class="grid-3">
-        <div class="problem-card" data-reveal>
-          <div class="problem-num">01</div>
-          <h3 class="problem-title">High Upfront Costs</h3>
-          <p class="problem-desc">Low-income families cannot afford appliances due to large one-time payments — limiting
-            access to essentials for daily living like food storage, cooking, and comfort.</p>
-          <div class="problem-who">👥 Low-income households, students, renters</div>
-        </div>
-        <div class="problem-card" data-reveal data-reveal-delay="1">
-          <div class="problem-num">02</div>
-          <h3 class="problem-title">Newly Moved Households</h3>
-          <p class="problem-desc">Young professionals and newlyweds need appliances immediately after moving but lack
-            sufficient budget for a full purchase at once.</p>
-          <div class="problem-who">👥 Young professionals, newly married couples</div>
-        </div>
-        <div class="problem-card" data-reveal data-reveal-delay="2">
-          <div class="problem-num">03</div>
-          <h3 class="problem-title">Small Businesses Left Out</h3>
-          <p class="problem-desc">Laundry shops, food stalls, and small entrepreneurs need appliances to earn income but
-            cannot afford them upfront to start operating.</p>
-          <div class="problem-who">👥 Laundry shops, food stalls, entrepreneurs</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOLUTION -->
-  <section class="section">
-    <div class="container">
-      <div class="solution-grid">
-        <div>
-          <span class="label" data-reveal>Our Solution</span>
-          <h2 class="display-2" data-reveal data-reveal-delay="1">Pay monthly — start living today.</h2>
-          <p class="lead" data-reveal data-reveal-delay="2" style="margin-bottom:28px;">Affordable installment plans so
-            everyone can access essential appliances — no large upfront payment needed.</p>
-          <div class="solution-features">
-            <div class="feature-row" data-reveal>
-              <div class="feature-icon">📦</div>
-              <div>
-                <div class="feature-title">Flexible Installment Plans</div>
-                <div class="feature-desc">Monthly payments. Terms from 6 to 24 months. Zero or low down payment.</div>
-              </div>
-            </div>
-            <div class="feature-row" data-reveal data-reveal-delay="1">
-              <div class="feature-icon">🚚</div>
-              <div>
-                <div class="feature-title">Free Delivery & Installation</div>
-                <div class="feature-desc">We deliver and professionally install your appliance at no extra charge —
-                  within selected areas.</div>
-              </div>
-            </div>
-            <div class="feature-row" data-reveal data-reveal-delay="2">
-              <div class="feature-icon">🔧</div>
-              <div>
-                <div class="feature-title">Ongoing Maintenance Support</div>
-                <div class="feature-desc">All plans include access to our certified repair and maintenance team.</div>
-              </div>
-            </div>
-            <div class="feature-row" data-reveal data-reveal-delay="3">
-              <div class="feature-icon">💳</div>
-              <div>
-                <div class="feature-title">Pay via GCash & Banks</div>
-                <div class="feature-desc">Multiple payment channels — GCash, major banks, or over-the-counter. No
-                  complex paperwork.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="calc-card" data-reveal data-reveal-delay="2">
-          <h3 style="font-size:20px;color:var(--text);margin-bottom:22px;">Installment Calculator</h3>
-          <div class="form-group">
-            <label class="form-label">Choose an Appliance</label>
-            <select class="form-select" id="calc-select" onchange="calcUpdate()">
-              <option value="3500">Washing Machine — ₱3,500</option>
-              <option value="17990">Panasonic Refrigerator — ₱17,990</option>
-              <option value="22000">Air Conditioner — ₱22,000</option>
-              <option value="18000">55" Smart TV — ₱18,000</option>
-              <option value="1200">Electric Fan — ₱1,200</option>
-              <option value="900">Rice Cooker — ₱900</option>
-              <option value="35000">Side-by-Side Ref — ₱35,000</option>
-              <option value="28000">Inverter Aircon — ₱28,000</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Payment Term</label>
-            <div class="months-grid">
-              <button class="month-btn" onclick="setMonths(6,this)">6 mos</button>
-              <button class="month-btn active" onclick="setMonths(12,this)">12 mos</button>
-              <button class="month-btn" onclick="setMonths(18,this)">18 mos</button>
-              <button class="month-btn" onclick="setMonths(24,this)">24 mos</button>
-            </div>
-          </div>
-          <div class="calc-result-box">
-            <div>
-              <div style="font-size:12px;color:var(--g600);font-weight:500;margin-bottom:2px;">Monthly Payment</div>
-              <div class="calc-monthly-amt" id="calc-monthly">₱1,574</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:11px;color:var(--g600);margin-bottom:2px;">Total Amount</div>
-              <div style="font-size:17px;font-weight:500;color:var(--g800);" id="calc-total">₱18,890</div>
-            </div>
-          </div>
-          <a href="apply.html" class="btn btn-primary" onclick="return ensureAuth('apply.html')"
-            style="width:100%;justify-content:center;margin-top:16px;">Apply
-            for This Plan →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="how-section" id="howitworks">
-    <div class="container">
-      <div class="section-header" data-reveal>
-        <span class="label" style="color:var(--g100);">How It Works</span>
-        <h2 class="display-2" style="color:white;">Get your appliance in 5 simple steps</h2>
-        <p class="lead" style="color:var(--t100);opacity:.8;">From browsing to delivery — fast, easy, and stress-free.
-        </p>
-      </div>
-      <div class="how-grid">
-        <div class="step-card" data-reveal>
-          <div class="step-num">01</div>
-          <div class="step-icon">🛍️</div>
-          <div class="step-title">Browse & Choose</div>
-          <div class="step-desc">Explore 200+ appliance models. Filter by category, brand, or price range.</div>
-        </div>
-        <div class="step-card" data-reveal data-reveal-delay="1">
-          <div class="step-num">02</div>
-          <div class="step-icon">🧮</div>
-          <div class="step-title">Choose & Calculate</div>
-          <div class="step-desc">Select your appliance and use our calculator to see your installment plan.</div>
-        </div>
-        <div class="step-card" data-reveal data-reveal-delay="2">
-          <div class="step-num">03</div>
-          <div class="step-icon">📋</div>
-          <div class="step-title">Apply Online</div>
-          <div class="step-desc">Fill out a short application form. Basic personal information required.</div>
-        </div>
-        <div class="step-card" data-reveal data-reveal-delay="3">
-          <div class="step-num">04</div>
-          <div class="step-icon">✅</div>
-          <div class="step-title">We Review</div>
-          <div class="step-desc">Our team reviews your application and verifies your details quickly.</div>
-        </div>
-        <div class="step-card" data-reveal data-reveal-delay="4" style="border-right:none;">
-          <div class="step-num">05</div>
-          <div class="step-icon">🏠</div>
-          <div class="step-title">Approve & Deliver</div>
-          <div class="step-desc">Once approved, we deliver and install your appliance right to your home!</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURED PRODUCTS -->
-  <section class="section">
-    <div class="container">
-      <div
-        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
-        <div><span class="label">Popular Appliances</span>
-          <h2 class="display-3" style="color:var(--text);">Top picks this month</h2>
-        </div>
-        <a class="btn btn-secondary" href="catalog.html">View Full Catalog →</a>
-      </div>
-      <div class="products-grid" id="featured-products"></div>
-    </div>
-  </section>
-
-  <!-- WHO WE SERVE -->
-  <section class="section" style="padding-top:0;">
-    <div class="container">
-      <div class="section-header" data-reveal>
-        <span class="label">Who We Serve</span>
-        <h2 class="display-2">Built for the people who need it most</h2>
-        <p class="lead">EasyHome is designed for everyday Filipinos who deserve access to modern living essentials.</p>
-      </div>
-      <div class="users-grid">
-        <div class="user-card uc-green" data-reveal>
-          <div class="user-emoji">👨‍👩‍👧</div>
-          <div class="user-type">Families & Households</div>
-          <div class="user-desc">Low to middle-income families who need appliances for daily living without draining
-            savings.</div>
-        </div>
-        <div class="user-card uc-teal" data-reveal data-reveal-delay="1">
-          <div class="user-emoji">🎓</div>
-          <div class="user-type">Students & Young Renters</div>
-          <div class="user-desc">Young professionals setting up their first home who need appliances fast, with payments
-            that fit an entry-level budget.</div>
-        </div>
-        <div class="user-card uc-amber" data-reveal data-reveal-delay="2">
-          <div class="user-emoji">🏪</div>
-          <div class="user-type">Small Business Owners</div>
-          <div class="user-desc">Laundry shops, food stalls, and small entrepreneurs who need appliances to generate
-            income without large upfront costs.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="section" style="background:var(--gray1);padding:80px 0;">
-    <div class="container">
-      <div class="section-header" data-reveal>
-        <span class="label">Customer Stories</span>
-        <h2 class="display-2">What our customers say</h2>
-      </div>
-      <div class="grid-3">
-        <div class="testi-card" data-reveal>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"I never thought I could own a refrigerator this soon. EasyHome made it possible with
-            their monthly plan — delivery was fast and professional."</p>
-          <div class="testi-author">
-            <div class="avatar" style="background:var(--g50);color:var(--g600);">MR</div>
-            <div>
-              <div style="font-size:14px;font-weight:500;color:var(--text);">Maria Reyes</div>
-              <div style="font-size:12px;color:var(--muted);">Stay-at-home mom, Davao City</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card" data-reveal data-reveal-delay="1">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"As a student renting a small room, I couldn't imagine paying full price for a washing
-            machine. EasyHome's plan saved me so much time and money."</p>
-          <div class="testi-author">
-            <div class="avatar" style="background:var(--t50);color:var(--t600);">JM</div>
-            <div>
-              <div style="font-size:14px;font-weight:500;color:var(--text);">Jake Morales</div>
-              <div style="font-size:12px;color:var(--muted);">College student, Cebu</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card" data-reveal data-reveal-delay="2">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"I started my laundry business with two washing machines from EasyHome. No big capital
-            needed — just small monthly payments, and now I earn daily!"</p>
-          <div class="testi-author">
-            <div class="avatar" style="background:var(--a50);color:var(--a600);">LP</div>
-            <div>
-              <div style="font-size:14px;font-weight:500;color:var(--text);">Liza Pascual</div>
-              <div style="font-size:12px;color:var(--muted);">Laundry shop owner, Manila</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA BANNER -->
-  <section class="section">
-    <div class="container">
-      <div class="cta-banner" data-reveal>
-        <div>
-          <h2>Ready to bring home the appliances you need?</h2>
-          <p>Apply online in minutes. Get approved fast. Delivered today.</p>
-        </div>
-        <div class="cta-actions">
-          <a class="btn btn-white" href="apply.html" onclick="return ensureAuth('apply.html')">Apply Now</a>
-          <a class="btn btn-outline-white" href="catalog.html">Browse Catalog</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo">🏠 EasyHome</div>
-          <p class="footer-tagline">Making modern living accessible for every Filipino family, student, and small
-            business owner — one appliance at a time.</p>
-          <div class="footer-socials">
-            <button class="footer-social-btn" title="Facebook">f</button>
-            <button class="footer-social-btn" title="Instagram">in</button>
-            <button class="footer-social-btn" title="Twitter">𝕏</button>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h5>Products</h5>
-          <a href="catalog.html?cat=refrigerators">Refrigerators</a>
-          <a href="catalog.html?cat=washers">Washing Machines</a>
-          <a href="catalog.html?cat=aircon">Air Conditioners</a>
-          <a href="catalog.html?cat=tvs">Smart TVs</a>
-          <a href="catalog.html">All Appliances</a>
-        </div>
-        <div class="footer-col">
-          <h5>Company</h5>
-          <a href="about.html">About Us</a>
-          <a href="index.html#howitworks">How It Works</a>
-          <a href="about.html#mission">Our Mission</a>
-          <a href="contact.html">Contact Us</a>
-        </div>
-        <div class="footer-col">
-          <h5>Support</h5>
-          <a href="apply.html" onclick="return ensureAuth('apply.html')">Apply for a Plan</a>
-          <a href="calculator.html">Payment Calculator</a>
-          <a href="dashboard.html">My Dashboard</a>
-          <a href="about.html#faq">FAQ</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2025 EasyHome. All rights reserved.</span>
-        <span>Terms · Privacy · Cookies</span>
-      </div>
-    </div>
-  </footer>
 
   <script src="shared.js"></script>
   <script>
-    const APPLIANCES = [
-      { id: 1, name: 'Panasonic 2-Door Refrigerator', model: 'NR-BB221V', price: 17990, img: 'https://www.smappliance.com/cdn/shop/products/CW530XMM__Front_1__website.jpg?v=1669708660', category: 'refrigerators', badge: 'Best Seller', monthly: 1500, term: 12 },
-      { id: 2, name: 'LG Front Load Washing Machine', model: '8.5kg Inverter Drive', price: 24500, img: 'https://emcor.com.ph/wp-content/uploads/2025/10/FV1208D4W-1.jpg', category: 'washers', badge: 'Popular', monthly: 1400, term: 12 },
-      { id: 3, name: 'Samsung 43" Smart TV', model: 'Crystal UHD 4K', price: 18000, img: 'https://emcor.com.ph/wp-content/uploads/2025/10/UA43U8000FGXXP-1.jpg', category: 'tvs', badge: 'New', monthly: 1200, term: 12 },
-      { id: 4, name: 'Sharp Microwave Oven', model: '20L Digital', price: 3900, img: 'https://ansons.ph/wp-content/uploads/2025/07/02_R-32F.png', category: 'microwaves', badge: 'Available', monthly: 650, term: 6 },
-    ];
+    // Auth guard - redirect to login if not logged in
+    const session = Auth.session();
+    if (!session) window.location.href = 'login.html';
+    // Redirect admin to admin panel
+    if (session && session.role === 'admin') window.location.href = 'admin.html';
 
-    function renderFeatured() {
-      const grid = document.getElementById('featured-products');
-      grid.innerHTML = APPLIANCES.map(a => `
-    <div class="product-card card-hover" data-reveal>
-      <img class="product-img" src="${a.img}" alt="${a.name}" loading="lazy" onerror="this.style.background='var(--gray1)'">
-      <div class="product-body">
-        <span class="badge badge-green">${a.badge}</span>
-        <div class="product-name">${a.name}</div>
-        <div style="font-size:12px;color:var(--muted);">${a.model}</div>
-        <div class="product-price">₱${a.monthly.toLocaleString()}/mo</div>
-        <div class="product-monthly">for ${a.term} months · Cash: ₱${a.price.toLocaleString()}</div>
+    function loadUserInfo() {
+      const s = Auth.session();
+      if (!s) return;
+      document.getElementById('dash-avatar').textContent = s.avatar;
+      document.getElementById('dash-name').textContent = s.name;
+      document.getElementById('dash-email').textContent = s.email;
+      document.getElementById('welcome-name').textContent = s.name.split(' ')[0];
+      document.getElementById('profile-avatar').textContent = s.avatar;
+      document.getElementById('profile-name').textContent = s.name;
+      document.getElementById('profile-email').textContent = s.email;
+      document.getElementById('edit-name').value = s.name;
+      document.getElementById('edit-email').value = s.email;
+      const users = Store.get('users', []);
+      const u = users.find(x => x.email === s.email);
+      if (u) {
+        document.getElementById('edit-phone').value = u.phone || '';
+        const joined = new Date(u.joined).toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('profile-joined').textContent = 'Joined ' + joined;
+      }
+    }
+
+    function showPanel(id) {
+      document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.dash-nav-item').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      const navMap = { overview: 'overview', applications: 'applications', payments: 'payments', cart: 'cart', wishlist: 'wishlist', profile: 'profile', 'settings-dash': 'settings-dash' };
+      document.querySelectorAll('.dash-nav-item').forEach(b => {
+        if (b.textContent.toLowerCase().includes(id.replace('-dash', '').replace('settings', 'setting'))) b.classList.add('active');
+      });
+      if (id === 'cart') renderCart();
+      if (id === 'applications') renderApplications();
+      if (id === 'payments') renderPayments();
+      if (id === 'wishlist') renderWishlist();
+      if (id === 'settings-dash') {
+        const dark = Store.get('theme') === 'dark';
+        document.getElementById('dash-dark-mode').checked = dark;
+      }
+    }
+
+    function renderApplications() {
+      const apps = Store.get('applications', []);
+      const list = document.getElementById('applications-list');
+      const ovApps = document.getElementById('overview-apps');
+      if (!apps.length) {
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No applications yet</div><div class="empty-desc">Start by browsing our product catalog.</div><a href="catalog.html" class="btn btn-primary btn-sm">Browse Products</a></div>`;
+        ovApps.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">No applications yet. <a href="apply.html" style="color:var(--g600);">Apply now →</a></div>`;
+        return;
+      }
+      const imgs = {
+        'Panasonic 2-Door Refrigerator': 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=100&q=80',
+        'LG Front Load Washing Machine': 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=100&q=80',
+        default: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&q=80'
+      };
+      const badgeClass = { 'In Review': 'badge-blue', 'Approved': 'badge-green', 'Draft': 'badge-amber', 'Rejected': 'badge-red' };
+      const html = apps.map(a => `
+    <div class="app-row">
+      <img class="app-img" src="${imgs[a.productName] || imgs.default}" alt="" onerror="this.style.background='var(--gray1)'">
+      <div class="app-info">
+        <div class="app-name">${a.productName || 'General Application'}</div>
+        <div class="app-meta">Ref: ${a.ref} · ${new Date(a.submittedAt).toLocaleDateString()}</div>
       </div>
-      <div class="product-actions">
-        <a class="btn btn-primary btn-sm" style="flex:1;" href="product.html?id=${a.id}">View Details</a>
-        <button class="btn btn-secondary btn-sm" onclick="if (ensureAuth('index.html')) Cart.add(${JSON.stringify(a)})">🛒</button>
+      <div class="app-right">
+        <span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span>
       </div>
-    </div>
-  `).join('');
-      initScrollReveal();
+    </div>`).join('');
+      list.innerHTML = html;
+      ovApps.innerHTML = apps.slice(0, 3).map(a => `
+    <div class="app-row">
+      <div class="app-info"><div class="app-name">${a.productName || 'General'}</div><div class="app-meta">${a.ref} · ${new Date(a.submittedAt).toLocaleDateString()}</div></div>
+      <span class="badge ${badgeClass[a.status] || 'badge-amber'}">${a.status}</span>
+    </div>`).join('');
+
+      const total = apps.length;
+      const approved = apps.filter(a => a.status === 'Approved').length;
+      const review = apps.filter(a => a.status === 'In Review').length;
+      document.getElementById('stat-apps').textContent = total;
+      document.getElementById('stat-approved').textContent = approved;
+      document.getElementById('stat-review').textContent = review;
     }
 
-    let calcMonths = 12;
-    function setMonths(m, btn) {
-      calcMonths = m;
-      document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      calcUpdate();
-    }
-    function calcUpdate() {
-      const price = parseFloat(document.getElementById('calc-select').value);
-      const rate = 0.025;
-      const total = Math.round(price * Math.pow(1 + rate, calcMonths / 12) * 100) / 100;
-      const monthly = Math.round(total / calcMonths);
-      document.getElementById('calc-monthly').textContent = '₱' + monthly.toLocaleString();
-      document.getElementById('calc-total').textContent = '₱' + Math.round(total).toLocaleString();
+    function renderPayments() {
+      const apps = Store.get('applications', []).filter(a => a.status === 'Approved');
+      const list = document.getElementById('payments-list');
+      if (!apps.length) { list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted);">No active payment plans yet.</div>`; return; }
+      list.innerHTML = apps.map(a => `
+    <div class="payment-row">
+      <div><div style="font-size:14px;font-weight:500;color:var(--text);">${a.productName}</div><div class="payment-due">Ref: ${a.ref}</div></div>
+      <div><span class="badge badge-green">Active</span></div>
+    </div>`).join('');
     }
 
-    let heroPrice = 3500;
-    function heroSetAppliance(el, price) {
-      heroPrice = price;
-      document.querySelectorAll('.hca-item').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
-      const m = Math.round(price * 1.025 / 12);
-      document.getElementById('hero-price').innerHTML = `₱${m.toLocaleString()} <small>/ 12 mos</small>`;
+    function renderCart() {
+      const items = Cart.items();
+      const list = document.getElementById('cart-list');
+      if (!items.length) { list.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">Your cart is empty</div><div class="empty-desc">Browse our products and add items to your cart.</div><a href="catalog.html" class="btn btn-primary btn-sm">Browse Products</a></div>`; return; }
+      list.innerHTML = items.map(item => `
+    <div class="cart-item">
+      <img class="cart-img" src="${item.img}" alt="${item.name}" onerror="this.style.background='var(--gray1)'">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:14px;font-weight:500;color:var(--text);">${item.name}</div>
+        <div style="font-size:13px;color:var(--muted);">₱${item.price.toLocaleString()}</div>
+        <div class="cart-qty-ctrl" style="margin-top:8px;">
+          <button class="qty-btn" onclick="adjQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty || 1}</span>
+          <button class="qty-btn" onclick="adjQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:15px;font-weight:500;color:var(--g600);">₱${(item.price * (item.qty || 1)).toLocaleString()}</div>
+        <button onclick="Cart.remove(${item.id});renderCart();" style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;margin-top:6px;">Remove</button>
+      </div>
+    </div>`).join('') + `
+    <div class="cart-total-bar">
+      <div><div style="font-size:12px;color:var(--g600);font-weight:500;">Cart Total</div><div style="font-family:'Fraunces',serif;font-size:24px;color:var(--g800);">₱${Cart.total().toLocaleString()}</div></div>
+      <a href="apply.html" class="btn btn-primary btn-sm">Proceed to Apply →</a>
+    </div>`;
+
+      const badge = document.getElementById('cart-sidebar-badge');
+      const c = Cart.count();
+      badge.textContent = c; badge.style.display = c ? 'inline-block' : 'none';
     }
 
-    calcUpdate();
-    renderFeatured();
+    function adjQty(id, delta) {
+      const items = Cart.items();
+      const idx = items.findIndex(i => i.id === id);
+      if (idx < 0) return;
+      items[idx].qty = Math.max(1, (items[idx].qty || 1) + delta);
+      Store.set('cart', items); Cart.updateBadge(); renderCart();
+    }
+
+    function renderWishlist() {
+      const wl = Store.get('wishlist', []);
+      const PRODS = [
+        { id: 1, name: 'Panasonic 2-Door Refrigerator', price: 17990, monthly: 1450, term: 12, img: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&q=80' },
+        { id: 2, name: 'LG Front Load Washing Machine', price: 24500, monthly: 1350, term: 12, img: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80' },
+        { id: 5, name: 'Carrier Inverter Aircon', price: 22000, monthly: 1600, term: 12, img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80' },
+      ];
+      const wishProds = PRODS.filter(p => wl.includes(p.id));
+      const grid = document.getElementById('wishlist-grid');
+      grid.innerHTML = wishProds.length ? wishProds.map(p => `
+    <div class="product-card card-hover">
+      <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="product-body"><div class="product-name">${p.name}</div><div class="product-price">₱${p.monthly.toLocaleString()}/mo</div><div class="product-monthly">for ${p.term} mos</div></div>
+      <div class="product-actions"><a href="product.html?id=${p.id}" class="btn btn-primary btn-sm" style="flex:1;">View Details</a></div>
+    </div>`).join('') :
+        `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">♥</div><div class="empty-title">No wishlist items</div><div class="empty-desc">Browse products and tap ♥ to save them here.</div><a href="catalog.html" class="btn btn-primary btn-sm">Browse Products</a></div>`;
+    }
+
+    function saveProfile() {
+      const s = Auth.session();
+      const name = document.getElementById('edit-name').value.trim();
+      if (!name) { Toast.error('Name is required.'); return; }
+      const users = Store.get('users', []);
+      const idx = users.findIndex(u => u.email === s.email);
+      if (idx >= 0) {
+        users[idx].name = name;
+        users[idx].phone = document.getElementById('edit-phone').value;
+        Store.set('users', users);
+      }
+      Store.set('session', { ...s, name, avatar: name.slice(0, 2).toUpperCase() });
+      Toast.success('Profile updated!');
+      loadUserInfo();
+    }
+
+    function changePassword() {
+      const oldPw = document.getElementById('old-pw').value;
+      const newPw = document.getElementById('new-pw').value;
+      const newPw2 = document.getElementById('new-pw2').value;
+      const s = Auth.session();
+      const users = Store.get('users', []);
+      const u = users.find(x => x.email === s.email);
+      if (!u) { Toast.error('User not found.'); return; }
+      if (u.password !== oldPw) { Toast.error('Current password is incorrect.'); return; }
+      if (!newPw || newPw.length < 8) { Toast.error('New password must be at least 8 characters.'); return; }
+      if (newPw !== newPw2) { Toast.error('Passwords do not match.'); return; }
+      u.password = newPw;
+      Store.set('users', users);
+      Toast.success('Password updated successfully!');
+      document.getElementById('old-pw').value = '';
+      document.getElementById('new-pw').value = '';
+      document.getElementById('new-pw2').value = '';
+    }
+
+    // Handle hash routing
+    function handleHash() {
+      const hash = location.hash.replace('#', '') || 'overview';
+      const valid = ['overview', 'applications', 'payments', 'cart', 'wishlist', 'profile', 'settings-dash'];
+      if (valid.includes(hash)) showPanel(hash);
+    }
+
+    loadUserInfo();
+    renderApplications();
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
   </script>
 </body>
 
