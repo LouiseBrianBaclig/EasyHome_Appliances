@@ -224,6 +224,39 @@ function updateNavAuth() {
       };
     }
   }
+
+  // Also update mobile menu auth controls (keeps desktop unchanged)
+  try {
+    const mobileUser = document.getElementById('mobile-nav-user-btn');
+    const mobileLogin = document.getElementById('mobile-login-link');
+    const mobileApply = document.getElementById('mobile-apply-btn');
+
+    if (session) {
+      if (mobileUser) {
+        mobileUser.style.display = 'flex';
+        mobileUser.style.cursor = 'pointer';
+        mobileUser.onclick = handleNavAuthClick;
+        const avatar = mobileUser.querySelector('span');
+        if (avatar) avatar.textContent = session.avatar || (session.name || session.email || '').slice(0, 2).toUpperCase();
+        const nameEl = mobileUser.querySelector('.mobile-user-name');
+        if (nameEl) nameEl.textContent = session.name || session.email || 'Profile';
+      }
+      if (mobileLogin) mobileLogin.style.display = 'none';
+      if (mobileApply) mobileApply.href = 'apply.html';
+    } else {
+      if (mobileUser) {
+        mobileUser.style.display = 'none';
+        mobileUser.onclick = null;
+      }
+      if (mobileLogin) {
+        mobileLogin.style.display = 'block';
+        mobileLogin.onclick = (e) => { e.preventDefault(); handleNavAuthClick(); };
+      }
+      if (mobileApply) mobileApply.href = 'apply.html';
+    }
+  } catch (err) {
+    // ignore mobile update failures
+  }
 }
 
 // ── MOBILE MENU ───────────────────────────────────────────────
