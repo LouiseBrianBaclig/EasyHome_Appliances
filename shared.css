@@ -1049,7 +1049,7 @@ footer {
 
 .product-body {
   padding: 18px;
-  flex: 1;
+  flex: auto;
   display: flex;
   flex-direction: column;
   gap: 6px
