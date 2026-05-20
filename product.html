@@ -477,9 +477,22 @@
           style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;">Logout</button></div>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="catalog.html">Products</a><a
-        class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
-      <div class="mobile-menu-divider"></div><a class="nav-link" href="login.html">Login</a>
+      <div class="mobile-menu-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;">
+        <div id="mobile-nav-user-btn" style="display:none;align-items:center;gap:10px;font-weight:600;color:var(--g700);cursor:pointer;">
+          <span style="width:36px;height:36px;border-radius:10px;background:var(--g600);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;">ME</span>
+          <div style="display:flex;flex-direction:column;text-align:left;">
+            <div style="font-size:14px;font-weight:600;" class="mobile-user-name">Profile</div>
+            <div style="font-size:12px;color:var(--muted);">View account</div>
+          </div>
+        </div>
+        <a id="mobile-apply-btn" class="btn btn-nav-primary" href="apply.html" style="flex-shrink:0;padding:8px 12px;font-size:14px;">Apply Now</a>
+      </div>
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="catalog.html">Products</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+      <div class="mobile-menu-divider"></div>
+      <a id="mobile-login-link" class="nav-link" href="login.html">Login</a>
     </div>
 
     <div class="product-hero">
@@ -1235,7 +1248,7 @@
         <a href="apply.html?id=${p.id}&term=${activeTerm.m}" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;" id="apply-btn">
           📋 Apply Now
         </a>
-        <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick='Cart.add(${JSON.stringify({ id: p.id, name: p.name, price: p.price, img: p.img })})'>
+        <button id="add-cart-btn" class="btn btn-secondary" style="width:100%;justify-content:center;" onclick='Cart.add(${JSON.stringify({ id: p.id, name: p.name, price: p.price, img: p.img, monthly: activeTerm.mo, term: activeTerm.m })})'>
           🛒 Add to Cart
         </button>
         <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:12px;color:var(--muted);">
@@ -1258,6 +1271,12 @@
       document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('apply-btn').href = `apply.html?id=${p.id}&term=${m}`;
+      // Update Add to Cart button payload to include the selected term and monthly amount
+      const addBtn = document.getElementById('add-cart-btn');
+      if (addBtn) {
+        const payload = { id: p.id, name: p.name, price: p.price, img: p.img, monthly: mo, term: m };
+        addBtn.setAttribute('onclick', `Cart.add(${JSON.stringify(payload)})`);
+      }
     }
 
     renderProduct();
