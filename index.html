@@ -921,7 +921,7 @@
         <div class="product-monthly">for ${a.term} months · Cash: ₱${a.price.toLocaleString()}</div>
       </div>
       <div class="product-actions">
-        <a class="btn btn-primary btn-sm" style="flex:1;" href="product.html?id=${a.id}">View Details</a>
+        <a class="btn btn-primary btn-sm" style="flex:auto;" href="product.html?id=${a.id}">View Details</a>
         <button class="btn btn-secondary btn-sm" onclick="if (ensureAuth('index.html')) Cart.add(${JSON.stringify(a)})">🛒</button>
       </div>
     </div>
