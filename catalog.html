@@ -687,7 +687,7 @@
         <div class="product-price" style="font-size:18px;">₱${monthly.toLocaleString()}<span style="font-size:12px;font-family:'DM Sans';">/mo</span></div>
         <div class="product-monthly">for ${term} mos · Cash ₱${p.price.toLocaleString()}</div>
         <div style="display:flex;gap:6px;margin-top:12px;">
-          <a class="btn btn-primary btn-sm" href="product.html?id=${p.id}" style="flex:1;justify-content:center;">View Details</a>
+          <a class="btn btn-primary btn-sm" href="product.html?id=${p.id}" style="flex:auto;justify-content:center;">View Details</a>
           <button class="btn btn-secondary btn-sm btn-icon" onclick='Cart.add(${JSON.stringify({...p, price: p.price, monthly: monthly, term: term})})' title="Add to cart">🛒</button>
         </div>
       </div>
