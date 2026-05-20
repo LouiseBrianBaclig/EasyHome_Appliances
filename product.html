@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details – EasyHome</title>
+  <title>Register – EasyHome</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233B6D11'/><text y='22' x='5' font-size='20'>🏠</text></svg>">
   <link
@@ -12,1274 +12,496 @@
     rel="stylesheet">
   <link rel="stylesheet" href="shared.css">
   <style>
-    .product-page {
-      padding-top: var(--nav-h)
-    }
-
-    .product-hero {
-      padding: 40px 0;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border)
-    }
-
-    .product-layout {
+    .auth-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start
+      min-height: 100vh
     }
 
-    .product-gallery {
-      position: sticky;
-      top: calc(var(--nav-h)+16px)
-    }
-
-    .main-img-wrap {
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      height: 360px;
-      background: var(--gray1);
-      position: relative
-    }
-
-    .main-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover
-    }
-
-    .best-seller-badge {
-      position: absolute;
-      top: 16px;
-      left: 16px
-    }
-
-    .thumb-row {
+    .auth-left {
+      background: linear-gradient(145deg, #edf6e0 0%, #d4edc0 100%);
       display: flex;
-      gap: 10px;
-      margin-top: 12px
-    }
-
-    .thumb {
-      width: 72px;
-      height: 72px;
-      border-radius: var(--radius-sm);
-      border: 2px solid var(--border);
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color var(--transition)
-    }
-
-    .thumb:hover,
-    .thumb.active {
-      border-color: var(--g400)
-    }
-
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover
-    }
-
-    .product-info {}
-
-    .product-name-lg {
-      font-size: clamp(22px, 3vw, 30px);
-      color: var(--text);
-      margin-bottom: 4px
-    }
-
-    .product-model {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 12px
-    }
-
-    .star-row {
-      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px
+      justify-content: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden
     }
 
-    .stars {
-      color: #E9A820;
-      font-size: 16px
+    [data-theme="dark"] .auth-left {
+      background: linear-gradient(145deg, #0d1f06 0%, #112808 100%)
     }
 
-    .review-count {
-      font-size: 14px;
-      color: var(--muted)
-    }
-
-    .product-desc {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 20px
-    }
-
-    .spec-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px
-    }
-
-    .spec-row:last-child {
-      border-bottom: none
-    }
-
-    .spec-icon {
-      font-size: 16px;
-      width: 24px;
-      flex-shrink: 0
-    }
-
-    .spec-label {
-      color: var(--muted);
-      min-width: 140px
-    }
-
-    .spec-val {
-      color: var(--text);
-      font-weight: 500
-    }
-
-    .price-box {
-      background: var(--surface);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      margin-top: 24px
-    }
-
-    .cash-price-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 4px
-    }
-
-    .cash-price {
-      font-family: 'Fraunces', serif;
-      font-size: 32px;
-      color: var(--text);
-      margin-bottom: 16px
-    }
-
-    .plan-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 12px
-    }
-
-    .plan-as-low {
-      background: var(--g50);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
-      margin-bottom: 14px
-    }
-
-    .plan-monthly {
-      font-family: 'Fraunces', serif;
-      font-size: 28px;
-      color: var(--g800)
-    }
-
-    .plan-monthly small {
-      font-family: 'DM Sans';
-      font-size: 13px;
-      color: var(--g600)
-    }
-
-    .term-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 16px
-    }
-
-    .term-btn {
-      padding: 12px 8px;
-      border: 1.5px solid var(--border-md);
-      border-radius: var(--radius-sm);
-      background: var(--surface);
-      font-family: 'DM Sans';
-      font-size: 13px;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all var(--transition);
+    .auth-left-content {
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
       text-align: center
     }
 
-    .term-btn:hover {
-      border-color: var(--g200);
-      color: var(--g600)
-    }
-
-    .term-btn.active {
-      border-color: var(--g600);
-      background: var(--g50);
-      color: var(--g800)
-    }
-
-    .term-btn .t-mo {
-      font-size: 15px;
-      font-weight: 600;
-      display: block;
-      color: inherit
-    }
-
-    .perks {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin: 14px 0
-    }
-
-    .perk {
+    .auth-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 26px;
+      color: var(--g800);
+      margin-bottom: 28px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--g700)
+      justify-content: center;
+      gap: 10px
     }
 
-    .perk-check {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+    [data-theme="dark"] .auth-logo {
+      color: var(--g900)
+    }
+
+    .auth-tagline {
+      font-size: clamp(22px, 2.8vw, 32px);
+      color: var(--g900);
+      margin-bottom: 14px
+    }
+
+    .auth-sub {
+      font-size: 14px;
+      color: var(--g600);
+      line-height: 1.7;
+      margin-bottom: 28px
+    }
+
+    .auth-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left
+    }
+
+    .auth-feat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--g700);
+      background: rgba(255, 255, 255, .6);
+      border-radius: 10px;
+      padding: 12px 16px
+    }
+
+    [data-theme="dark"] .auth-feat {
+      background: rgba(0, 0, 0, .2);
+      color: var(--g900)
+    }
+
+    .auth-feat-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: var(--g600);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      flex-shrink: 0
+      flex-shrink: 0;
+      font-size: 15px
     }
 
-    .why-buy {
+    .auth-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: var(--bg-page);
+      overflow-y: auto
+    }
+
+    .auth-form-box {
+      width: 100%;
+      max-width: 460px
+    }
+
+    .auth-form-title {
+      font-size: clamp(24px, 3vw, 32px);
+      color: var(--text);
+      margin-bottom: 6px
+    }
+
+    .auth-form-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      font-size: 13px;
+      color: var(--hint)
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border)
+    }
+
+    .social-btn {
+      width: 100%;
+      padding: 11px;
+      border: 1.5px solid var(--border-md);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px
+    }
+
+    .social-btn:hover {
+      border-color: var(--g200);
+      background: var(--g50)
+    }
+
+    .pw-req {
       background: var(--gray1);
-      padding: 60px 0;
-      margin-top: 32px
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-top: 8px;
+      display: none
     }
 
-    @media(max-width:900px) {
-      .product-layout {
-        grid-template-columns: 1fr;
-        gap: 32px
-      }
-
-      .product-gallery {
-        position: static
-      }
-
-      .term-grid {
-        grid-template-columns: repeat(3, 1fr)
-      }
-
-      .main-img-wrap {
-        height: 300px
-      }
+    .pw-req.show {
+      display: block
     }
 
-    @media(max-width:600px) {
-      .product-layout {
-        gap: 24px
-      }
-
-      .product-name-lg {
-        font-size: 20px
-      }
-
-      .price-box {
-        padding: 18px
-      }
-
-      .cash-price {
-        font-size: 26px
-      }
-
-      .plan-monthly {
-        font-size: 24px
-      }
-
-      .term-grid {
-        grid-template-columns: 1fr 1fr
-      }
-
-      .term-btn {
-        padding: 10px 6px;
-        font-size: 12px
-      }
-
-      .thumb-row {
-        gap: 8px
-      }
-
-      .thumb {
-        width: 60px;
-        height: 60px
-      }
-
-      .main-img-wrap {
-        height: 250px
-      }
-
-      .perks {
-        margin: 12px 0
-      }
-
-      .perk {
-        font-size: 12px
-      }
+    .pw-req-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 8px
     }
 
-    @media(max-width:480px) {
-      .product-page {
-        padding-top: var(--nav-h)
+    .pw-req-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .pw-req-item {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color var(--transition)
+    }
+
+    .pw-req-item.met {
+      color: var(--g600)
+    }
+
+    .pw-req-item .req-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray4);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      transition: all var(--transition)
+    }
+
+    .pw-req-item.met .req-dot {
+      background: var(--g600);
+      border-color: var(--g600);
+      color: white
+    }
+
+    .terms-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px
+    }
+
+    .terms-row input {
+      margin-top: 3px;
+      accent-color: var(--g600);
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      cursor: pointer
+    }
+
+    .terms-row label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6
+    }
+
+    .terms-row a {
+      color: var(--g600)
+    }
+
+    .auth-bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(59, 109, 17, .07)
+    }
+
+    .auth-footer-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    .auth-footer-link a {
+      color: var(--g600);
+      font-weight: 500
+    }
+
+    @media(max-width:768px) {
+      .auth-layout {
+        grid-template-columns: 1fr
       }
 
-      .product-hero {
-        padding: 20px 0
+      .auth-left {
+        display: none
       }
 
-      .breadcrumb {
-        font-size: 11px;
-        margin-bottom: 16px
+      .auth-right {
+        padding: 32px 20px;
+        min-height: 100vh
       }
 
-      .product-name-lg {
-        font-size: 18px;
-        margin-bottom: 4px
-      }
-
-      .product-model {
-        font-size: 12px
-      }
-
-      .price-box {
-        padding: 16px;
-        margin-top: 16px
-      }
-
-      .cash-price {
-        font-size: 22px
-      }
-
-      .plan-title {
-        font-size: 12px
-      }
-
-      .plan-monthly {
-        font-size: 20px
-      }
-
-      .term-grid {
-        gap: 6px
-      }
-
-      .term-btn {
-        padding: 8px 4px;
-        font-size: 11px
-      }
-
-      .term-btn .t-mo {
-        font-size: 13px
-      }
-
-      .spec-row {
-        flex-wrap: wrap;
-        padding: 8px 0
-      }
-
-      .spec-label {
-        min-width: 100px
-      }
-
-      .btn {
-        padding: 10px 18px;
-        font-size: 13px
-      }
-
-      .why-buy {
-        padding: 40px 0;
-        margin-top: 24px
-      }
-
-      .grid-4 {
-        grid-template-columns: 1fr 1fr
-      }
-
-      .feature-row {
-        padding: 14px
-      }
-
-      .feature-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 18px
-      }
-
-      .feature-title {
-        font-size: 13px
-      }
-
-      .feature-desc {
-        font-size: 12px
+      .form-row {
+        grid-template-columns: 1fr
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="product-page">
-    <!-- NAV -->
-    <nav id="main-nav">
-      <div class="nav-inner">
-        <a class="nav-logo" href="index.html">
-          <div class="nav-logo-mark">🏠</div><span>Easy<span style="color:var(--g400)">Home</span></span>
+  <div class="auth-layout">
+    <div class="auth-left">
+      <div class="auth-bg-circle" style="width:300px;height:300px;top:-80px;left:-60px;"></div>
+      <div class="auth-bg-circle" style="width:180px;height:180px;bottom:-40px;right:-30px;"></div>
+      <div class="auth-left-content">
+        <div class="auth-logo">
+          <div class="nav-logo-mark">🏠</div>EasyHome
+        </div>
+        <h2 class="auth-tagline">Create Your Account</h2>
+        <p class="auth-sub">Join EasyHome today and take the first step toward a better home.</p>
+        <div class="auth-features">
+          <div class="auth-feat">
+            <div class="auth-feat-icon">🛡️</div><span><strong>Secure &amp; Safe</strong> — Your info is
+              protected</span>
+          </div>
+          <div class="auth-feat">
+            <div class="auth-feat-icon">📅</div><span><strong>Flexible Payments</strong> — Plans that fit your
+              budget</span>
+          </div>
+          <div class="auth-feat">
+            <div class="auth-feat-icon">🏆</div><span><strong>Trusted Quality</strong> — 100% authentic
+              appliances</span>
+          </div>
+          <div class="auth-feat">
+            <div class="auth-feat-icon">🚚</div><span><strong>Fast Delivery</strong> — Right to your door</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <a href="index.html" class="back-link" style="margin-bottom:24px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 5l-7 7 7 7" />
+          </svg>
+          Back to Home
         </a>
-        <div class="nav-links">
-          <a class="nav-link" href="index.html">Home</a>
-          <a class="nav-link active" href="catalog.html">Products</a>
-          <a class="nav-link" href="index.html#howitworks">How It Works</a>
-          <a class="nav-link" href="about.html">About</a>
-          <a class="nav-link" href="contact.html">Contact</a>
-        </div>
-        <div class="nav-actions" style="display:flex;align-items:center;gap:16px;">
-          <div class="nav-user-btn" id="nav-user-btn"
-            style="display:none;align-items:center;gap:8px;font-weight:600;color:var(--g700);">
-            <span style="font-size:18px;">👤</span><span id="nav-user-name"></span>
-          </div>
-          <a class="nav-link" id="nav-login-btn" href="login.html"
-            style="font-weight:600;display:inline-flex;align-items:center;gap:8px;">👤 Login</a>
-          <a class="btn btn-primary btn-sm" href="apply.html" style="margin-left:12px;">Apply Now</a>
-          <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-        </div>
-      </div>
-    </nav>
-    <div class="settings-panel" id="settings-panel">
-      <div class="settings-panel-title">⚙️ Settings</div>
-      <div class="settings-row">
-        <div>
-          <div class="settings-label">🌙 Dark Mode</div>
-        </div><label class="toggle-switch"><input type="checkbox" id="theme-toggle"
-            onchange="toggleTheme(this.checked)"><span class="toggle-track"></span></label>
-      </div>
-      <div class="settings-row" style="border:none;padding-bottom:0;"><a href="login.html"
-          style="font-size:13px;color:var(--g600);font-weight:500;">Login →</a><button onclick="Auth.logout()"
-          style="font-size:12px;color:var(--r600);background:none;border:none;cursor:pointer;">Logout</button></div>
-    </div>
-    <div class="mobile-menu" id="mobile-menu">
-      <div class="mobile-menu-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;">
-        <div id="mobile-nav-user-btn" style="display:none;align-items:center;gap:10px;font-weight:600;color:var(--g700);cursor:pointer;">
-          <span style="width:36px;height:36px;border-radius:10px;background:var(--g600);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;">ME</span>
-          <div style="display:flex;flex-direction:column;text-align:left;">
-            <div style="font-size:14px;font-weight:600;" class="mobile-user-name">Profile</div>
-            <div style="font-size:12px;color:var(--muted);">View account</div>
-          </div>
-        </div>
-        <a id="mobile-apply-btn" class="btn btn-nav-primary" href="apply.html" style="flex-shrink:0;padding:8px 12px;font-size:14px;">Apply Now</a>
-      </div>
-      <a class="nav-link" href="index.html">Home</a>
-      <a class="nav-link" href="catalog.html">Products</a>
-      <a class="nav-link" href="about.html">About</a>
-      <a class="nav-link" href="contact.html">Contact</a>
-      <div class="mobile-menu-divider"></div>
-      <a id="mobile-login-link" class="nav-link" href="login.html">Login</a>
-    </div>
+        <h1 class="auth-form-title">Register</h1>
+        <p class="auth-form-sub">Please fill in the details below to create your account.</p>
 
-    <div class="product-hero">
-      <div class="container">
-        <div class="breadcrumb" style="margin-bottom:20px;">
-          <a href="index.html">Home</a><span class="breadcrumb-sep">›</span>
-          <a href="catalog.html">Products</a><span class="breadcrumb-sep">›</span>
-          <span class="breadcrumb-current" id="bc-name">Product</span>
-        </div>
-        <div class="product-layout" id="product-layout">
-          <div style="text-align:center;padding:60px;color:var(--muted);">Loading product...</div>
-        </div>
-      </div>
-    </div>
+        <div id="reg-error" class="alert alert-error" style="display:none;"></div>
 
-    <!-- WHY BUY -->
-    <div class="why-buy">
-      <div class="container">
-        <h3 style="font-size:20px;color:var(--text);margin-bottom:24px;">Why buy from EasyHome?</h3>
-        <div class="grid-4">
-          <div class="feature-row">
-            <div class="feature-icon">🚚</div>
-            <div>
-              <div class="feature-title">Free Delivery</div>
-              <div class="feature-desc">Fast and free delivery within selected areas.</div>
-            </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name *</label>
+            <input class="form-control" id="reg-name" type="text" placeholder="Enter your full name">
+            <div class="form-error" id="reg-name-err"></div>
           </div>
-          <div class="feature-row">
-            <div class="feature-icon">🔧</div>
-            <div>
-              <div class="feature-title">Professional Installation</div>
-              <div class="feature-desc">Our experts will install your appliance.</div>
-            </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address *</label>
+            <input class="form-control" id="reg-email" type="email" placeholder="Enter your email">
+            <div class="form-error" id="reg-email-err"></div>
           </div>
-          <div class="feature-row">
-            <div class="feature-icon">🛡️</div>
-            <div>
-              <div class="feature-title">Maintenance Support</div>
-              <div class="feature-desc">We provide reliable after-sales service.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">Phone Number *</label>
+          <input class="form-control" id="reg-phone" type="tel" placeholder="09XXXXXXXXX">
+          <div class="form-error" id="reg-phone-err"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-pw">Create Password *</label>
+            <div class="pw-wrapper">
+              <input class="form-control" id="reg-pw" type="password" placeholder="Create a password"
+                oninput="checkPwReqs(this.value)">
+              <button class="pw-toggle" type="button" aria-label="Show password"></button>
             </div>
+            <div class="form-error" id="reg-pw-err"></div>
           </div>
-          <div class="feature-row">
-            <div class="feature-icon">📅</div>
-            <div>
-              <div class="feature-title">Flexible Payments</div>
-              <div class="feature-desc">Choose a payment plan that fits your budget.</div>
+          <div class="form-group">
+            <label class="form-label" for="reg-pw2">Confirm Password *</label>
+            <div class="pw-wrapper">
+              <input class="form-control" id="reg-pw2" type="password" placeholder="Confirm your password">
+              <button class="pw-toggle" type="button" aria-label="Show password"></button>
+            </div>
+            <div class="form-error" id="reg-pw2-err"></div>
+          </div>
+        </div>
+
+        <div class="pw-req" id="pw-req-box">
+          <div class="pw-req-title">Password must contain:</div>
+          <div class="pw-req-list">
+            <div class="pw-req-item" id="req-length">
+              <div class="req-dot">✓</div> At least 8 characters
+            </div>
+            <div class="pw-req-item" id="req-upper">
+              <div class="req-dot">✓</div> One uppercase letter
+            </div>
+            <div class="pw-req-item" id="req-number">
+              <div class="req-dot">✓</div> One number
+            </div>
+            <div class="pw-req-item" id="req-special">
+              <div class="req-dot">✓</div> One special character
             </div>
           </div>
         </div>
+
+        <div class="terms-row" style="margin-top:16px;">
+          <input type="checkbox" id="reg-terms">
+          <label for="reg-terms">I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy
+              Policy</a>. By creating an account, you agree to receive updates and offers from EasyHome
+            Appliances.</label>
+        </div>
+        <div class="form-error" id="reg-terms-err" style="margin-top:-12px;margin-bottom:12px;"></div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doRegister()" id="reg-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <line x1="19" y1="8" x2="19" y2="14" />
+            <line x1="22" y1="11" x2="16" y2="11" />
+          </svg>
+          Register
+        </button>
+
+        <div class="auth-divider">or sign up with</div>
+        <button class="social-btn" onclick="Toast.info('Google sign-up coming soon!')">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          Continue with Google
+        </button>
+        <button class="social-btn" onclick="Toast.info('Facebook sign-up coming soon!')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+          Continue with Facebook
+        </button>
+
+        <div class="auth-footer-link">Already have an account? <a href="login.html">Login</a></div>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo">🏠 EasyHome</div>
-          <p class="footer-tagline">Affordable appliances for every Filipino home.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Products</h5><a href="catalog.html">All Appliances</a>
-        </div>
-        <div class="footer-col">
-          <h5>Company</h5><a href="about.html">About Us</a><a href="contact.html">Contact</a>
-        </div>
-        <div class="footer-col">
-          <h5>Account</h5><a href="login.html">Login</a><a href="dashboard.html">Dashboard</a>
-        </div>
-      </div>
-      <div class="footer-bottom"><span>© 2025 EasyHome.</span></div>
-    </div>
-  </footer>
-
   <script src="shared.js"></script>
   <script>
-    const PRODUCTS_DB = [
-      {
-        id: 1,
-        name: 'Panasonic 2-Door Refrigerator',
-        model: 'NR-BB221V',
-        price: 17990,
-        category: 'Refrigerators',
-        brand: 'Panasonic',
-        badge: 'Best Seller',
-        img: 'https://www.smappliance.com/cdn/shop/products/CW530XMM__Front_1__website.jpg?v=1669708660',
-        imgs: ['https://www.smappliance.com/cdn/shop/products/CW530XMM__Front_1__website.jpg?v=1669708660'],
-        rating: 4.7,
-        reviews: 120,
-        desc: 'Energy-efficient Panasonic refrigerator with spacious storage and reliable cooling performance.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '12 cu.ft.' },
-          { icon: '❄️', label: 'Type', val: 'Top Freezer' },
-          { icon: '⚡', label: 'Inverter', val: 'Yes' }
-        ],
-        terms: [
-          { m: 6, mo: 3100 },
-          { m: 12, mo: 1550 },
-          { m: 18, mo: 1100 }
-        ]
-      },
+    const registerRedirect = getRedirectTarget('dashboard.html');
+    const registerSwitch = document.querySelector('.auth-footer-link a');
+    const currentRedirect = new URLSearchParams(location.search).get('redirect');
+    if (registerSwitch) {
+      registerSwitch.href = 'login.html' + (currentRedirect ? `?redirect=${encodeURIComponent(currentRedirect)}` : '');
+    }
+    if (Auth.isLoggedIn()) window.location.href = registerRedirect;
 
-      {
-        id: 2,
-        name: 'LG Front Load Washing Machine',
-        model: '8.5kg Inverter Drive',
-        price: 24500,
-        category: 'Washing Machines',
-        brand: 'LG',
-        badge: 'Popular',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/FV1208D4W-1.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/FV1208D4W-1.jpg'],
-        rating: 4.8,
-        reviews: 210,
-        desc: 'Powerful LG washer with inverter motor for efficient and quiet washing.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '8.5 kg' },
-          { icon: '⚡', label: 'Motor', val: 'Inverter' }
-        ],
-        terms: [
-          { m: 12, mo: 2050 },
-          { m: 18, mo: 1450 },
-          { m: 24, mo: 1100 }
-        ]
-      },
+    function checkPwReqs(val) {
+      const box = document.getElementById('pw-req-box');
+      box.classList.add('show');
+      const r = validatePassword(val);
+      document.getElementById('req-length').classList.toggle('met', r.length);
+      document.getElementById('req-upper').classList.toggle('met', r.upper);
+      document.getElementById('req-number').classList.toggle('met', r.number);
+      document.getElementById('req-special').classList.toggle('met', r.special);
+    }
 
-      {
-        id: 3,
-        name: 'Samsung 43" Smart TV',
-        model: 'Crystal UHD 4K',
-        price: 18000,
-        category: 'Televisions',
-        brand: 'Samsung',
-        badge: 'New',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/UA43U8000FGXXP-1.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/UA43U8000FGXXP-1.jpg'],
-        rating: 4.6,
-        reviews: 95,
-        desc: 'Enjoy crystal clear 4K viewing with Samsung Smart TV.',
-        specs: [
-          { icon: '📺', label: 'Size', val: '43"' },
-          { icon: '🎬', label: 'Resolution', val: '4K UHD' }
-        ],
-        terms: [
-          { m: 12, mo: 1500 },
-          { m: 24, mo: 800 }
-        ]
-      },
+    function doRegister() {
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const pw = document.getElementById('reg-pw').value;
+      const pw2 = document.getElementById('reg-pw2').value;
+      const terms = document.getElementById('reg-terms').checked;
+      let valid = true;
 
-      {
-        id: 4,
-        name: 'Sharp Microwave Oven',
-        model: '20L Digital',
-        price: 3900,
-        category: 'Microwaves',
-        brand: 'Sharp',
-        badge: 'Available',
-        img: 'https://ansons.ph/wp-content/uploads/2025/07/02_R-32F.png',
-        imgs: ['https://ansons.ph/wp-content/uploads/2025/07/02_R-32F.png'],
-        rating: 4.4,
-        reviews: 60,
-        desc: 'Compact microwave with digital controls and multiple cooking functions.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '20L' },
-          { icon: '⚡', label: 'Power', val: '700W' }
-        ],
-        terms: [
-          { m: 6, mo: 700 },
-          { m: 12, mo: 350 }
-        ]
-      },
+      ['reg-name', 'reg-email', 'reg-phone', 'reg-pw', 'reg-pw2', 'reg-terms'].forEach(id => clearFieldError(id));
+      document.getElementById('reg-error').style.display = 'none';
 
-      {
-        id: 5,
-        name: 'Carrier Inverter Aircon',
-        model: '1.0 HP Energy Saving',
-        price: 22000,
-        category: 'Air Conditioners',
-        brand: 'Carrier',
-        badge: 'Popular',
-        img: 'https://i0.wp.com/jnrappliances.com.ph/wp-content/uploads/2026/03/8.png',
-        imgs: ['https://i0.wp.com/jnrappliances.com.ph/wp-content/uploads/2026/03/8.png'],
-        rating: 4.7,
-        reviews: 140,
-        desc: 'Efficient cooling with inverter technology for lower power consumption.',
-        specs: [
-          { icon: '❄️', label: 'Capacity', val: '1.0 HP' },
-          { icon: '⚡', label: 'Inverter', val: 'Yes' }
-        ],
-        terms: [
-          { m: 12, mo: 1850 },
-          { m: 18, mo: 1300 }
-        ]
-      },
-
-      {
-        id: 6,
-        name: 'Samsung Top Load Washer',
-        model: '7.0kg Wobble Technology',
-        price: 13200,
-        category: 'Washing Machines',
-        brand: 'Samsung',
-        badge: 'Available',
-        img: 'https://www.smappliance.com/cdn/shop/products/3-10151930WA75H4200SW_800x.jpg',
-        imgs: ['https://www.smappliance.com/cdn/shop/products/3-10151930WA75H4200SW_800x.jpg'],
-        rating: 4.5,
-        reviews: 85,
-        desc: 'Top load washer with wobble technology for gentle fabric care.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '7.0 kg' }
-        ],
-        terms: [
-          { m: 12, mo: 1100 },
-          { m: 18, mo: 800 }
-        ]
-      },
-
-      {
-        id: 7,
-        name: 'Panasonic Rice Cooker',
-        model: '1.8L Keep Warm',
-        price: 1800,
-        category: 'Small Appliances',
-        brand: 'Panasonic',
-        badge: 'Available',
-        img: 'https://d1rlzxa98cyc61.cloudfront.net/catalog/product/1/3/139250.jpg',
-        imgs: ['https://d1rlzxa98cyc61.cloudfront.net/catalog/product/1/3/139250.jpg'],
-        rating: 4.6,
-        reviews: 70,
-        desc: 'Simple and reliable rice cooker with keep warm function.',
-        specs: [
-          { icon: '🍚', label: 'Capacity', val: '1.8L' }
-        ],
-        terms: [
-          { m: 6, mo: 320 }
-        ]
-      },
-
-      {
-        id: 8,
-        name: 'Hanabishi Stand Fan',
-        model: '16" 3-Speed',
-        price: 1320,
-        category: 'Small Appliances',
-        brand: 'Hanabishi',
-        badge: 'Available',
-        img: 'https://myhanabishi.com/cdn/shop/files/18BLUE_1b5ddda5-e8c0-4067-8bcd-1927eb560aae.jpg',
-        imgs: ['https://myhanabishi.com/cdn/shop/files/18BLUE_1b5ddda5-e8c0-4067-8bcd-1927eb560aae.jpg'],
-        rating: 4.3,
-        reviews: 40,
-        desc: 'Affordable stand fan with 3-speed control.',
-        specs: [
-          { icon: '🌬️', label: 'Speed', val: '3 Levels' }
-        ],
-        terms: [
-          { m: 6, mo: 250 }
-        ]
-      },
-
-      {
-        id: 9,
-        name: 'LG Side-by-Side Refrigerator',
-        model: '23cu.ft. InstaView',
-        price: 45000,
-        category: 'Refrigerators',
-        brand: 'LG',
-        badge: 'Premium',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/RVS-B200LS-1.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/RVS-B200LS-1.jpg'],
-        rating: 4.9,
-        reviews: 180,
-        desc: 'Premium side-by-side refrigerator with InstaView glass panel and large capacity.',
-        specs: [{ icon: '📦', label: 'Capacity', val: '23 cu.ft.' }],
-        terms: [{ m: 24, mo: 2000 }]
-      },
-
-      {
-        id: 10,
-        name: 'Samsung 55" QLED TV',
-        model: '4K Smart Q70C',
-        price: 36000,
-        category: 'Televisions',
-        brand: 'Samsung',
-        badge: 'Premium',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/QA55QE1DAGXXP-1-1200x1200.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/QA55QE1DAGXXP-1-1200x1200.jpg'],
-        rating: 4.8,
-        reviews: 140,
-        desc: 'QLED TV with vibrant colors and smart features for immersive viewing.',
-        specs: [{ icon: '📺', label: 'Size', val: '55"' }],
-        terms: [{ m: 24, mo: 1600 }]
-      },
-
-      {
-        id: 11,
-        name: 'Panasonic Window Aircon',
-        model: '1.5HP Standard',
-        price: 18500,
-        category: 'Air Conditioners',
-        brand: 'Panasonic',
-        badge: 'Available',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/CW-N1820EPH-3-1-1200x675.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/CW-N1820EPH-3-1-1200x675.jpg'],
-        rating: 4.6,
-        reviews: 95,
-        desc: 'Reliable window-type air conditioner for efficient cooling.',
-        specs: [{ icon: '❄️', label: 'Capacity', val: '1.5 HP' }],
-        terms: [{ m: 12, mo: 1550 }, { m: 18, mo: 1100 }]
-      },
-
-      {
-        id: 12,
-        name: 'Sharp Chest Freezer',
-        model: '150L Manual Defrost',
-        price: 9500,
-        category: 'Refrigerators',
-        brand: 'Sharp',
-        badge: 'Available',
-        img: 'https://ansons.ph/wp-content/uploads/2025/07/06_FRV-212.jpg',
-        imgs: ['https://ansons.ph/wp-content/uploads/2025/07/06_FRV-212.jpg'],
-        rating: 4.5,
-        reviews: 60,
-        desc: 'Spacious chest freezer perfect for frozen storage needs.',
-        specs: [{ icon: '📦', label: 'Capacity', val: '150L' }],
-        terms: [{ m: 12, mo: 850 }]
-      },
-
-      {
-        id: 13,
-        name: 'Daikin Split Aircon',
-        model: '1.5HP Inverter',
-        price: 25000,
-        category: 'Air Conditioners',
-        brand: 'Daikin',
-        badge: 'New',
-        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9jSx95lKQOvUNE4sSd39nLzvNjes9SUQEWA&s',
-        imgs: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9jSx95lKQOvUNE4sSd39nLzvNjes9SUQEWA&s'],
-        rating: 4.7,
-        reviews: 110,
-        desc: 'Energy-efficient split-type inverter air conditioner.',
-        specs: [{ icon: '❄️', label: 'Capacity', val: '1.5 HP' }],
-        terms: [{ m: 18, mo: 1500 }, { m: 24, mo: 1150 }]
-      },
-
-      {
-        id: 14,
-        name: 'LG Washing Machine (Top Load)',
-        model: '8.0kg TurboDrum',
-        price: 16500,
-        category: 'Washing Machines',
-        brand: 'LG',
-        badge: 'Popular',
-        img: 'https://www.smappliance.com/cdn/shop/files/10174691.jpg',
-        imgs: ['https://www.smappliance.com/cdn/shop/files/10174691.jpg'],
-        rating: 4.6,
-        reviews: 130,
-        desc: 'TurboDrum washing system for powerful cleaning.',
-        specs: [{ icon: '📦', label: 'Capacity', val: '8.0 kg' }],
-        terms: [{ m: 12, mo: 1400 }, { m: 18, mo: 1000 }]
-      },
-
-      {
-        id: 15,
-        name: 'Samsung Refrigerator',
-        model: '3-Door Digital',
-        price: 28000,
-        category: 'Refrigerators',
-        brand: 'Samsung',
-        badge: 'Best Seller',
-        img: 'https://ansons.ph/wp-content/uploads/2024/04/01_RB45DG600ES9TC_02.png',
-        imgs: ['https://ansons.ph/wp-content/uploads/2024/04/01_RB45DG600ES9TC_02.png'],
-        rating: 4.8,
-        reviews: 160,
-        desc: 'Modern 3-door refrigerator with digital inverter technology.',
-        specs: [{ icon: '📦', label: 'Type', val: '3-Door' }],
-        terms: [{ m: 18, mo: 1500 }, { m: 24, mo: 1200 }]
-      },
-
-      {
-        id: 16,
-        name: 'Panasonic Automatic Washing Machine',
-        model: '6.5kg Eco',
-        price: 21000,
-        category: 'Washing Machines',
-        brand: 'Panasonic',
-        badge: 'Available',
-        img: 'https://i0.wp.com/jnrappliances.com.ph/wp-content/uploads/2021/08/PANASONIC-NA-FD10X1HRM-10kg-Top-Load-Fully-Automatic-Inverter-1.png',
-        imgs: ['https://i0.wp.com/jnrappliances.com.ph/wp-content/uploads/2021/08/PANASONIC-NA-FD10X1HRM-10kg-Top-Load-Fully-Automatic-Inverter-1.png'],
-        rating: 4.5,
-        reviews: 100,
-        desc: 'Eco-friendly automatic washer with efficient water usage.',
-        specs: [{ icon: '📦', label: 'Capacity', val: '6.5 kg' }],
-        terms: [{ m: 12, mo: 1800 }, { m: 18, mo: 1300 }]
-      },
-
-      {
-        id: 17,
-        name: 'Sharp TV 32 inch',
-        model: 'Smart LED',
-        price: 9999,
-        category: 'Televisions',
-        brand: 'Sharp',
-        badge: 'Available',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/2T-C32GF2000X-1.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/2T-C32GF2000X-1.jpg'],
-        rating: 4.4,
-        reviews: 75,
-        desc: 'Affordable smart TV with HD display.',
-        specs: [{ icon: '📺', label: 'Size', val: '32"' }],
-        terms: [{ m: 12, mo: 900 }, { m: 18, mo: 700 }]
-      },
-
-      {
-        id: 18,
-        name: 'Carrier Window Aircon',
-        model: '0.5HP Eco Cool',
-        price: 12500,
-        category: 'Air Conditioners',
-        brand: 'Carrier',
-        badge: 'Available',
-        img: 'https://emcor.com.ph/wp-content/uploads/2026/04/WCARJ012EEV-1200x1200.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2026/04/WCARJ012EEV-1200x1200.jpg'],
-        rating: 4.3,
-        reviews: 60,
-        desc: 'Compact aircon ideal for small rooms.',
-        specs: [{ icon: '❄️', label: 'Capacity', val: '0.5 HP' }],
-        terms: [{ m: 12, mo: 1050 }]
-      },
-
-      {
-        id: 19,
-        name: 'Philips Blender',
-        model: 'ProBlend Avance',
-        price: 4500,
-        category: 'Small Appliances',
-        brand: 'Philips',
-        badge: 'New',
-        img: 'https://www.smappliance.com/cdn/shop/files/101779782_800x.jpg',
-        imgs: ['https://www.smappliance.com/cdn/shop/files/101779782_800x.jpg'],
-        rating: 4.6,
-        reviews: 85,
-        desc: 'High-performance blender with ProBlend technology for smooth results.',
-        specs: [
-          { icon: '⚡', label: 'Power', val: '800W' },
-          { icon: '🥤', label: 'Capacity', val: '1.5L' }
-        ],
-        terms: [
-          { m: 6, mo: 800 },
-          { m: 12, mo: 400 }
-        ]
-      },
-
-      {
-        id: 20,
-        name: 'LG Microwave Oven',
-        model: '25L Sensor',
-        price: 8900,
-        category: 'Microwaves',
-        brand: 'LG',
-        badge: 'Popular',
-        img: 'https://www.lg.com/content/dam/channel/wcms/ph/images/microwave-ovens/ms2535gib_bbk6eph_eacm_ph_c/MS2535GIB_BBK6EPH_EACM_PH_C-450x450.jpg',
-        imgs: ['https://www.lg.com/content/dam/channel/wcms/ph/images/microwave-ovens/ms2535gib_bbk6eph_eacm_ph_c/MS2535GIB_BBK6EPH_EACM_PH_C-450x450.jpg'],
-        rating: 4.7,
-        reviews: 120,
-        desc: 'Smart microwave with sensor cooking for perfect meals.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '25L' },
-          { icon: '⚡', label: 'Power', val: '1000W' }
-        ],
-        terms: [
-          { m: 12, mo: 800 },
-          { m: 18, mo: 600 }
-        ]
-      },
-
-      {
-        id: 21,
-        name: 'Samsung 65" Crystal TV',
-        model: '4K Smart TV',
-        price: 48000,
-        category: 'Televisions',
-        brand: 'Samsung',
-        badge: 'Premium',
-        img: 'https://images.samsung.com/is/image/samsung/p6pim/ph/ua65du7000gxxp/gallery/ph-crystal-uhd-du7000-ua65du7000gxxp-541034031',
-        imgs: ['https://images.samsung.com/is/image/samsung/p6pim/ph/ua65du7000gxxp/gallery/ph-crystal-uhd-du7000-ua65du7000gxxp-541034031'],
-        rating: 4.9,
-        reviews: 200,
-        desc: 'Large 65-inch smart TV with crystal clear 4K resolution.',
-        specs: [
-          { icon: '📺', label: 'Size', val: '65"' },
-          { icon: '🎬', label: 'Resolution', val: '4K UHD' }
-        ],
-        terms: [
-          { m: 24, mo: 2200 }
-        ]
-      },
-
-      {
-        id: 22,
-        name: 'Panasonic 2-Tub Washing Machine',
-        model: 'NA-W6850',
-        price: 19500,
-        category: 'Washing Machines',
-        brand: 'Panasonic',
-        badge: 'Best Seller',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/NA-W9523B-1.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/NA-W9523B-1.jpg'],
-        rating: 4.7,
-        reviews: 150,
-        desc: 'Durable 2-tub washing machine ideal for heavy laundry.',
-        specs: [
-          { icon: '📦', label: 'Type', val: 'Twin Tub' }
-        ],
-        terms: [
-          { m: 18, mo: 1200 },
-          { m: 24, mo: 950 }
-        ]
-      },
-
-      {
-        id: 23,
-        name: 'Daikin Cassette Type Aircon',
-        model: '2.0HP Smart',
-        price: 38000,
-        category: 'Air Conditioners',
-        brand: 'Daikin',
-        badge: 'Premium',
-        img: 'https://www.daikin.com.ph/wp-content/uploads/2021/10/Ceiling-Mounted-Cassette-Standard.png',
-        imgs: ['https://www.daikin.com.ph/wp-content/uploads/2021/10/Ceiling-Mounted-Cassette-Standard.png'],
-        rating: 4.8,
-        reviews: 90,
-        desc: 'Ceiling-mounted cassette aircon for wide and even cooling.',
-        specs: [
-          { icon: '❄️', label: 'Capacity', val: '2.0 HP' }
-        ],
-        terms: [
-          { m: 24, mo: 1800 }
-        ]
-      },
-
-      {
-        id: 24,
-        name: 'Sharp Water Cooler',
-        model: 'Bottom Load',
-        price: 7500,
-        category: 'Small Appliances',
-        brand: 'Sharp',
-        badge: 'Available',
-        img: 'https://www.sharptce.com/wp-content/uploads/2025/04/SB-C9-1.jpg',
-        imgs: ['https://www.sharptce.com/wp-content/uploads/2025/04/SB-C9-1.jpg'],
-        rating: 4.5,
-        reviews: 70,
-        desc: 'Convenient bottom-load water dispenser for easy use.',
-        specs: [
-          { icon: '💧', label: 'Type', val: 'Hot & Cold' }
-        ],
-        terms: [
-          { m: 12, mo: 650 }
-        ]
-      },
-
-      {
-        id: 25,
-        name: 'Panasonic French Door Fridge',
-        model: 'NR-BX468',
-        price: 38000,
-        category: 'Refrigerators',
-        brand: 'Panasonic',
-        badge: 'Premium',
-        img: 'https://www.smappliance.com/cdn/shop/products/CW530XMM__Front_1__website.jpg',
-        imgs: ['https://www.smappliance.com/cdn/shop/products/CW530XMM__Front_1__website.jpg'],
-        rating: 4.8,
-        reviews: 140,
-        desc: 'Stylish French door fridge with spacious compartments.',
-        specs: [
-          { icon: '📦', label: 'Type', val: 'French Door' }
-        ],
-        terms: [
-          { m: 24, mo: 1800 }
-        ]
-      },
-
-      {
-        id: 26,
-        name: 'LG 50" 4K TV',
-        model: 'UP7500',
-        price: 32000,
-        category: 'Televisions',
-        brand: 'LG',
-        badge: 'Popular',
-        img: 'https://www.lg.com/content/dam/channel/wcms/ph/images/tvs/50un7300ppc_aph_eacm_ph_c/gallery/1100-1.jpg',
-        imgs: ['https://www.lg.com/content/dam/channel/wcms/ph/images/tvs/50un7300ppc_aph_eacm_ph_c/gallery/1100-1.jpg'],
-        rating: 4.7,
-        reviews: 130,
-        desc: 'Smart 4K TV with AI ThinQ and vibrant display.',
-        specs: [
-          { icon: '📺', label: 'Size', val: '50"' }
-        ],
-        terms: [
-          { m: 24, mo: 1500 }
-        ]
-      },
-
-      {
-        id: 27,
-        name: 'Samsung Inverter Aircon',
-        model: '2.0HP Wind',
-        price: 26000,
-        category: 'Air Conditioners',
-        brand: 'Samsung',
-        badge: 'New',
-        img: 'https://emcor.com.ph/wp-content/uploads/2025/10/AW40F09D0ATNTC.jpg',
-        imgs: ['https://emcor.com.ph/wp-content/uploads/2025/10/AW40F09D0ATNTC.jpg'],
-        rating: 4.6,
-        reviews: 100,
-        desc: 'Wind-free cooling aircon with inverter efficiency.',
-        specs: [
-          { icon: '❄️', label: 'Capacity', val: '2.0 HP' }
-        ],
-        terms: [
-          { m: 18, mo: 1500 },
-          { m: 24, mo: 1200 }
-        ]
-      },
-
-      {
-        id: 28,
-        name: 'Electrolux Refrigerator',
-        model: 'E4000',
-        price: 21000,
-        category: 'Refrigerators',
-        brand: 'Electrolux',
-        badge: 'Available',
-        img: 'https://d1rlzxa98cyc61.cloudfront.net/catalog/product/cache/1801c418208f9607a371e61f8d9184d9/1/4/143568.jpg',
-        imgs: ['https://d1rlzxa98cyc61.cloudfront.net/catalog/product/cache/1801c418208f9607a371e61f8d9184d9/1/4/143568.jpg'],
-        rating: 4.5,
-        reviews: 95,
-        desc: 'Reliable refrigerator with modern cooling technology.',
-        specs: [
-          { icon: '📦', label: 'Type', val: 'Double Door' }
-        ],
-        terms: [
-          { m: 18, mo: 1200 }
-        ]
-      },
-
-      {
-        id: 29,
-        name: 'Whirlpool Washing Machine',
-        model: '7.0kg Aqua',
-        price: 15000,
-        category: 'Washing Machines',
-        brand: 'Whirlpool',
-        badge: 'Available',
-        img: 'https://jnrappliances.com.ph/wp-content/uploads/2021/08/Website-Photo-Whirlpool-4.png',
-        imgs: ['https://jnrappliances.com.ph/wp-content/uploads/2021/08/Website-Photo-Whirlpool-4.png'],
-        rating: 4.5,
-        reviews: 80,
-        desc: 'Efficient washer with Aqua technology for better cleaning.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '7.0 kg' }
-        ],
-        terms: [
-          { m: 12, mo: 1300 },
-          { m: 18, mo: 950 }
-        ]
-      },
-
-      {
-        id: 30,
-        name: 'Midea Microwave',
-        model: '23L Auto Menu',
-        price: 5500,
-        category: 'Microwaves',
-        brand: 'Midea',
-        badge: 'Available',
-        img: 'https://d1rlzxa98cyc61.cloudfront.net/catalog/product/1/5/152151_2020.jpg',
-        imgs: ['https://d1rlzxa98cyc61.cloudfront.net/catalog/product/1/5/152151_2020.jpg'],
-        rating: 4.4,
-        reviews: 65,
-        desc: 'Microwave oven with auto-cook menu for convenience.',
-        specs: [
-          { icon: '📦', label: 'Capacity', val: '23L' }
-        ],
-        terms: [
-          { m: 6, mo: 950 },
-          { m: 12, mo: 500 }
-        ]
-      },
-
-      {
-        id: 31,
-        name: 'Fujitsu Aircon',
-        model: '1.0HP R410A',
-        price: 19000,
-        category: 'Air Conditioners',
-        brand: 'Fujitsu',
-        badge: 'Available',
-        img: 'https://www.airconditionerland.com.au/cdn/shop/products/set-astg30kmtc_c4e9a178-3c19-4a2d-bb23-51a6f583495b_992x558.jpg',
-        imgs: ['https://www.airconditionerland.com.au/cdn/shop/products/set-astg30kmtc_c4e9a178-3c19-4a2d-bb23-51a6f583495b_992x558.jpg'],
-        rating: 4.6,
-        reviews: 90,
-        desc: 'Reliable air conditioner with efficient cooling performance.',
-        specs: [{ icon: '❄️', label: 'Capacity', val: '1.0 HP' }],
-        terms: [{ m: 12, mo: 1600 }, { m: 18, mo: 1200 }]
+      if (!name || name.length < 2) { showFieldError('reg-name', 'Please enter your full name.'); valid = false; }
+      if (!email) { showFieldError('reg-email', 'Email is required.'); valid = false; }
+      else if (!validateEmail(email)) { showFieldError('reg-email', 'Please enter a valid email address.'); valid = false; }
+      if (!phone || !/^(09|\+639)\d{9}$/.test(phone)) { showFieldError('reg-phone', 'Enter a valid PH mobile number (09XXXXXXXXX).'); valid = false; }
+      if (!pw) { showFieldError('reg-pw', 'Password is required.'); valid = false; }
+      else {
+        const r = validatePassword(pw);
+        if (!r.length || !r.upper || !r.number || !r.special) { showFieldError('reg-pw', 'Password does not meet requirements.'); valid = false; }
       }
-    ];
+      if (pw && pw2 && pw !== pw2) { showFieldError('reg-pw2', 'Passwords do not match.'); valid = false; }
+      if (!terms) { showFieldError('reg-terms', 'You must agree to the Terms & Conditions.'); valid = false; }
+      if (!valid) return;
 
-    const params = new URLSearchParams(location.search);
-    const pid = parseInt(params.get('id')) || 1;
-    const p = PRODUCTS_DB.find(x => x.id === pid) || PRODUCTS_DB[0];
-
-    document.title = p.name + ' – EasyHome';
-    document.getElementById('bc-name').textContent = p.name;
-
-    let activeTerm = p.terms[0];
-
-    function renderProduct() {
-      document.getElementById('product-layout').innerHTML = `
-    <div class="product-gallery">
-      <div class="main-img-wrap">
-        <img id="main-img" src="${p.img}" alt="${p.name}">
-        <div class="best-seller-badge"><span class="badge badge-green">${p.badge}</span></div>
-      </div>
-      <div class="thumb-row">
-        ${p.imgs.map((img, i) => `<div class="thumb ${i === 0 ? 'active' : ''}" onclick="setImg('${img}',this)"><img src="${img}" alt=""></div>`).join('')}
-      </div>
-    </div>
-    <div class="product-info">
-      <h1 class="product-name-lg">${p.name}</h1>
-      <div class="product-model">${p.model}</div>
-      <div class="star-row"><span class="stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5 - Math.floor(p.rating))}</span><span style="font-size:16px;font-weight:500;color:var(--text);">${p.rating}</span><span class="review-count">(${p.reviews} reviews)</span></div>
-      <p class="product-desc">${p.desc}</p>
-      <div>${p.specs.map(s => `<div class="spec-row"><div class="spec-icon">${s.icon}</div><div class="spec-label">${s.label}</div><div class="spec-val">${s.val}</div></div>`).join('')}</div>
-      <div class="price-box">
-        <div class="cash-price-label">Cash Price</div>
-        <div class="cash-price">₱${p.price.toLocaleString()}</div>
-        <div class="plan-title">EasyHome Installment Plan</div>
-        <div class="plan-as-low">
-          <div style="font-size:12px;color:var(--g600);margin-bottom:4px;">As low as</div>
-          <div class="plan-monthly">₱<span id="plan-mo">${activeTerm.mo.toLocaleString()}</span> <small>/ month</small></div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px;">for <span id="plan-term">${activeTerm.m}</span> months</div>
-        </div>
-        <div class="term-grid">
-          ${p.terms.map(t => `<button class="term-btn ${t.m === activeTerm.m ? 'active' : ''}" onclick="setTerm(${t.m},${t.mo},this)"><span class="t-mo">${t.m}</span>months<br><span style="font-size:12px;color:var(--g600);">₱${t.mo.toLocaleString()}/mo</span></button>`).join('')}
-        </div>
-        <div class="perks">
-          <div class="perk"><div class="perk-check">✓</div> Low or zero down payment</div>
-          <div class="perk"><div class="perk-check">✓</div> Flexible payment terms</div>
-          <div class="perk"><div class="perk-check">✓</div> Free delivery &amp; installation</div>
-          <div class="perk"><div class="perk-check">✓</div> Maintenance support</div>
-        </div>
-        <a href="apply.html?id=${p.id}&term=${activeTerm.m}" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px;" id="apply-btn">
-          📋 Apply Now
-        </a>
-        <button id="add-cart-btn" class="btn btn-secondary" style="width:100%;justify-content:center;" onclick='Cart.add(${JSON.stringify({ id: p.id, name: p.name, price: p.price, img: p.img, monthly: activeTerm.mo, term: activeTerm.m })})'>
-          🛒 Add to Cart
-        </button>
-        <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:12px;color:var(--muted);">
-          🔒 Secure and confidential application
-        </div>
-      </div>
-    </div>`;
+      const btn = document.getElementById('reg-btn');
+      btn.innerHTML = '<span class="spinner"></span> Creating account...';
+      btn.disabled = true;
+      setTimeout(() => {
+        const result = Auth.register(name, email, pw, phone);
+        if (result.ok) {
+          Toast.success('Account created successfully!');
+          setTimeout(() => window.location.href = registerRedirect, 800);
+        } else {
+          document.getElementById('reg-error').style.display = 'flex';
+          document.getElementById('reg-error').innerHTML = '⚠️ ' + result.error;
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Register';
+          btn.disabled = false;
+        }
+      }, 800);
     }
-
-    function setImg(src, thumb) {
-      document.getElementById('main-img').src = src;
-      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-      thumb.classList.add('active');
-    }
-
-    function setTerm(m, mo, btn) {
-      activeTerm = { m, mo };
-      document.getElementById('plan-mo').textContent = mo.toLocaleString();
-      document.getElementById('plan-term').textContent = m;
-      document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('apply-btn').href = `apply.html?id=${p.id}&term=${m}`;
-      // Update Add to Cart button payload to include the selected term and monthly amount
-      const addBtn = document.getElementById('add-cart-btn');
-      if (addBtn) {
-        const payload = { id: p.id, name: p.name, price: p.price, img: p.img, monthly: mo, term: m };
-        addBtn.setAttribute('onclick', `Cart.add(${JSON.stringify(payload)})`);
-      }
-    }
-
-    renderProduct();
   </script>
 </body>
 
